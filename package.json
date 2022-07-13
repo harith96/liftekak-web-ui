@@ -1,0 +1,112 @@
+{
+  "name": "liftekak-web-ui",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "antd": "^3.20.7",
+    "axios": "^0.21.1",
+    "core-js": "^3.8.2",
+    "formik": "^2.2.6",
+    "formik-antd": "^1.9.0",
+    "history": "^5.0.0",
+    "i18next": "^19.8.4",
+    "lodash": "^4.17.20",
+    "moment": "^2.29.1",
+    "pako": "^2.0.4",
+    "papaparse": "^5.3.1",
+    "prop-types": "^15.7.2",
+    "qs": "^6.9.4",
+    "query-string": "^7.0.1",
+    "raf": "^3.4.1",
+    "react": "^17.0.1",
+    "react-app-polyfill": "^2.0.0",
+    "react-dom": "^17.0.1",
+    "react-i18next": "^11.8.5",
+    "react-image-file-resizer": "^0.4.7",
+    "react-redux": "^7.2.2",
+    "react-resize-detector": "^7.0.0",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^3.0.1",
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-logger": "^3.0.6",
+    "redux-saga": "^1.1.3",
+    "yup": "^0.32.11",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^13.5.0",
+    "web-vitals": "^2.1.4"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "@rescripts/cli": "0.0.11",
+    "@rescripts/rescript-use-babel-config": "0.0.8",
+    "@rescripts/utilities": "0.0.5",
+    "antd-scss-theme-plugin": "^1.0.7",
+    "babel-plugin-import": "^1.12.0",
+    "css-loader": "^3.1.0",
+    "eslint-config-airbnb": "^17.1.1",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "extract-loader": "^3.1.0",
+    "husky": "^4.3.7",
+    "jest-sonar-reporter": "^2.0.0",
+    "less": "^2.3.1",
+    "less-loader": "^4.0.6",
+    "lint-staged": "^10.5.3",
+    "prettier": "^2.2.1",
+    "redux-mock-store": "^1.5.4",
+    "sass-loader": "^6.0.6",
+    "sonarqube-scanner": "^2.8.0",
+    "style-loader": "^1.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --single-quote --write --print-width 120",
+      "git add"
+    ]
+  },
+  "scripts": {
+    "start-old": "react-scripts start",
+    "build-old": "react-scripts build",
+    "start": "REACT_APP_BUILD_TIME=$(date '+%d/%m/%Y %H:%M:%S') PORT=3006 rescripts start",
+    "build": "REACT_APP_BUILD_TIME=$(date '+%d/%m/%Y %H:%M:%S') rescripts build",
+    "dist:dev": "REACT_APP_ENV=dev npm run build && cd build && aws s3 sync . s3://${DEPLOY_BUCKET_NAME}/ui/rewards",
+    "dist:qa": "REACT_APP_ENV=qa npm run build && cd build && aws s3 sync . s3://${DEPLOY_BUCKET_NAME}/ui/rewards",
+    "dist:uat": "REACT_APP_ENV=uat npm run build && cd build && aws s3 sync . s3://${DEPLOY_BUCKET_NAME}/ui/rewards --profile uat",
+    "dist:prod": "REACT_APP_ENV=prod npm run build && cd build && aws s3 sync . s3://${DEPLOY_BUCKET_NAME}/ui/rewards --profile prod",
+    "test": "react-scripts test --env=jsdom --testResultsProcessor ./node_modules/jest-sonar-reporter/index.js",
+    "lint": "eslint src",
+    "lint:fix": "eslint --fix src",
+    "eject": "react-scripts eject",
+    "coverage": "npm test -- --coverage --watchAll=false --passWithNoTests",
+    "sonar": "node sonar-project.js",
+    "sonar:pr": "node sonar-pr.js"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
