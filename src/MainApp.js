@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Select } from 'antd';
@@ -12,40 +12,15 @@ import RideDetailsPageContainer from 'pages/RideDetailsPage/RidesDetailsPageCont
 import { APP_ROUTES } from 'util/constants';
 import { UserRole } from 'enums';
 
-import AppLogo from 'styles/images/app-logos/rewards-logo.svg';
-import styles from 'styles/RewardsApp.scss';
+import 'antd/dist/antd.css';
 
 const { Option } = Select;
 
-const setAppLogo = () => {
-  if (document.getElementById('app-logo')) {
-    document.getElementById('app-logo').src = AppLogo;
-  }
-};
-
-const setAppHeaderToAppMode = () => {
-  if (document.getElementById('app-bar')) {
-    document.getElementById('app-bar').className = 'app-bar app-mode';
-  }
-};
-
-const COMMON_ROUTES_USER_ROLES = [UserRole.MASTER_VENDOR, UserRole.SYSCO_ASSOCIATE];
-
 // Style use
 function MainApp({ actions, userId, userRole, userFetching }) {
-  setAppLogo();
-  setAppHeaderToAppMode();
-
   useEffect(() => {
     actions.loadUserDetails(userId);
   }, [actions, userId]);
-
-  useEffect(() => {
-    styles.use();
-    return () => {
-      styles.unuse();
-    };
-  }, []);
 
   return !userFetching ? (
     <div className="wrapper reward-wrapper">

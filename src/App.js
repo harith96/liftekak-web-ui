@@ -9,7 +9,6 @@ import MainApp from './MainApp';
 function App() {
   return (
     <Provider store={store}>
-      <h1>TEST APP</h1>
       <MainApp />
     </Provider>
   );
