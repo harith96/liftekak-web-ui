@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import * as i18n from '_i18n';
 import * as rewardsActions from 'actions';
-import { NotificationTypes } from 'enums';
+import { NotificationType } from 'enums';
 import { APP_ROUTES } from 'util/constants';
 import AppLoader from './AppLoader';
 
@@ -22,7 +22,7 @@ const PrivateRoute = ({ component: Component, roles, userFetching, currentUserRo
           actions.showNotification(
             i18n.t('rewards.user.error.message'),
             i18n.t('rewards.user.error.notLoggedIn.description'),
-            NotificationTypes.ERROR
+            NotificationType.ERROR
           );
           return <Redirect to={{ pathname: APP_ROUTES.LOGIN }} />;
         }
@@ -33,7 +33,7 @@ const PrivateRoute = ({ component: Component, roles, userFetching, currentUserRo
           actions.showNotification(
             i18n.t('rewards.user.error.message'),
             i18n.t('rewards.user.error.notAuthorized.description'),
-            NotificationTypes.ERROR
+            NotificationType.ERROR
           );
           return <Redirect to={{ pathname: APP_ROUTES.LOGIN }} />;
         }

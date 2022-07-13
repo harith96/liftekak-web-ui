@@ -15,7 +15,7 @@ import {
 import { BAD_REQUEST_STATUS, BATCHES_PAGE_SIZE, NOT_FOUND_STATUS, USER_NOT_AUTHORIZED_STATUS } from 'util/constants';
 import * as i18n from '_i18n';
 import { action } from 'reduxHelpers';
-import { NotificationTypes } from 'enums';
+import { NotificationType } from 'enums';
 import openNotification from 'components/openNotification';
 
 export const getRole = (state) => state.user.data.userRole;
@@ -31,7 +31,7 @@ function* handleUserSessionErrors(error) {
     yield put(
       action(SHOW_NOTIFICATION, {
         description: i18n.t('rewards.user.error.notAuthorized.description'),
-        className: NotificationTypes.ERROR,
+        className: NotificationType.ERROR,
         message: i18n.t('rewards.user.error.message'),
       })
     );
@@ -63,7 +63,7 @@ function* loadUserAsync({ userId }) {
       yield put(
         action(SHOW_NOTIFICATION, {
           description: i18n.t('rewards.user.error.description'),
-          className: NotificationTypes.ERROR,
+          className: NotificationType.ERROR,
           message: i18n.t('rewards.user.error.message'),
         })
       );
@@ -90,7 +90,7 @@ function* loadRidesAsync() {
         action(SHOW_NOTIFICATION, {
           message: i18n.t('rewards.rides.error.message'),
           description: i18n.t('rewards.rides.error.description'),
-          className: NotificationTypes.ERROR,
+          className: NotificationType.ERROR,
         })
       );
   }
@@ -120,7 +120,7 @@ function* loadAllNonExpiredRidesAsync() {
         action(SHOW_NOTIFICATION, {
           message: i18n.t('rewards.rides.error.message'),
           description: i18n.t('rewards.rides.error.description'),
-          className: NotificationTypes.ERROR,
+          className: NotificationType.ERROR,
         })
       );
   }
@@ -142,7 +142,7 @@ function* loadRideAsync({ selectedRideId }) {
         action(SHOW_NOTIFICATION, {
           message: i18n.t('rewards.ride.error.message'),
           description,
-          className: NotificationTypes.ERROR,
+          className: NotificationType.ERROR,
         })
       );
     }
@@ -158,7 +158,7 @@ function* updateRideAsync({ data: { rideId, endDate, comment } = {}, history }) 
     yield put({ type: UPDATE_RIDE.SUCCESS });
     yield put(
       action(SHOW_NOTIFICATION, {
-        className: NotificationTypes.SUCCESS,
+        className: NotificationType.SUCCESS,
         message: i18n.t('rewards.ride.success.message'),
         description: i18n.t('rewards.ride.updated.success.description'),
       })
@@ -173,7 +173,7 @@ function* updateRideAsync({ data: { rideId, endDate, comment } = {}, history }) 
         action(SHOW_NOTIFICATION, {
           message: i18n.t('rewards.ride.error.message'),
           description: i18n.t('rewards.ride.updated.error.description'),
-          className: NotificationTypes.ERROR,
+          className: NotificationType.ERROR,
         })
       );
   }
@@ -189,7 +189,7 @@ function* createRideAsync({ data }) {
     yield put({ type: CREATE_RIDE.SUCCESS, payload: response.data });
     yield put(
       action(SHOW_NOTIFICATION, {
-        className: NotificationTypes.SUCCESS,
+        className: NotificationType.SUCCESS,
         message: i18n.t('rewards.ride.success.message'),
         description: i18n.t('rewards.ride.save.success.description'),
       })
@@ -207,7 +207,7 @@ function* createRideAsync({ data }) {
         action(SHOW_NOTIFICATION, {
           message: i18n.t('rewards.ride.error.message'),
           description,
-          className: NotificationTypes.ERROR,
+          className: NotificationType.ERROR,
         })
       );
     }

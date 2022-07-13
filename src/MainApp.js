@@ -13,6 +13,7 @@ import { APP_ROUTES } from 'util/constants';
 import { UserRole } from 'enums';
 
 import 'antd/dist/antd.css';
+import LoginPageContainer from 'pages/LoginPage/LoginPageContainer';
 
 const { Option } = Select;
 
@@ -25,6 +26,7 @@ function MainApp({ actions, userId, userRole, userFetching }) {
   return !userFetching ? (
     <div className="wrapper reward-wrapper">
       <Router>
+        <Route path={APP_ROUTES.LOGIN} component={LoginPageContainer} />
         <PrivateRoute
           path={APP_ROUTES.RIDES_LIST}
           component={RidesListPageContainer}
