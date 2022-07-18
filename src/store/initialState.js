@@ -1,6 +1,36 @@
 const initialState = {
+  signIn: {
+    fetching: false,
+    data: null,
+    error: null,
+  },
+  signUp: {
+    fetching: false,
+    data: null,
+    error: null,
+  },
+  sendPasswordResetEmail: {
+    fetching: false,
+    data: null,
+    error: null,
+  },
+  saveUserDetails: {
+    fetching: false,
+    data: null,
+    error: null,
+  },
+  userVehicles: {
+    fetching: false,
+    data: null,
+    error: null,
+  },
+  saveVehicles: {
+    fetching: false,
+    data: null,
+    error: null,
+  },
   user: {
-    fetching: true,
+    fetching: false,
     data: {
       email: null,
       userId: null,
@@ -10,76 +40,9 @@ const initialState = {
     },
     error: null,
   },
-  batches: {
-    fetching: true,
-    data: null,
-    error: null,
-  },
-  batch: {
-    fetching: false,
-    data: {
-      batchType: null,
-      effectiveDate: null,
-      batchId: null,
-      opcoItems: [],
-      opcos: [],
-      priceType: null,
-      status: null,
-      vendorName: null,
-      comments: null,
-    },
-    error: null,
-  },
-  loadRewardItems: {
-    fetching: false,
-    error: null,
-  },
-  createBatch: {
-    fetching: false,
-    data: {
-      batchType: null,
-      batchId: null,
-      opcoItems: [],
-      opcos: [],
-      status: null,
-      vendorName: null,
-      comments: null,
-    },
-    error: null,
-  },
-  updateBatch: {
-    fetching: false,
-    data: [],
-    error: null,
-  },
-  deleteBatch: {
-    fetching: false,
-    data: [],
-    error: null,
-  },
   updateRide: {
     fetching: false,
     data: [],
-    error: null,
-  },
-  saveAndUpdateBatchStatus: {
-    fetching: false,
-    data: [],
-    error: null,
-  },
-  filters: {
-    fetching: true,
-    data: {
-      vendorIds: null,
-      sort: null,
-      opco: 'All',
-      batchStatus: 'All',
-      startDate: null,
-      batchId: null,
-      endDate: null,
-      page: 1,
-      rewardType: 'All',
-    },
     error: null,
   },
   rideFilters: {

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, useHistory, H } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Select } from 'antd';
@@ -13,29 +13,25 @@ import { APP_ROUTES } from 'util/constants';
 import { UserRole } from 'enums';
 
 import 'antd/dist/antd.css';
+import SignInPageContainer from 'pages/SignInPage/SignInPageContainer';
 
 const { Option } = Select;
 
 // Style use
-function MainApp({ actions, userId, userRole, userFetching }) {
+function MainApp({ actions, userId, userFetching }) {
   useEffect(() => {
-    actions.loadUserDetails(userId);
+    // actions.loadUserDetails(userId);
   }, [actions, userId]);
 
   return !userFetching ? (
     <div className="wrapper reward-wrapper">
       <Router>
-        <PrivateRoute
-          path={APP_ROUTES.RIDES_LIST}
-          component={RidesListPageContainer}
-          roles={[UserRole.SYSCO_ASSOCIATE]}
-          currentUserRole={userRole}
-        />
+        <Route path={APP_ROUTES.LOGIN} component={SignInPageContainer} />
+        <PrivateRoute path={APP_ROUTES.RIDES_LIST} component={RidesListPageContainer} roles={[UserRole.PASSENGER]} />
         <PrivateRoute
           path={`${APP_ROUTES.RIDE_VIEW}/:id`}
           component={RideDetailsPageContainer}
-          roles={[UserRole.SYSCO_ASSOCIATE]}
-          currentUserRole={userRole}
+          roles={[UserRole.PASSENGER]}
         />
       </Router>
     </div>

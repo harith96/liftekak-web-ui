@@ -1,0 +1,32 @@
+.login-container {
+  max-width: 300px;
+  margin: auto;
+}
+.login-form-forgot {
+  float: right;
+}
+.login-form-button {
+  width: 100%;
+}
+.is-sign-up-switch {
+  float: right;
+  width: 5rem;
+}
+.sign-in-form-forgot {
+  float: right;
+}
+
+.google-logo {
+  margin-right: 8px;
+}
+
+.or-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.or-text {
+  margin: 0 8px;
+  align-self: center;
+}

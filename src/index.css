@@ -9,3 +9,9 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+
+.horizontal-line {
+  flex: 1;
+  border-top: 1px solid gray;
+  align-self: center;
+}
