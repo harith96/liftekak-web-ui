@@ -1,7 +1,8 @@
 import React from 'react';
+import RidesListPageComponents from './components/RidesListPageComponents';
 
 function RidesListPageContainer() {
-  return <h1>RidesListPageContainer</h1>;
+  return <RidesListPageComponents />;
 }
 
 export default RidesListPageContainer;

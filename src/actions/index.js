@@ -8,9 +8,23 @@ import {
   UPDATE_RIDE,
   CREATE_RIDE,
   FETCH_ALL_RIDES,
+  SIGN_IN,
+  SIGN_UP,
+  SAVE_USER_DETAILS,
+  SAVE_VEHICLES,
+  USER_VEHICLES,
+  RESET_PASSWORD,
 } from './actionTypes';
 
-const loadUserDetails = (userId) => action(USER.REQUEST, { userId });
+const signIn = (provider, signInDetails) => action(SIGN_IN.REQUEST, { provider, signInDetails });
+const signUp = (email, password) => action(SIGN_UP.REQUEST, { email, password });
+const sendPasswordResetEmail = (email) => action(RESET_PASSWORD.REQUEST, { email });
+const saveUserDetails = (data) => action(SAVE_USER_DETAILS.REQUEST, { data });
+const loadUserDetails = () => action(USER.REQUEST);
+
+const saveVehicles = ({ type, brand, model, year, registrationNumber }) =>
+  action(SAVE_VEHICLES.REQUEST, { type, brand, model, year, registrationNumber });
+const loadUserVehicles = () => action(USER_VEHICLES.REQUEST);
 
 const showNotification = (message, description, notificationType) =>
   action(SHOW_NOTIFICATION, { message, description, className: notificationType });
@@ -26,7 +40,16 @@ const updateRide = (data, history) =>
 const loadAllRides = () => action(FETCH_ALL_RIDES.REQUEST);
 
 export {
+  // user actions
+  signIn,
+  signUp,
+  saveUserDetails,
   loadUserDetails,
+  sendPasswordResetEmail,
+  // vehicle actions
+  loadUserVehicles,
+  saveVehicles,
+  // ride actions
   loadRidesDetails,
   loadRideDetails,
   showNotification,
