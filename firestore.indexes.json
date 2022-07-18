@@ -1,0 +1,25 @@
+{
+  "indexes": [],
+  "fieldOverrides": [
+    {
+      "collectionGroup": "admins",
+      "fieldPath": "address",
+      "indexes": []
+    },
+    {
+      "collectionGroup": "admins",
+      "fieldPath": "dateOfBirth",
+      "indexes": []
+    },
+    {
+      "collectionGroup": "admins",
+      "fieldPath": "idNo",
+      "indexes": []
+    },
+    {
+      "collectionGroup": "users",
+      "fieldPath": "name",
+      "indexes": []
+    }
+  ]
+}
