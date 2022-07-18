@@ -15,3 +15,8 @@ code {
   border-top: 1px solid gray;
   align-self: center;
 }
+
+.submit-button {
+  height: 40px;
+  width: 100%;
+}

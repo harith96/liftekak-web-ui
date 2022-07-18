@@ -6,6 +6,7 @@ const saveUserDetails = async (userDetails) => {
   const uid = getCurrentUserID();
 
   const db = getFirestore();
+  console.log(userDetails);
 
   await setDoc(doc(db, 'users', uid), userDetails, { merge: true });
 };

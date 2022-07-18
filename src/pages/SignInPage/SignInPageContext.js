@@ -1,7 +1,6 @@
 import React from 'react';
 
 const SignInPageContext = React.createContext({
-  signInFormRef: '',
   onSignInWithEmailCustom: () => {},
   onSignUpWithEmailCustom: () => {},
   onSignInWithGoogle: () => {},

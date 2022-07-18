@@ -19,8 +19,7 @@ import {
 const signIn = (provider, signInDetails) => action(SIGN_IN.REQUEST, { provider, signInDetails });
 const signUp = (email, password) => action(SIGN_UP.REQUEST, { email, password });
 const sendPasswordResetEmail = (email) => action(RESET_PASSWORD.REQUEST, { email });
-const saveUserDetails = ({ firstName, lastName, gender, passengerPreference, nicFront, nicBack } = {}) =>
-  action(SAVE_USER_DETAILS.REQUEST, { firstName, lastName, gender, passengerPreference, nicFront, nicBack });
+const saveUserDetails = (data) => action(SAVE_USER_DETAILS.REQUEST, { data });
 const loadUserDetails = () => action(USER.REQUEST);
 
 const saveVehicles = ({ type, brand, model, year, registrationNumber }) =>

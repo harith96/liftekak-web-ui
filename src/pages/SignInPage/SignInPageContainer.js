@@ -10,7 +10,6 @@ import SignInPageComponent from './components/SignInPageComponent';
 import { SignInPageContextProvider } from './SignInPageContext';
 
 function SignInPageContainer() {
-  const signInFormRef = useRef();
   const dispatch = useDispatch();
   const history = useHistory();
   const isSigningIn = useSelector((state) => state.signIn.fetching);
@@ -44,7 +43,6 @@ function SignInPageContainer() {
       value={{
         onSignInWithEmailCustom,
         onForgotPassword,
-        signInFormRef,
         onSignInWithGoogle,
         isSigningIn,
         onSignUpWithEmailCustom,

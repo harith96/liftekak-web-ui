@@ -23,6 +23,7 @@ export const FILTER_ALL = 'All';
 export const NOT_APPLICABLE = 'N/A';
 
 export const APP_ROUTES = {
+  USER: '/user',
   LOGIN: '/login',
   RIDES_LIST: '/rides',
   RIDE_VIEW: '/ride', // /suite/rewards/ride/:id

@@ -15,7 +15,7 @@ const validationSchema = yup.object().shape({
     .string()
     .when(
       'isSignUp',
-      (isSignUp, schema) => (isSignUp ? schema.oneOf([yup.ref('password'), null], 'Passwords must match') : schema),
+      (isSignUp, schema) => (isSignUp ? schema.oneOf([yup.ref('password')], 'Passwords must match') : schema),
       i18n.t('Passwords must match')
     ),
   rememberMe: yup.boolean().optional(),
@@ -28,12 +28,11 @@ const getFieldError = (errors, touched, fieldName) =>
   errors[fieldName] && touched[fieldName] && renderFormError(errors[fieldName]);
 
 function SignInForm({ togglePasswordRestModal }) {
-  const { onSignInWithEmailCustom, signInFormRef, isSigningIn, onSignInWithGoogle, onSignUpWithEmailCustom } =
+  const { onSignInWithEmailCustom, isSigningIn, onSignInWithGoogle, onSignUpWithEmailCustom } =
     useContext(SignInPageContext);
   return (
     <Formik
-      innerRef={signInFormRef}
-      id="productListForm"
+      id="sign-in-form"
       onSubmit={(values, { setSubmitting, resetForm }) => {
         if (values.isSignUp) onSignUpWithEmailCustom(values);
         else onSignInWithEmailCustom(values);
@@ -45,7 +44,7 @@ function SignInForm({ togglePasswordRestModal }) {
       validateOnMount
       enableReinitialize
     >
-      {({ errors, touched, values: { isSignUp } }) => (
+      {({ errors, touched, values: { isSignUp }, submitForm }) => (
         <Form className="login-form">
           <AntdForm.Item>
             <Switch
@@ -92,12 +91,7 @@ function SignInForm({ togglePasswordRestModal }) {
               </Button>
             )}
             <AntdForm.Item>
-              <Button
-                loading={isSigningIn}
-                onClick={signInFormRef.current?.submitForm}
-                type="primary"
-                className="login-form-button"
-              >
+              <Button loading={isSigningIn} onClick={submitForm} type="primary" className="login-form-button">
                 {isSignUp ? i18n.t('Sign Up') : i18n.t('Sign In')}
               </Button>
             </AntdForm.Item>

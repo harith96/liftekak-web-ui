@@ -31,4 +31,10 @@ const FirebaseError = {
   USER_NOT_FOUND: 'auth/user-not-found',
 };
 
-export { UserRole, NotificationType, SortOrder, RideStatus, SignInProvider, FirebaseError };
+const Gender = {
+  MALE: 'Male',
+  FEMALE: 'Female',
+  OTHER: 'Other',
+};
+
+export { UserRole, NotificationType, SortOrder, RideStatus, SignInProvider, FirebaseError, Gender };

@@ -73,7 +73,7 @@ const listenForAuthStateChanged = async (signedInCallback, signedOutCallback) =>
   return onAuthStateChanged(auth, (user) => {
     if (user) {
       console.log('Auth User: ', user);
-      if (signedInCallback) signedInCallback();
+      if (signedInCallback) signedInCallback(user);
     } else {
       console.log('User logged out: ');
       if (signedOutCallback) signedOutCallback();
