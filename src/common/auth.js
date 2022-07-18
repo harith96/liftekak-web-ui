@@ -59,7 +59,7 @@ const sendPasswordRestEmail = async (email) => {
 const getCurrentUserID = () => {
   const auth = getAuth();
 
-  return auth.currentUser.uid;
+  return auth.currentUser?.uid;
 };
 
 const signOut = async () => {
