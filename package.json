@@ -82,7 +82,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "deploy": "firebase deploy --only hosting",
+    "deploy": "npm run build && firebase deploy --only hosting",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src",
     "eject": "react-scripts eject",
