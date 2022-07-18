@@ -1,23 +1,24 @@
 import React, { useEffect } from 'react';
 import { Route, Redirect, useHistory } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 
 import * as i18n from '_i18n';
 import * as rewardsActions from 'actions';
 import { NotificationType, UserRole } from 'enums';
 import { APP_ROUTES } from 'util/constants';
-import { listenForAuthStateChanged } from 'common/auth';
+import { getCurrentUserID, listenForAuthStateChanged } from 'common/auth';
 import AppLoader from './AppLoader';
 import AppBar from './AppBar';
 
 const PrivateRoute = ({ component: Component, roles, userFetching, currentUserRole, actions, ...rest }) => {
   const history = useHistory();
+  const user = useSelector((state) => state.user.data);
 
-  useEffect(async () => {
+  useEffect(() => {
     let unsubscribe;
     listenForAuthStateChanged(null, () => history.push(APP_ROUTES.LOGIN))
-      .then(function (unsubFunction) {
+      .then((unsubFunction) => {
         unsubscribe = unsubFunction;
       })
       .catch((error) => console.error(error));
@@ -26,6 +27,10 @@ const PrivateRoute = ({ component: Component, roles, userFetching, currentUserRo
       if (unsubscribe) unsubscribe();
     };
   }, []);
+
+  useEffect(() => {
+    if (!user && getCurrentUserID()) history.push(APP_ROUTES.USER);
+  }, [user]);
 
   return userFetching ? (
     <AppLoader />
