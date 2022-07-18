@@ -82,11 +82,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "dist:dev": "REACT_APP_ENV=dev npm run build && cd build && aws s3 sync . s3://${DEPLOY_BUCKET_NAME}/ui/rewards",
-    "dist:qa": "REACT_APP_ENV=qa npm run build && cd build && aws s3 sync . s3://${DEPLOY_BUCKET_NAME}/ui/rewards",
-    "dist:uat": "REACT_APP_ENV=uat npm run build && cd build && aws s3 sync . s3://${DEPLOY_BUCKET_NAME}/ui/rewards --profile uat",
-    "dist:prod": "REACT_APP_ENV=prod npm run build && cd build && aws s3 sync . s3://${DEPLOY_BUCKET_NAME}/ui/rewards --profile prod",
-    "test": "react-scripts test --env=jsdom --testResultsProcessor ./node_modules/jest-sonar-reporter/index.js",
+    "deploy": "firebase deploy --only hosting",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src",
     "eject": "react-scripts eject",
