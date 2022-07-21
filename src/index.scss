@@ -1,0 +1,77 @@
+// @import url('src/styles/_antd.scss');
+// @import url('src/styles/helpers/_mixins.scss');
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
+    'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.horizontal-line {
+  flex: 1;
+  border-top: 1px solid gray;
+  align-self: center;
+}
+
+.submit-button {
+  height: 40px;
+  width: 100%;
+}
+
+@mixin flexbox($base: 1 1 auto, $direction: row, $justify: center, $align: center) {
+  display: flex;
+  flex: $base;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  box-sizing: border-box;
+  // transition: all ease-in-out 300ms;
+}
+
+//Responsive Breakpoints
+@mixin breakpoint($class) {
+  @if $class == xs {
+    @media (max-width: 547px) {
+      @content;
+    }
+  } @else if $class == sm {
+    @media (min-width: 768px) {
+      @content;
+    }
+  } @else if $class == md {
+    @media (min-width: 1290px) {
+      @content;
+    }
+  } @else if $class == lg {
+    @media (min-width: 1400px) {
+      @content;
+    }
+  } @else {
+    @warn "Breakpoint mixin supports: xs, sm, md, lg";
+  }
+}
+
+.grid-panel {
+  overflow: hidden;
+  @include flexbox(1 1 auto, column, flex-start);
+  width: 98vw;
+  border-top-left-radius: 19px;
+  border-top-right-radius: 19px;
+  background: #fff;
+  border: 1px solid #b1c8d8;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+  margin: auto;
+  position: relative;
+
+  @include breakpoint(xs) {
+    border-radius: 0;
+    width: 100vw;
+    height: 93%;
+  }
+}

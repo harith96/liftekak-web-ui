@@ -17,6 +17,7 @@ const SortOrder = {
 };
 
 const RideStatus = {
+  NEW: 'NEW',
   ACTIVE: 'ACTIVE',
   INACTIVE: 'INACTIVE',
   EXPIRED: 'EXPIRED',
@@ -37,4 +38,9 @@ const Gender = {
   OTHER: 'Other',
 };
 
-export { UserRole, NotificationType, SortOrder, RideStatus, SignInProvider, FirebaseError, Gender };
+const PageAction = {
+  NEXT: 'NEXT',
+  BACK: 'BACK',
+};
+
+export { UserRole, NotificationType, SortOrder, RideStatus, SignInProvider, FirebaseError, Gender, PageAction };

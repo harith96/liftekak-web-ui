@@ -11,6 +11,7 @@ import { APP_ROUTES } from 'util/constants';
 import { UserRole } from 'enums';
 
 import 'antd/dist/antd.css';
+// import 'styles/CostingApp.scss';
 import 'components/styles/index.scss';
 import SignInPageContainer from 'pages/SignInPage/SignInPageContainer';
 import UserDetailsPageContainer from 'pages/UserDetailsPage/UserDetailsPageContainer';
