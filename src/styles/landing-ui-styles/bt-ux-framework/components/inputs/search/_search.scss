@@ -1,0 +1,23 @@
+.search {
+  box-shadow: inset 0px 0px 8px 0px rgba(0, 0, 0, 0.26);
+  border: none;
+  border-radius: 20px;
+  padding: 0.4rem 1rem 0.4rem 2rem;
+  outline: none;
+  font-weight: 400;
+  color: $textstandard;
+  width: 15rem;
+  transition: all ease-in-out 300ms;
+  background: $background
+    url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAaRJREFUOBGdkzlIA1EQht3FBBTBVqxTRixslXhhIh4pXCLEWiuxlRySpMiBttooaKWFRo02dl4otgp2pvUobAy2m/WbNftYLTbog5/5Z+afefPe29VaXCufz09omha1LKuPcBDux56DjUQicYxvueQ21ZxAoVDYhM+DW7CKuFav19uwS/gRUAkEAkYsFjPharUKY+cVdp0BRjqdPlTZb3JGPkyj7Wq1ui8a9yRaqVTqMU3znsQQxde/ipVLkyDOA8WzyWSy7CR0xlwmeOlVLOJUKvWI7gAqx1RLh4XY/VRFPIjowCBQd6fjdNH52aNOpXRdf0Hrz+VynU5QJ/CG0+0EvCzHFZ2ZyWQ+HJ0c4Yoppp1AEzuF9o5N1fcgDbYIjPAdDHgVN17B4Bjrbp19GRTL24fAAk905BYILxaLY+y8A955jV533m6QzWY7fD5fmUnCiG6wa6AGbweL8HHsBbaf4viP70C60eCTzhFEk7hyQRUpACfwVxAlP4yNE9tlYgNuL/WeTqCZlWJpwjRzMsmfG8gGjQn2aDL5rwbShIsd5R96+gLrEr6U2KEepAAAAABJRU5ErkJggg==)
+    no-repeat;
+  background-position: 0.7rem center;
+  background-size: auto 50%;
+  &::placeholder {
+    font-weight: 300;
+  }
+  &:focus {
+    width: 20rem;
+    box-shadow: inset 0px 0px 8px 0px rgba(0, 135, 185, 0.56);
+  }
+}

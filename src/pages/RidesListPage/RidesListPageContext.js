@@ -5,6 +5,8 @@ const RidesListPageContext = React.createContext({
   isRidesFetching: true,
   onNextPage: () => {},
   onPreviousPage: () => {},
+  onRideSelected: () => {},
+  gotToCreateRideView: () => {},
 });
 
 export const RidesListPageContextProvider = RidesListPageContext.Provider;

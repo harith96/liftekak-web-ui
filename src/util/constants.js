@@ -25,8 +25,9 @@ export const NOT_APPLICABLE = 'N/A';
 export const APP_ROUTES = {
   USER: '/user',
   LOGIN: '/login',
+  CREATE_RIDE: '/create-ride',
   RIDES_LIST: '/rides',
-  RIDE_VIEW: '/ride', // /suite/rewards/ride/:id
+  RIDE_VIEW: '/ride', // /ride/:id
 };
 
 export const ISO_DATE_FORMAT = 'YYYY-MM-DDTHH:mm:ss.SSS[Z]';

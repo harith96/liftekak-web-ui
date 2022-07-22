@@ -1,0 +1,78 @@
+.filters {
+  @include flexbox(0 0 auto, row, flex-start);
+  flex-wrap: wrap;
+
+  .filter {
+    @include flexbox(0 0 auto, row, flex-start);
+    @include bg-border(right, normal, half);
+    padding: 0.4rem 1.5rem;
+    label {
+      margin-right: 0.8rem;
+    }
+    .filter-select {
+      min-width: 5rem;
+      max-width: 20vw;
+    }
+    .filter-date-range {
+      max-width: 15rem;
+    }
+    &:first-of-type {
+      padding-left: 0;
+    }
+    &:last-of-type {
+      background: transparent;
+      padding-right: 0;
+    }
+    &.no-border {
+      border: none;
+      background: none;
+      padding: 0.4rem 0 0.4rem 1.5rem;
+    }
+  }
+  @include breakpoint(xs) {
+    @include flexbox(1 1 auto, row, flex-start);
+    flex-wrap: wrap;
+    .filter {
+      padding: 0.4rem 1rem 0.4rem 0;
+      background: transparent;
+    }
+  }
+}
+
+.variance {
+  @include flexbox(0 0 auto, row, flex-start);
+  flex-wrap: wrap;
+  margin-left: 2rem;
+  padding-left: 1rem;
+  @include bg-border(left, normal, half);
+  .variance-item {
+    @include flexbox(0 0 auto, row, flex-start);
+    margin-right: 1rem;
+    label {
+      margin-right: 0.4rem;
+    }
+    &:last-of-type {
+      background: transparent;
+      padding-right: 0;
+    }
+    .variance-input {
+      width: 6.5rem;
+    }
+  }
+  .variance-color {
+    background: #97cb8c;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 100%;
+    margin-right: 0.5rem;
+    &.negative {
+      background: #e79f9a;
+    }
+  }
+  .variance-divider {
+    @include bg-border(right, normal, half);
+    width: 2px;
+    height: 3rem;
+    margin-right: 1rem;
+  }
+}

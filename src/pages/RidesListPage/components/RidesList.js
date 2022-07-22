@@ -9,6 +9,11 @@ const columns = [
     title: 'Ride Id',
     dataIndex: 'rideId',
     key: 'rideId',
+    render: (text) => (
+      <div id={`rides-table-ride-${text}`} className="link-div" aria-hidden="true">
+        {text}
+      </div>
+    ),
   },
   {
     title: 'Start Location',
@@ -21,10 +26,16 @@ const columns = [
     key: 'destination',
   },
   {
-    title: 'Departure',
+    title: 'Departure Date',
     dataIndex: 'departure',
-    key: 'departure',
-    render: (departure) => moment.utc(departure.seconds * 1000).format('MM/DD/YYYY hh:mmA'),
+    key: 'departureDate',
+    render: (departure) => moment.utc(departure.seconds * 1000).format('MM/DD/YYYY'),
+  },
+  {
+    title: 'Departure Time',
+    dataIndex: 'departure',
+    key: 'departureTime',
+    render: (departure) => moment.utc(departure.seconds * 1000).format('HH:mmA'),
   },
   {
     title: 'Available seat count',
@@ -39,7 +50,7 @@ const columns = [
 ];
 
 function RidesList() {
-  const { ridesList, isRidesFetching } = useContext(RidesListPageContext);
+  const { ridesList, isRidesFetching, onRideSelected } = useContext(RidesListPageContext);
 
   return (
     <div id="rewards-batches-table-panel" className="grid-panel">
@@ -49,6 +60,8 @@ function RidesList() {
         loading={isRidesFetching}
         dataSource={ridesList}
         columns={columns}
+        onRowClick={onRideSelected}
+        rowClassName="antd-clickable-row"
       />
     </div>
   );

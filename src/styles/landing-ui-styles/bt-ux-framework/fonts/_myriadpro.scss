@@ -1,0 +1,45 @@
+/* Myriad Pro Fonts Offline Fonts*/
+
+$fontfilepath: 'myriadpro/';
+
+@font-face {
+  font-family: myriad-pro, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  src: local('Myriad Pro Regular'), url('#{$fontfilepath}/MYRIADPRO-REGULAR.woff') format('woff');
+}
+
+@font-face {
+  font-family: myriad-pro, sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  src: local('Myriad Pro Light'), url('#{$fontfilepath}/MYRIADPRO-LIGHT.woff') format('woff');
+}
+
+@font-face {
+  font-family: myriad-pro, sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  src: local('Myriad Pro Semibold'), url('#{$fontfilepath}/MYRIADPRO-SEMIBOLD.woff') format('woff');
+}
+
+@font-face {
+  font-family: myriad-pro, sans-serif;
+  font-weight: 600;
+  font-style: italic;
+  src: local('Myriad Pro Semibold Italic'), url('#{$fontfilepath}/MYRIADPRO-SEMIBOLDIT.woff') format('woff');
+}
+
+@font-face {
+  font-family: myriad-pro, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  src: local('Myriad Pro Bold'), url('#{$fontfilepath}/MYRIADPRO-BOLD.woff') format('woff');
+}
+
+@font-face {
+  font-family: myriad-pro, sans-serif;
+  font-weight: 700;
+  font-style: italic;
+  src: local('Myriad Pro Bold Italic'), url('#{$fontfilepath}/MYRIADPRO-BOLDIT.woff') format('woff');
+}

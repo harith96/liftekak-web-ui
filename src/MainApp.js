@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Select } from 'antd';
 
@@ -11,12 +11,13 @@ import { APP_ROUTES } from 'util/constants';
 import { UserRole } from 'enums';
 
 import 'antd/dist/antd.css';
-// import 'styles/CostingApp.scss';
+import 'styles/CostingApp.scss';
 import 'components/styles/index.scss';
 import SignInPageContainer from 'pages/SignInPage/SignInPageContainer';
 import UserDetailsPageContainer from 'pages/UserDetailsPage/UserDetailsPageContainer';
 import { listenForAuthStateChanged } from 'common/auth';
 import { loadUserDetails } from 'actions';
+import CreateRidePageContainer from 'pages/CreateRidePage/CreateRidePageContainer';
 
 const { Option } = Select;
 
@@ -40,18 +41,28 @@ function MainApp() {
   return (
     <div className="wrapper reward-wrapper">
       <Router>
-        <Route path={APP_ROUTES.LOGIN} component={SignInPageContainer} />
-        <PrivateRoute
-          path={APP_ROUTES.USER}
-          component={UserDetailsPageContainer}
-          roles={[UserRole.PASSENGER, UserRole.DRIVER]}
-        />
-        <PrivateRoute path={APP_ROUTES.RIDES_LIST} component={RidesListPageContainer} roles={[UserRole.PASSENGER]} />
-        <PrivateRoute
-          path={`${APP_ROUTES.RIDE_VIEW}/:id`}
-          component={RideDetailsPageContainer}
-          roles={[UserRole.PASSENGER]}
-        />
+        <Switch>
+          <Route path={APP_ROUTES.LOGIN} component={SignInPageContainer} />
+          <PrivateRoute exact path={APP_ROUTES.CREATE_RIDE} component={CreateRidePageContainer} />
+          <PrivateRoute
+            exact
+            path={APP_ROUTES.USER}
+            component={UserDetailsPageContainer}
+            roles={[UserRole.PASSENGER, UserRole.DRIVER]}
+          />
+          <PrivateRoute
+            exact
+            path={APP_ROUTES.RIDES_LIST}
+            component={RidesListPageContainer}
+            roles={[UserRole.PASSENGER]}
+          />
+          <PrivateRoute
+            path={`${APP_ROUTES.RIDE_VIEW}/:id`}
+            component={RideDetailsPageContainer}
+            roles={[UserRole.PASSENGER]}
+          />
+          <Redirect to={APP_ROUTES.RIDES_LIST} />
+        </Switch>
       </Router>
       {userFetching && <AppLoader />}
     </div>
