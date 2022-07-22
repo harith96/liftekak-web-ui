@@ -60,7 +60,7 @@ const initialState = {
     error: null,
   },
   ride: {
-    fetching: true,
+    fetching: false,
     data: {
       rideId: null,
       startDate: 0,

@@ -57,7 +57,7 @@ function MainApp() {
             roles={[UserRole.PASSENGER]}
           />
           <PrivateRoute
-            path={`${APP_ROUTES.RIDE_VIEW}/:id`}
+            path={`${APP_ROUTES.RIDE_VIEW}/:rideId`}
             component={RideDetailsPageContainer}
             roles={[UserRole.PASSENGER]}
           />

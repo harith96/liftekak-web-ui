@@ -117,7 +117,15 @@ const getRides = async ({ startLocation, endLocation, departure, rideId, status,
   return querySnap.docs.map((docSnap) => docSnap.data());
 };
 
-const getRide = async (rideId) => {};
+const getRide = async (rideId) => {
+  const db = getFirestore();
+  const rideRef = doc(db, 'rides', rideId);
+
+  const docSnap = await getDoc(rideRef);
+
+  return docSnap.data();
+};
+
 const createRide = async () => {
   incrementCounter('rides');
 };

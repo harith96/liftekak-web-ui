@@ -29,7 +29,7 @@ import {
   sendPasswordRestEmail,
   signUpWithEmailAndPassword,
 } from 'common/auth';
-import { getRides, getUserDetails, getUserVehicles, saveUserDetails } from 'common/db';
+import { getRide, getRides, getUserDetails, getUserVehicles, saveUserDetails } from 'common/db';
 
 export const getRole = (state) => state.user.data.userRole;
 export const getUser = (state) => state.user.data;
@@ -242,8 +242,19 @@ function* loadAllNonExpiredRidesAsync() {
 
 function* loadRideAsync({ selectedRideId }) {
   try {
-    const response = yield call(getRequest, `/offer-code/${selectedRideId}`);
-    yield put({ type: RIDE.SUCCESS, payload: response.data });
+    const ride = yield getRide(selectedRideId);
+
+    if (ride) yield put({ type: RIDE.SUCCESS, payload: ride });
+    else {
+      yield put({ type: RIDE.FAILURE, error: 'RIDE_NOT_FOUND' });
+      yield put(
+        action(SHOW_NOTIFICATION, {
+          message: i18n.t('liftEkak.ride.error.message'),
+          description: 'Invalid Ride Id',
+          className: NotificationType.ERROR,
+        })
+      );
+    }
   } catch (error) {
     yield put({ type: RIDE.FAILURE, error: error.message });
 
