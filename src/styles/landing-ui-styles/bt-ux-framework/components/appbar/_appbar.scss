@@ -1,0 +1,168 @@
+@import 'account-widget/_account-widget';
+@import 'vendorswitcher/_vendorswitcher';
+
+.app-bar {
+  width: 100%;
+  background: $background;
+  padding: 20px 20px 20px 30px;
+  @include flexbox(0 0 auto);
+}
+
+// Labels for dev environments
+.qa-env {
+  &::after {
+    content: 'QA ENV';
+    font-weight: 700;
+    color: white;
+    background: $syscoorange;
+    padding: 0.2rem 0.8rem;
+    font-size: 0.8rem;
+    border-radius: 2rem;
+    margin-left: 0.5rem;
+    // position: absolute;
+    top: 0;
+    right: 0;
+    display: inline-block;
+  }
+}
+.dev-env {
+  &::after {
+    content: '🚧 DEV ENV';
+    font-weight: 700;
+    color: white;
+    background: $syscoyellow;
+    padding: 0.2rem 0.8rem 0.2rem 0.5rem;
+    font-size: 0.8rem;
+    border-radius: 2rem;
+    margin-left: 0.5rem;
+    // position: absolute;
+    top: 0;
+    right: 0;
+    display: inline-block;
+  }
+}
+
+.prod-env {
+  &::after {
+    content: 'PROD ENV';
+    font-weight: 700;
+    color: white;
+    background: $syscogreen;
+    padding: 0.2rem 0.8rem;
+    font-size: 0.8rem;
+    border-radius: 2rem;
+    margin-left: 0.5rem;
+    // position: absolute;
+    top: 0;
+    right: 0;
+    display: inline-block;
+  }
+}
+
+.branding {
+  @include flexbox(0 0 auto, row);
+
+  .logo {
+    width: 9rem;
+    @include breakpoint(xs) {
+      z-index: $bringToTop;
+      position: absolute;
+      top: 0.8rem;
+      left: 2rem;
+    }
+    cursor: pointer;
+  }
+  .app-logo-wrapper {
+    border-left: 1px dotted $bluegrey;
+    padding-left: 0.2rem;
+    margin-left: 1rem;
+    display: none;
+  }
+  .app-logo {
+    // height: 2rem;
+    width: 8rem;
+    margin-left: 1rem;
+    @include breakpoint(xs) {
+      z-index: $bringToTop;
+      position: absolute;
+      top: 1.5rem;
+    }
+    &#item-enrichment-app-logo {
+      width: 13rem;
+    }
+  }
+}
+
+// App-wise custom menu items.
+.nav {
+  @include flexbox(0 0 auto, row, center, center);
+  @include bg-border(right);
+  margin-right: 0.6rem;
+  padding: 0.8rem 1rem;
+  position: absolute;
+  top: 1rem;
+  right: 26.5rem;
+  li {
+    cursor: pointer;
+    transition: color ease-in-out 300ms, border ease-in-out 300ms;
+    // transition: all ease-in-out 300ms;
+    padding: 0.2rem 0.8rem;
+    margin: 0 0.2rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    border: 1px solid white;
+    border-radius: 1rem;
+    font-size: 0.9rem;
+    outline: none;
+    .icon {
+      margin-right: 0.15rem;
+    }
+    &:hover,
+    &:focus {
+      color: $syscoblue;
+      border: 1px solid $syscoblue;
+      &.selected {
+        box-shadow: 0px 0px 2px 3px rgba(104, 177, 217, 0.4);
+      }
+    }
+    &.selected,
+    &:active {
+      // color: $syscoblue;
+      // border-bottom: 3px solid $syscoblue;
+      transition-duration: 150ms;
+      border-radius: 1rem;
+      color: white;
+      background: $syscoblue;
+      border: 1px solid $syscoblue;
+      box-shadow: inset 0px 0px 3px 0px rgba(0, 0, 0, 0.32);
+    }
+  }
+  @include breakpoint(xs) {
+    display: none;
+  }
+  @include breakpoint(sm) {
+    display: none;
+  }
+}
+
+//Inner App mode switches are below
+.app-bar.app-mode {
+  .app-logo-wrapper,
+  .app-menu-drawer {
+    display: flex;
+  }
+  .organisation {
+    background: $background;
+    color: $syscodarkblue;
+    border: 1px solid #d2dbe2;
+    .type {
+      border-right: 1px dotted $syscodarkblue;
+      opacity: 0.6;
+      margin-top: -1px;
+    }
+    .name {
+      opacity: 0.6;
+      margin-top: -1px;
+    }
+  }
+}

@@ -17,10 +17,10 @@ import {
   RESET_PASSWORD,
   SAVE_USER_DETAILS,
 } from 'actions/actionTypes';
-import { BAD_REQUEST_STATUS, BATCHES_PAGE_SIZE, NOT_FOUND_STATUS, USER_NOT_AUTHORIZED_STATUS } from 'util/constants';
+import { BAD_REQUEST_STATUS, NOT_FOUND_STATUS, USER_NOT_AUTHORIZED_STATUS } from 'util/constants';
 import * as i18n from '_i18n';
 import { action } from 'reduxHelpers';
-import { FirebaseError, NotificationType, SignInProvider } from 'enums';
+import { FirebaseError, NotificationType, RideStatus, SignInProvider } from 'enums';
 import openNotification from 'components/openNotification';
 import { getAuth } from '@firebase/auth';
 import {
@@ -29,7 +29,7 @@ import {
   sendPasswordRestEmail,
   signUpWithEmailAndPassword,
 } from 'common/auth';
-import { getUserDetails, getUserVehicles, saveUserDetails } from 'common/db';
+import { getRides, getUserDetails, getUserVehicles, saveUserDetails } from 'common/db';
 
 export const getRole = (state) => state.user.data.userRole;
 export const getUser = (state) => state.user.data;
@@ -183,35 +183,28 @@ function* loadUserVehiclesAsync() {
     if (!handled)
       yield put(
         action(SHOW_NOTIFICATION, {
-          description: i18n.t('liftEkak.user.error.description'),
+          description: i18n.t('liftEkak.vehicles.error.description'),
           className: NotificationType.ERROR,
-          message: i18n.t('liftEkak.user.error.message'),
+          message: i18n.t('liftEkak.vehicles.error.message'),
         })
       );
   }
 }
 
-function* loadRidesAsync() {
+function* loadRidesAsync({ pageAction }) {
   try {
-    const { page, ...filtersApplied } = yield select(getRideFilters);
-
-    const response = yield call(
-      postRequest,
-      `/offer-code/header/user?page=${page}&size=${BATCHES_PAGE_SIZE}`,
-      filtersApplied
-    );
-
-    response.data.groupedRides = _.groupBy(response?.data?.items, 'rewardType');
-    yield put({ type: RIDES.SUCCESS, payload: response.data });
+    const ridesFilters = yield select((state) => state.rideFilters.data);
+    const ridesList = yield getRides({ ...ridesFilters, pageAction });
+    yield put({ type: RIDES.SUCCESS, payload: ridesList });
   } catch (error) {
     yield put({ type: RIDES.FAILURE, payload: error.message });
     const handled = yield handleUserSessionErrors(error);
     if (!handled)
       yield put(
         action(SHOW_NOTIFICATION, {
-          message: i18n.t('liftEkak.rides.error.message'),
           description: i18n.t('liftEkak.rides.error.description'),
           className: NotificationType.ERROR,
+          message: i18n.t('liftEkak.rides.error.message'),
         })
       );
   }

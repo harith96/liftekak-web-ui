@@ -28,7 +28,7 @@ const loadUserVehicles = () => action(USER_VEHICLES.REQUEST);
 
 const showNotification = (message, description, notificationType) =>
   action(SHOW_NOTIFICATION, { message, description, className: notificationType });
-const loadRidesDetails = () => action(RIDES.REQUEST);
+const loadRidesList = (pageAction) => action(RIDES.REQUEST, { pageAction });
 const loadRideDetails = (selectedRideId) => action(RIDE.REQUEST, { selectedRideId });
 const createRide = (data) => action(CREATE_RIDE.REQUEST, { data });
 const updateRideFilters = (data) => action(UPDATE_RIDE_FILTERS.REQUEST, { data });
@@ -50,7 +50,7 @@ export {
   loadUserVehicles,
   saveVehicles,
   // ride actions
-  loadRidesDetails,
+  loadRidesList,
   loadRideDetails,
   showNotification,
   updateRideFilters,

@@ -1,0 +1,25 @@
+.textfield-group {
+  @include flexbox(0 0 auto, column, center, flex-start);
+  input[type='text'],
+  input[type='password'] {
+    outline: none;
+    border: none;
+    border-bottom: 1px solid $textstandard;
+    margin: 0.8rem 0;
+    padding: 0.9rem 0;
+    font-weight: 600;
+    color: $textstandard;
+    width: 15rem;
+    -webkit-appearance: none;
+    transition: all ease-in-out 300ms;
+    background: transparent;
+    &::placeholder {
+      font-weight: 600;
+      opacity: 0.8;
+    }
+    &:focus {
+      border-bottom: 1px solid $syscoblue;
+      color: $syscoblue;
+    }
+  }
+}

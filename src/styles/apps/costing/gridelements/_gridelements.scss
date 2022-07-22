@@ -1,0 +1,164 @@
+.batch-section-header {
+  text-align: left !important;
+  padding-bottom: 0.6rem !important;
+  .ant-table-column-title {
+    color: $bluegrey2;
+    font-weight: 600;
+    font-size: 1.1rem;
+    width: 100%;
+  }
+  .ant-table-header-column {
+    width: 100%;
+    & > div {
+      width: 100%;
+    }
+  }
+}
+td.opco-divider,
+th.opco-divider {
+  border-right: 1px dotted lighten($textstandard, 25%) !important;
+}
+
+.new-price-column,
+.ant-table-thead > tr > th.new-price-column {
+  background-color: rgba(255, 248, 232, 0.7) !important;
+}
+
+.highlight-cell:not(th) {
+  font-weight: 600;
+  &.red {
+    color: $textalternative;
+    background-image: url(data:application/octet-stream;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAAYSURBVBiVY7yZGrOcgQjARIyiUYXUUwgAqJICVYJYX9AAAAAASUVORK5CYII=) !important;
+  }
+  &.yellow {
+    background-image: url(data:application/octet-stream;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAAYSURBVBiVY/x4mG8iAxGAiRhFowqppxAAxdQCZ164BlUAAAAASUVORK5CYII=) !important;
+  }
+  &.green {
+    color: $textalternative;
+    background-image: url(data:application/octet-stream;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAAYSURBVBiVYwxZ57ycgQjARIyiUYXUUwgAIK4CAA/YfxcAAAAASUVORK5CYII=) !important;
+  }
+}
+
+.new-vendor-price {
+  &.ant-input,
+  &.ant-input-number {
+    font-weight: 600;
+    border-radius: 0.4rem;
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+    width: 100%;
+  }
+}
+.region-switcher-wrapper {
+  @include flexbox(1 1 auto, row, flex-start, center);
+  width: 100%;
+  .region-switcher {
+    @include flexbox(0 0 auto, row, center, center);
+    .label {
+      font-size: 1rem;
+      font-weight: 500;
+      color: $textstandard;
+      font-style: italic;
+      margin: 0 0.4rem 0 0;
+    }
+    .ant-select {
+      display: flex;
+    }
+  }
+}
+
+.regional-grid-label {
+  font-weight: 600;
+  color: $syscogreen;
+  .region-name-label {
+    color: $syscogreen;
+    background: $textalternative;
+    border-color: $syscogreen;
+    margin-left: 0.3rem;
+    font-weight: 600;
+  }
+}
+.national-grid-label {
+  font-weight: 600;
+  color: $syscoblue;
+}
+.ant-table-row-expand-icon {
+  display: none;
+}
+.is-expandable-row .ant-table-row-expand-icon {
+  display: block;
+}
+.is-rejected-item-row td {
+  background-color: rgba(217, 101, 92, 0.16) !important;
+}
+
+.ant-checkbox-inner,
+.ant-checkbox-inner::after {
+  border-radius: 20px;
+}
+
+.red-checkbox.ant-checkbox-inner,
+.red-checkbox.ant-checkbox-inner::after {
+  background: $syscored;
+}
+.red-checkbox .ant-checkbox-checked .ant-checkbox-inner {
+  background-color: $syscored;
+  border-color: $syscored;
+}
+
+.ant-badge {
+  font-size: 1.3rem;
+}
+
+.multiple-pricing-icon {
+  margin-left: 0.3rem;
+  opacity: 0.8;
+  transition: color ease-in-out 200ms;
+  &:hover {
+    opacity: 0.5;
+    cursor: pointer;
+  }
+}
+
+.multiple-pricing-icon-tooltip {
+  .tooltip-header {
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+}
+// To prevent default unhighlight behavior for links in grid
+.ant-table-row a {
+  &:link,
+  &:visited,
+  &:hover,
+  &:active {
+    color: $syscoblue;
+    font-weight: 600;
+  }
+}
+
+.custom-scrollbar {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: 1.25rem;
+  overflow-x: auto;
+
+  .overflower {
+    height: 1px;
+    opacity: 0;
+  }
+}
+
+.with-scroller .ant-table-body {
+  overflow-x: hidden !important;
+}
+
+.truncated-desc-td {
+  width: 11vw;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.with-scroller .ant-table-scroll .ant-table-body {
+  border-bottom: 1.06rem solid white;
+}

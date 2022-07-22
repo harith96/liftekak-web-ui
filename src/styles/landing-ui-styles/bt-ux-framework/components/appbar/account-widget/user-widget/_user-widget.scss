@@ -1,0 +1,181 @@
+.user-widget {
+  @include flexbox(0 0 auto, row, center, flex-end);
+  // @include bg-border(left);
+  padding-left: 1rem;
+  margin-left: 1rem;
+  .user {
+    @include flexbox(0 0 auto, column, center, flex-end);
+    .type {
+      @include flexbox(0 0 auto);
+      border-radius: 18px;
+      background: $textstandard;
+      color: $textalternative;
+      padding: 0.2rem 0.6rem;
+      margin-top: 0.2rem;
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-align: center;
+    }
+    .name {
+      font-weight: 700;
+      .welcome {
+        font-weight: 400;
+        text-transform: capitalize;
+      }
+    }
+  }
+  .user-pic {
+    @include flexbox(0 0 auto);
+    padding-left: 0.8rem;
+    cursor: pointer;
+    .pic {
+      margin-right: 0.6rem;
+      border-radius: 50%;
+      height: 2.8rem;
+      width: 2.8rem;
+      background: url(data:image/svg+xml;base64,PHN2ZyBpZD0idXNlciIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjcuMTEiIGhlaWdodD0iMjcuMTEiIHZpZXdCb3g9IjAgMCAyNy4xMSAyNy4xMSI+CiAgPGcgaWQ9Ikdyb3VwXzQzMCIgZGF0YS1uYW1lPSJHcm91cCA0MzAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDApIj4KICAgIDxwYXRoIGlkPSJQYXRoXzM4NSIgZGF0YS1uYW1lPSJQYXRoIDM4NSIgZD0iTTIzLjE0LDE3LjUyNWExMy41LDEzLjUsMCwwLDAtNS4xNTEtMy4yMzEsNy44MzYsNy44MzYsMCwxLDAtOC44NjgsMEExMy41NzYsMTMuNTc2LDAsMCwwLDAsMjcuMTFIMi4xMThhMTEuNDM3LDExLjQzNywwLDAsMSwyMi44NzQsMEgyNy4xMUExMy40NjcsMTMuNDY3LDAsMCwwLDIzLjE0LDE3LjUyNVptLTkuNTg1LTMuOTdhNS43MTgsNS43MTgsMCwxLDEsNS43MTgtNS43MThBNS43MjUsNS43MjUsMCwwLDEsMTMuNTU1LDEzLjU1NVoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDApIiBmaWxsPSIjZmZmIi8+CiAgPC9nPgo8L3N2Zz4K)
+          center center/50% auto no-repeat,
+        linear-gradient(-45deg, $syscoblue 0%, lighten($syscoblue, 20%) 100%);
+      box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.25);
+      transition: background ease-in-out 300ms;
+
+      &.color-1 {
+        background: url(data:image/svg+xml;base64,PHN2ZyBpZD0idXNlciIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjcuMTEiIGhlaWdodD0iMjcuMTEiIHZpZXdCb3g9IjAgMCAyNy4xMSAyNy4xMSI+CiAgPGcgaWQ9Ikdyb3VwXzQzMCIgZGF0YS1uYW1lPSJHcm91cCA0MzAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDApIj4KICAgIDxwYXRoIGlkPSJQYXRoXzM4NSIgZGF0YS1uYW1lPSJQYXRoIDM4NSIgZD0iTTIzLjE0LDE3LjUyNWExMy41LDEzLjUsMCwwLDAtNS4xNTEtMy4yMzEsNy44MzYsNy44MzYsMCwxLDAtOC44NjgsMEExMy41NzYsMTMuNTc2LDAsMCwwLDAsMjcuMTFIMi4xMThhMTEuNDM3LDExLjQzNywwLDAsMSwyMi44NzQsMEgyNy4xMUExMy40NjcsMTMuNDY3LDAsMCwwLDIzLjE0LDE3LjUyNVptLTkuNTg1LTMuOTdhNS43MTgsNS43MTgsMCwxLDEsNS43MTgtNS43MThBNS43MjUsNS43MjUsMCwwLDEsMTMuNTU1LDEzLjU1NVoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDApIiBmaWxsPSIjZmZmIi8+CiAgPC9nPgo8L3N2Zz4K)
+            center center/50% auto no-repeat,
+          linear-gradient(-45deg, $syscoblue 0%, lighten($syscoblue, 20%) 100%);
+      }
+      &.color-2 {
+        background: url(data:image/svg+xml;base64,PHN2ZyBpZD0idXNlciIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjcuMTEiIGhlaWdodD0iMjcuMTEiIHZpZXdCb3g9IjAgMCAyNy4xMSAyNy4xMSI+CiAgPGcgaWQ9Ikdyb3VwXzQzMCIgZGF0YS1uYW1lPSJHcm91cCA0MzAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDApIj4KICAgIDxwYXRoIGlkPSJQYXRoXzM4NSIgZGF0YS1uYW1lPSJQYXRoIDM4NSIgZD0iTTIzLjE0LDE3LjUyNWExMy41LDEzLjUsMCwwLDAtNS4xNTEtMy4yMzEsNy44MzYsNy44MzYsMCwxLDAtOC44NjgsMEExMy41NzYsMTMuNTc2LDAsMCwwLDAsMjcuMTFIMi4xMThhMTEuNDM3LDExLjQzNywwLDAsMSwyMi44NzQsMEgyNy4xMUExMy40NjcsMTMuNDY3LDAsMCwwLDIzLjE0LDE3LjUyNVptLTkuNTg1LTMuOTdhNS43MTgsNS43MTgsMCwxLDEsNS43MTgtNS43MThBNS43MjUsNS43MjUsMCwwLDEsMTMuNTU1LDEzLjU1NVoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDApIiBmaWxsPSIjZmZmIi8+CiAgPC9nPgo8L3N2Zz4K)
+            center center/50% auto no-repeat,
+          linear-gradient(-45deg, $syscogreen 0%, lighten($syscogreen, 20%) 100%);
+      }
+      &.color-3 {
+        background: url(data:image/svg+xml;base64,PHN2ZyBpZD0idXNlciIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjcuMTEiIGhlaWdodD0iMjcuMTEiIHZpZXdCb3g9IjAgMCAyNy4xMSAyNy4xMSI+CiAgPGcgaWQ9Ikdyb3VwXzQzMCIgZGF0YS1uYW1lPSJHcm91cCA0MzAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDApIj4KICAgIDxwYXRoIGlkPSJQYXRoXzM4NSIgZGF0YS1uYW1lPSJQYXRoIDM4NSIgZD0iTTIzLjE0LDE3LjUyNWExMy41LDEzLjUsMCwwLDAtNS4xNTEtMy4yMzEsNy44MzYsNy44MzYsMCwxLDAtOC44NjgsMEExMy41NzYsMTMuNTc2LDAsMCwwLDAsMjcuMTFIMi4xMThhMTEuNDM3LDExLjQzNywwLDAsMSwyMi44NzQsMEgyNy4xMUExMy40NjcsMTMuNDY3LDAsMCwwLDIzLjE0LDE3LjUyNVptLTkuNTg1LTMuOTdhNS43MTgsNS43MTgsMCwxLDEsNS43MTgtNS43MThBNS43MjUsNS43MjUsMCwwLDEsMTMuNTU1LDEzLjU1NVoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDApIiBmaWxsPSIjZmZmIi8+CiAgPC9nPgo8L3N2Zz4K)
+            center center/50% auto no-repeat,
+          linear-gradient(-45deg, $syscoorange 0%, lighten($syscoorange, 20%) 100%);
+      }
+      &.color-4 {
+        background: url(data:image/svg+xml;base64,PHN2ZyBpZD0idXNlciIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjcuMTEiIGhlaWdodD0iMjcuMTEiIHZpZXdCb3g9IjAgMCAyNy4xMSAyNy4xMSI+CiAgPGcgaWQ9Ikdyb3VwXzQzMCIgZGF0YS1uYW1lPSJHcm91cCA0MzAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDApIj4KICAgIDxwYXRoIGlkPSJQYXRoXzM4NSIgZGF0YS1uYW1lPSJQYXRoIDM4NSIgZD0iTTIzLjE0LDE3LjUyNWExMy41LDEzLjUsMCwwLDAtNS4xNTEtMy4yMzEsNy44MzYsNy44MzYsMCwxLDAtOC44NjgsMEExMy41NzYsMTMuNTc2LDAsMCwwLDAsMjcuMTFIMi4xMThhMTEuNDM3LDExLjQzNywwLDAsMSwyMi44NzQsMEgyNy4xMUExMy40NjcsMTMuNDY3LDAsMCwwLDIzLjE0LDE3LjUyNVptLTkuNTg1LTMuOTdhNS43MTgsNS43MTgsMCwxLDEsNS43MTgtNS43MThBNS43MjUsNS43MjUsMCwwLDEsMTMuNTU1LDEzLjU1NVoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDApIiBmaWxsPSIjZmZmIi8+CiAgPC9nPgo8L3N2Zz4K)
+            center center/50% auto no-repeat,
+          linear-gradient(-45deg, $syscored 0%, lighten($syscored, 20%) 100%);
+      }
+    }
+    .menuicon {
+      font-size: 0.7rem;
+    }
+    &:focus {
+      outline: none;
+      .pic {
+        box-shadow: 0px 0px 12px $syscoblue;
+      }
+    }
+  }
+  //Responsive
+  @include breakpoint(xs) {
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    top: 0;
+    margin: 0;
+    background: $background;
+    height: 100vh;
+    width: 70%;
+    z-index: 1000;
+    box-shadow: none;
+    padding-top: 4rem;
+    display: none;
+    transition: all ease-in-out 200ms;
+    animation: slide-in 0.5s forwards;
+    -webkit-animation: slide-in 0.5s forwards;
+
+    @keyframes slide-in {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+    &::after {
+      background: rgba(0, 0, 0, 0.4);
+      content: ' ';
+      position: fixed;
+      right: 0;
+      top: 0;
+      height: 101vh;
+      width: 30%;
+      overflow: hidden;
+    }
+
+    .user {
+      @include flexbox(0 0 auto, column, center, center);
+      margin-top: 2rem;
+      position: absolute;
+      padding-top: 6rem;
+      font-size: 1.2rem;
+    }
+    .user-pic {
+      @include flexbox(0 0 auto);
+      padding-left: 0;
+      cursor: pointer;
+      .pic {
+        margin: 2rem;
+        border-radius: 50%;
+        height: 4.8rem;
+        width: 4.8rem;
+      }
+      .menuicon {
+        display: none;
+      }
+    }
+  }
+}
+
+.sidemenu-toggle {
+  padding: 0 0 0 1rem;
+  font-size: 1.3rem;
+  cursor: pointer;
+  &:active {
+    color: $syscoblue;
+  }
+  //Responsive
+  @include breakpoint(xs) {
+    display: block;
+  }
+  @include breakpoint(sm) {
+    display: none;
+  }
+  @include breakpoint(md) {
+    display: none;
+  }
+  @include breakpoint(lg) {
+    display: none;
+  }
+}
+
+.sidemenu-closer {
+  color: white;
+  position: fixed;
+  padding: 0 0 0 1rem;
+  right: 1.4rem;
+  top: 1.6rem;
+  font-size: 1.3rem;
+  z-index: $bringToTop;
+  display: none;
+
+  //Responsive
+  @include breakpoint(md) {
+    display: none !important;
+    &.show {
+      display: none !important;
+    }
+  }
+  @include breakpoint(lg) {
+    display: none !important;
+    &.show {
+      display: none !important;
+    }
+  }
+}

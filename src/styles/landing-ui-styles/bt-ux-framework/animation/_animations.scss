@@ -1,0 +1,65 @@
+// CSS Animation library helper
+@import '_animate';
+
+.hover-brighten {
+  &:hover {
+    transition: ease-in-out 300ms filter;
+    -webkit-animation-duration: 300ms;
+    animation-duration: 300ms;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    filter: brightness(1.05);
+  }
+}
+.hover-brighten-focus {
+  transition: ease-in-out 300ms filter, ease-in-out 200ms box-shadow;
+  cursor: pointer;
+  &:hover {
+    filter: brightness(1.1);
+  }
+  &:focus {
+    box-shadow: 0 0 3px 3px rgba(0, 140, 209, 0.4);
+  }
+  &:active {
+    box-shadow: 0 0 3px 3px rgba(0, 140, 209, 0.4) !important;
+  }
+}
+.hover-enlarge {
+  transition: ease-in-out 300ms filter, ease-in-out 500ms transform;
+  &:hover {
+    filter: brightness(1.1);
+    transform: scale(1.03, 1.03);
+  }
+}
+
+.link-style-1 {
+  transition: ease-in-out 500ms filter, ease-in-out 500ms transform;
+  &:hover {
+    filter: brightness(1.1);
+  }
+  &:active {
+    filter: brightness(1.1);
+    transform: scale(1.2, 1.2);
+  }
+}
+
+@keyframes fadeHover {
+  0% {
+    opacity: 1;
+    box-shadow: 0px 3px 14px rgba(0, 0, 0, 0.4);
+  }
+  to {
+    opacity: 0.8;
+    box-shadow: 0px 3px 14px rgba(0, 0, 0, 0.3);
+  }
+}
+@keyframes fadeHoverOut {
+  0% {
+    opacity: 0.8;
+    box-shadow: 0px 3px 14px rgba(0, 0, 0, 0.4);
+  }
+  to {
+    opacity: 1;
+    box-shadow: 0px 3px 14px rgba(0, 0, 0, 0.4);
+  }
+}

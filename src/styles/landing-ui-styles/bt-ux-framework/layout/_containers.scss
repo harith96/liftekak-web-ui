@@ -1,0 +1,52 @@
+// Core Structure
+.app-container {
+  width: 100%;
+  height: 100%;
+  // height: 90vh;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  // flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  overflow: auto;
+  padding: 0;
+  box-sizing: border-box;
+  // align-content: stretch;
+  // align-items: stretch;
+  &.scrollable {
+    max-height: 91.7vh;
+  }
+  &:empty {
+    display: none;
+  }
+  section {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    overflow: auto;
+    padding: 0;
+    box-sizing: border-box;
+  }
+}
+.app-container-blockmode {
+  width: 100%;
+  // height: 90vh;
+  overflow: auto;
+  padding: 0;
+  box-sizing: border-box;
+  // align-content: stretch;
+  // align-items: stretch;
+  &.scrollable {
+    max-height: 91.7vh;
+  }
+}
+.wrapper {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}

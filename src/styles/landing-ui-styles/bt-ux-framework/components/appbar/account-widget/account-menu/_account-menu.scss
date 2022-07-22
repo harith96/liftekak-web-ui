@@ -1,0 +1,145 @@
+.account-menu {
+  display: none;
+  position: absolute;
+  top: 6rem;
+  right: 1.1rem;
+  background: $background;
+  z-index: $bringToTop;
+  border-radius: 0.8rem;
+  box-shadow: 0px 2px 14px rgba(0, 0, 0, 0.35);
+  &:after {
+    bottom: 100%;
+    left: 80%;
+    border: solid transparent;
+    content: ' ';
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-color: rgba(213, 213, 213, 0);
+    border-bottom-color: #fff;
+    border-width: 12px;
+    margin-left: -12px;
+  }
+
+  li {
+    @include flexbox(0 0 auto, row, flex-start);
+    padding: 0.8rem 1.3rem 0.8rem 1rem;
+    font-size: 1rem;
+    transition: ease-in-out 120ms background;
+
+    .sub-text {
+      font-size: 0.9rem;
+    }
+    &:first-of-type {
+      border-top-left-radius: 0.8rem;
+      border-top-right-radius: 0.8rem;
+    }
+    &:last-of-type {
+      border-bottom-left-radius: 0.8rem;
+      border-bottom-right-radius: 0.8rem;
+    }
+    .icon {
+      font-size: 1.2rem;
+      margin-right: 1rem;
+    }
+    .linkbutton {
+      &:link,
+      &:visited,
+      &:hover,
+      &:active {
+        color: $textstandard;
+        text-decoration: none;
+      }
+    }
+    &:hover {
+      background: $syscoblue;
+      color: white;
+      cursor: pointer;
+      .submenu {
+        display: block;
+      }
+      & > .linkbutton {
+        &:link,
+        &:visited,
+        &:hover,
+        &:active {
+          color: $textalternative;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+  .submenu {
+    position: absolute;
+    left: -42%;
+    top: 0;
+    background: $background;
+    border-radius: 0.8rem;
+    color: $textstandard;
+    display: none;
+    font-size: 0.8rem;
+    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.32);
+  }
+
+  //Side menu nav items
+  .nav-side-menu {
+    display: none;
+    margin-bottom: 1rem;
+    background: $gridstripes;
+  }
+  //Responsive
+  @include breakpoint(xs) {
+    @include flexbox(0 0 auto, column, flex-start);
+    width: 100%;
+    background: $background;
+    padding: 0;
+    margin: 0;
+    left: 0;
+    box-shadow: none;
+    border-radius: 0;
+    top: 18rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    li {
+      padding: 0.6rem 0.8rem 0.6rem 1.5rem;
+      font-size: 1.2rem;
+      border-radius: 0;
+      width: 70vw;
+      .icon {
+        font-size: 1.7rem;
+        margin-right: 1rem;
+      }
+      &:first-of-type {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+      }
+      &:last-of-type {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+      &:active {
+        .submenu {
+          display: block;
+          width: 70vw;
+        }
+      }
+    }
+    .backgroundClickContainer {
+      display: none;
+    }
+    .submenu {
+      position: relative;
+      margin-left: -41vw;
+      box-shadow: inset 0px 0px 8px 0px rgba(0, 0, 0, 0.32);
+      background: $background;
+      border-radius: 0;
+      color: $textstandard;
+      display: none;
+      font-size: 0.8rem;
+    }
+    .nav-side-menu {
+      @include flexbox(0 0 auto, column, flex-start);
+    }
+  }
+}

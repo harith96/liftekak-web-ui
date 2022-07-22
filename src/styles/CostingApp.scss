@@ -1,0 +1,20 @@
+/***********************************************************
+    SYSCO SUPPLIER SUITE 
+    COSTING APPLICATION PRIMARY SASS FILE
+    Author: Michael Lu 
+    (Auto Compiled to CSS during runtime)
+***********************************************************/
+
+@charset "UTF-8";
+
+// Initial Imports and resets
+@import 'bt-ux-framework/bt-ux-framework-lite';
+
+//Costing app import
+@import 'apps/costing/_costing';
+
+// Rewards
+@import 'apps/costing/_rewards';
+
+// landing-ui
+@import 'landing-ui-styles/App.scss';

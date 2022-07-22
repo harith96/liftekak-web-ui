@@ -1,3 +1,5 @@
+import { RideStatus } from 'enums';
+
 const initialState = {
   signIn: {
     fetching: false,
@@ -48,14 +50,7 @@ const initialState = {
   rideFilters: {
     fetching: true,
     data: {
-      sort: null,
-      opco: 'All',
-      status: 'All',
-      startDate: null,
-      rideId: null,
-      endDate: null,
-      page: 1,
-      rewardType: 'All',
+      status: RideStatus.NEW,
     },
     error: null,
   },

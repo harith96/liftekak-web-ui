@@ -1,0 +1,150 @@
+.create-modal {
+  $modalradius: 1rem;
+  color: $textstandard;
+  .ant-modal-content {
+    border-radius: $modalradius;
+    box-shadow: 0 0 45px rgba(0, 0, 0, 0.25);
+    color: $textstandard;
+  }
+  .ant-modal-header {
+    border-radius: $modalradius $modalradius 0 0;
+    background: $modalheader;
+    border: none;
+  }
+  .ant-modal-title {
+    font-weight: 600;
+    font-size: 1.4rem;
+    color: $textstandard;
+    &::before {
+      content: '\f10b';
+      font-family: 'Flaticon', sans-serif;
+      margin-right: 0.5rem;
+    }
+  }
+  .ant-modal-footer {
+    border: none;
+    padding: 0 1rem 1rem 1rem;
+  }
+  .continue-btn {
+    margin: 0;
+  }
+  .desc {
+    font-size: 1.1rem;
+    padding: 1rem 0;
+    color: $textstandard;
+    span {
+      font-weight: 600;
+    }
+  }
+
+  .create-modal-contents {
+    @include flexbox(0 0 auto, row, center, flex-start);
+  }
+
+  .left-panel {
+    width: 47%;
+    border-right: 1px dashed #cfd3d5;
+  }
+  .right-panel {
+    width: 60%;
+    height: 100%;
+  }
+  .batch-type-selector {
+    margin-right: 1rem;
+    border-bottom: 1px dashed #cfd3d5;
+    padding-bottom: 1rem;
+    .batch-type {
+      font-weight: 600;
+      color: $bluegrey;
+      .ant-radio-button-wrapper {
+        background: linear-gradient(#fff 0%, #dbdbdb 100%);
+        border: 1px solid rgba(112, 112, 112, 0.28);
+        color: $textstandard;
+        border-color: none;
+      }
+      .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+        background: $syscoblue;
+        border-color: none;
+        color: $textalternative;
+        box-shadow: none;
+      }
+    }
+  }
+  .effective-date-selector {
+    margin-right: 1rem;
+    // border-top: 1px dashed #cfd3d5;
+
+    .calendar {
+      width: 100%;
+      .ant-fullcalendar-table {
+        tr th .ant-fullcalendar-column-header-inner {
+          font-weight: 700;
+          opacity: 0.9;
+        }
+        tr th:nth-child(7),
+        tr td:nth-child(7),
+        tr th:nth-child(1),
+        tr td:nth-child(1) {
+          background: $gridstripes;
+        }
+      }
+      .ant-fullcalendar-header {
+        text-align: left;
+        .ant-radio-group {
+          display: none;
+        }
+      }
+    }
+  }
+  .opco-selector {
+    @include flexbox(0 0 auto, column, flex-start, flex-start);
+    margin-left: 1rem;
+    padding-left: 1rem;
+    .opco-list {
+      width: 100%;
+      max-height: 24.9rem;
+      overflow: auto;
+      .ant-radio-wrapper,
+      .ant-checkbox-wrapper {
+        font-size: 1.1rem;
+        .ant-checkbox-inner {
+          border-radius: 1rem;
+          // box-shadow: 0 0 45px rgba(0, 0, 0, 0.25);
+        }
+      }
+
+      .ant-checkbox-wrapper + .ant-checkbox-wrapper {
+        margin-left: 0;
+      }
+      @include flexbox(0 0 auto, column, flex-start, flex-start);
+      &.primary {
+        border-bottom: 1px dashed #cfd3d5;
+        padding-bottom: 0.5rem;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+      }
+      &.region {
+        .ant-radio-wrapper {
+          line-height: 1;
+        }
+        .region-opco {
+          font-weight: 300;
+          font-size: 0.9rem;
+          margin-left: 1.75rem;
+          max-width: 100%;
+          white-space: pre-wrap;
+          line-height: 1.3;
+          .see-more {
+            color: $syscoblue;
+            border: 1px solid $syscoblue;
+            padding: 0.2rem 0.3rem;
+            font-weight: 500;
+            display: inline-block;
+            border-radius: 0.3rem;
+            margin-left: 0.3rem;
+          }
+        }
+      }
+    }
+  }
+}

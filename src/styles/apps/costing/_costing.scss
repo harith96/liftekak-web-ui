@@ -1,0 +1,32 @@
+/***********************************************************
+    COSTING APP PRIMARY SASS FILE - BUILT ON BT-UX-FRAMEWORK
+    Author: Michael Lu 
+    (Auto Compiled to CSS during runtime)
+***********************************************************/
+@import 'headers/_headers';
+@import 'filters/_filters';
+@import 'gridpanel/_gridpanel';
+@import 'states/_states';
+@import 'gridselectionpanel/_gridselectionpanel';
+@import 'actionbuttons/_actionbuttons';
+@import 'gridhoveractions/_gridhoveractions';
+@import 'createmodal/_createmodal';
+@import 'notespopover/_notespopover';
+@import 'gridelements/_gridelements';
+
+.costing-wrapper {
+  @include flexbox(1 1 auto, column, flex-start, center);
+  color: $textstandard;
+  background: #f6f9fc;
+  border-top: 1px solid #cbe0ef;
+
+  //Responsive
+  @include breakpoint(xs) {
+    display: block;
+    overflow-y: auto;
+  }
+}
+
+// .ant-table{
+//   font-size: 1rem;
+// }

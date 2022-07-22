@@ -1,0 +1,98 @@
+.organisation {
+  position: relative;
+  max-width: 40%;
+  height: 1.5rem;
+  border-radius: 18px;
+  background: #7792a5;
+  margin: 0 15px;
+  color: $textalternative;
+  padding: 0 13px;
+  @include flexbox(0 0 auto, column, flex-start, center);
+
+  &:focus {
+    outline: none;
+    box-shadow: 0px 0px 12px $syscoblue;
+  }
+
+  .current-vendor {
+    @include flexbox(0 0 auto, row, flex-start, center);
+    height: 1.5rem;
+    i {
+      font-size: 0.5rem;
+      margin-left: 0.5rem;
+    }
+  }
+  .type {
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-right: 1px dotted $textalternative-faded;
+    padding-right: 10px;
+    height: 100%;
+    @include flexbox(0 0 auto);
+  }
+  .name {
+    @include flexbox(0 0 auto);
+    font-weight: 900;
+    font-size: 0.95rem;
+    padding-left: 10px;
+    @include truncate(20vw);
+    cursor: pointer;
+  }
+  //Responsive
+  @include breakpoint(xs) {
+    display: none;
+  }
+  &.outlined {
+    background: $background;
+    color: $syscodarkblue;
+    border: 1px solid $syscodarkblue;
+    .type {
+      border-right: 1px dotted $syscodarkblue;
+      opacity: 0.6;
+    }
+    .name {
+      opacity: 0.6;
+    }
+    @include breakpoint(xs) {
+      @include flexbox(0 0 auto);
+      z-index: $bringToTop;
+      position: absolute;
+      bottom: 1rem;
+      left: 1rem;
+      margin: 0;
+      max-width: 100%;
+      .name {
+        @include flexbox(0 0 auto, row, flex-start, center);
+        font-size: 0.75rem;
+        padding-left: 0.7rem;
+        @include truncate(38vw);
+        text-align: left;
+      }
+      display: none;
+    }
+  }
+  .vendor-switcher {
+    position: absolute;
+    background: $background;
+    box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.4);
+    color: $textstandard;
+    margin-top: 1.5rem;
+    margin-left: 2rem;
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    width: 65%;
+    z-index: $bringToTop;
+    @include flexbox(1 1 auto, column, center, flex-start);
+    display: none;
+    li {
+      padding: 0.5rem 1rem;
+      width: 100%;
+      cursor: pointer;
+      &:hover {
+        color: $textalternative;
+        background: $syscoblue;
+      }
+    }
+  }
+}

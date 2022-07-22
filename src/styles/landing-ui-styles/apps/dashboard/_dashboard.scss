@@ -1,0 +1,19 @@
+/***********************************************************
+    DASHBOARD APP PRIMARY SASS FILE - BUILT ON BT-UX-FRAMEWORK
+    Author: Michael Lu 
+    (Auto Compiled to CSS during runtime)
+***********************************************************/
+
+@import 'components/app-grid/_app-grid';
+@import 'components/recent-activity/_recent-activity';
+
+.dashboard-wrapper {
+  @include flexbox(1 1 auto, row, center, flex-start);
+  color: $textstandard;
+
+  //Responsive
+  @include breakpoint(xs) {
+    display: block;
+    overflow-y: auto;
+  }
+}

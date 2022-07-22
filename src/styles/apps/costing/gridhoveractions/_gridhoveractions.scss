@@ -1,0 +1,54 @@
+.grid-hover-panel {
+  @include flexbox(0 0 auto, row, flex-start);
+  flex-wrap: wrap;
+  display: none;
+  margin: 0;
+  .btn {
+    @include flexbox(0 0 auto, row);
+    font-size: 0.75rem;
+    padding: 0 0.6rem;
+    height: 1.7rem;
+    font-weight: 700;
+    margin: 0.2rem;
+    text-transform: uppercase;
+    border: 1px solid darken($lightyellow, 3%) !important;
+    @include breakpoint(sm) {
+      font-size: 0.9rem;
+      padding: 0 0.3rem;
+      span {
+        display: none;
+      }
+      i {
+        margin: 0;
+      }
+    }
+    @include breakpoint(md) {
+      font-size: 0.75rem;
+      padding: 0 0.6rem;
+      span {
+        display: block;
+      }
+      i {
+        margin-right: 0.4rem;
+      }
+      &.delete-btn i {
+        margin: 0;
+      }
+    }
+  }
+}
+
+.ant-table {
+  tbody {
+    tr {
+      td.hover-actions {
+        padding: 0;
+      }
+      &:hover td.hover-actions {
+        .grid-hover-panel {
+          display: flex;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,64 @@
+@import 'user-widget/_user-widget';
+@import 'account-menu/_account-menu';
+@import 'app-menu-drawer/_app-menu-drawer';
+@import 'notification-drawer/_notification-drawer';
+
+.account-widget {
+  color: $textstandard;
+  @include flexbox(0 0 auto);
+}
+
+.messages {
+  @include flexbox(0 0 auto);
+  @include standard-blue-link;
+  cursor: pointer;
+  .icon {
+    font-size: 1.5rem;
+    margin: 0 0.7rem;
+  }
+  .label {
+    display: none;
+    //Responsive
+    @include breakpoint(xs) {
+      display: none;
+    }
+  }
+}
+.notifications {
+  @include flexbox(0 0 auto);
+  @include standard-blue-link;
+  position: relative;
+  cursor: pointer;
+  .icon {
+    font-size: 1.8rem;
+    margin: 0 0.7rem;
+  }
+  .count {
+    color: $textalternative;
+    background: $syscored;
+    border-radius: 50%;
+    padding: 0.2rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    box-shadow: 0px 0px 0.3rem rgba(0, 0, 0, 0.2);
+    position: absolute;
+    top: 0.9rem;
+    right: 0.5rem;
+  }
+}
+
+.app-menu-drawer {
+  @include flexbox(0 0 auto);
+  @include standard-blue-link;
+
+  position: relative;
+  .icon {
+    font-size: 1.6rem;
+    margin: 0 0.7rem;
+    &:focus {
+      outline: none;
+      color: $syscoblue;
+    }
+  }
+  // display: none;
+}
