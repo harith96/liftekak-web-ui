@@ -17,7 +17,7 @@ import {
   RESET_PASSWORD,
   SAVE_USER_DETAILS,
 } from 'actions/actionTypes';
-import { BAD_REQUEST_STATUS, NOT_FOUND_STATUS, USER_NOT_AUTHORIZED_STATUS } from 'util/constants';
+import { APP_ROUTES, BAD_REQUEST_STATUS, NOT_FOUND_STATUS, USER_NOT_AUTHORIZED_STATUS } from 'util/constants';
 import * as i18n from '_i18n';
 import { action } from 'reduxHelpers';
 import { FirebaseError, NotificationType, RideStatus, SignInProvider } from 'enums';
@@ -29,7 +29,7 @@ import {
   sendPasswordRestEmail,
   signUpWithEmailAndPassword,
 } from 'common/auth';
-import { getRide, getRides, getUserDetails, getUserVehicles, saveUserDetails } from 'common/db';
+import { createRide, getRide, getRides, getUserDetails, getUserVehicles, saveUserDetails } from 'common/db';
 
 export const getRole = (state) => state.user.data.userRole;
 export const getUser = (state) => state.user.data;
@@ -193,8 +193,9 @@ function* loadUserVehiclesAsync() {
 
 function* loadRidesAsync({ pageAction }) {
   try {
+    const { gender: userGender } = yield select((state) => state.user.data);
     const ridesFilters = yield select((state) => state.rideFilters.data);
-    const ridesList = yield getRides({ ...ridesFilters, pageAction });
+    const ridesList = yield getRides({ ...ridesFilters, pageAction, userGender });
     yield put({ type: RIDES.SUCCESS, payload: ridesList });
   } catch (error) {
     yield put({ type: RIDES.FAILURE, payload: error.message });
@@ -304,14 +305,17 @@ function* updateRideAsync({ data: { rideId, endDate, comment } = {}, history }) 
   }
 }
 
-function* createRideAsync({ data }) {
+function* createRideAsync({ data, history }) {
   try {
-    const { name: associateName, userId: associateId } = yield select(getUser);
-    const response = yield call(postRequest, '/offer-code', { ...data, associateName, associateId });
+    console.log('***************** CREATE RIDE');
+    const driver = yield select(getUser);
+    yield createRide({ ...data, driver });
 
-    yield loadRidesAsync();
+    history.push(APP_ROUTES.RIDES_LIST);
 
-    yield put({ type: CREATE_RIDE.SUCCESS, payload: response.data });
+    // yield loadRidesAsync();
+
+    yield put({ type: CREATE_RIDE.SUCCESS });
     yield put(
       action(SHOW_NOTIFICATION, {
         className: NotificationType.SUCCESS,
@@ -320,6 +324,7 @@ function* createRideAsync({ data }) {
       })
     );
   } catch (error) {
+    console.log(error);
     yield put({ type: CREATE_RIDE.FAILURE, error: error.message });
 
     const handled = yield handleUserSessionErrors(error);

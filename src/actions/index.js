@@ -28,9 +28,9 @@ const loadUserVehicles = () => action(USER_VEHICLES.REQUEST);
 
 const showNotification = (message, description, notificationType) =>
   action(SHOW_NOTIFICATION, { message, description, className: notificationType });
-const loadRidesList = (pageAction) => action(RIDES.REQUEST, { pageAction });
+const loadRidesList = (pageAction = null) => action(RIDES.REQUEST, { pageAction });
 const loadRideDetails = (selectedRideId) => action(RIDE.REQUEST, { selectedRideId });
-const createRide = (data) => action(CREATE_RIDE.REQUEST, { data });
+const createRide = (data, history) => action(CREATE_RIDE.REQUEST, { data, history });
 const updateRideFilters = (data) => action(UPDATE_RIDE_FILTERS.REQUEST, { data });
 const updateRide = (data, history) =>
   action(UPDATE_RIDE.REQUEST, {

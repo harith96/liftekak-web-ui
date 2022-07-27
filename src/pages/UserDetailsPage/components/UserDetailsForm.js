@@ -57,7 +57,14 @@ function UserDetailsForm() {
         setSubmitting(false);
         resetForm({ values });
       }}
-      initialValues={{ firstName, lastName, mobileNo, gender, passengerPreference, nic: { idNo, front, back } }}
+      initialValues={{
+        firstName,
+        lastName,
+        mobileNo,
+        gender,
+        passengerPreference: passengerPreference || genders,
+        nic: { idNo, front, back },
+      }}
       validationSchema={validationSchema}
       validateOnMount
       enableReinitialize

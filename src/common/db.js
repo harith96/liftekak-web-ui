@@ -12,9 +12,12 @@ import {
   limit,
   orderBy,
   startAt,
+  addDoc,
 } from '@firebase/firestore';
+import { RideStatus } from 'enums';
 
 import * as _ from 'lodash';
+import moment from 'moment';
 import { DEFAULT_PAGE_SIZE } from 'util/constants';
 import { getCurrentUserID } from './auth';
 
@@ -94,25 +97,27 @@ const deleteVehicles = async (vehicles = []) => {
   await batch.commit();
 };
 
-const getRides = async ({ startLocation, endLocation, departure, rideId, status, pageAction }) => {
+const getRides = async ({ startLocation, endLocation, departure, rideId, status, pageAction, userGender }) => {
   const db = getFirestore();
 
   const ridesRef = collection(db, 'rides');
 
+  console.log(moment.now());
+
   const q = query(
     ridesRef,
-    where('status', '==', status),
-    where('departure', '>', new Date()),
-    orderBy('departure'),
-    limit(DEFAULT_PAGE_SIZE),
-    startAt(!pageAction || !lastVisibleRide ? 1 : lastVisibleRide)
+    where('status', '==', status || RideStatus.NEW),
+    where('departure', '>', moment.now())
+    // orderBy('departure')
+    // limit(DEFAULT_PAGE_SIZE)
+    // startAt(!pageAction || !lastVisibleRide ? 1 : lastVisibleRide)
   );
 
   const querySnap = await getDocs(q);
 
-  if (!_.isEmpty(querySnap.docs)) {
-    lastVisibleRide = querySnap.docs[querySnap.docs.length - 1];
-  }
+  // if (!_.isEmpty(querySnap.docs)) {
+  //   lastVisibleRide = querySnap.docs[querySnap.docs.length - 1];
+  // }
 
   return querySnap.docs.map((docSnap) => docSnap.data());
 };
@@ -126,8 +131,30 @@ const getRide = async (rideId) => {
   return docSnap.data();
 };
 
-const createRide = async () => {
-  incrementCounter('rides');
+const createRide = async ({
+  startLocation,
+  endLocation,
+  departure,
+  note: driverNote,
+  route,
+  availableSeatCount,
+  driver,
+} = {}) => {
+  // incrementCounter('rides');
+
+  const db = getFirestore();
+  const rideId = `${moment.now()}`;
+  const ride = {
+    rideId,
+    start: { location: startLocation },
+    destination: { location: endLocation },
+    departure,
+    details: { driverNote, route, availableSeatCount, totalSeatCount: availableSeatCount },
+    driver,
+    status: RideStatus.NEW,
+  };
+
+  await setDoc(doc(db, 'rides', rideId), ride);
 };
 
 const createBooking = async () => {};
