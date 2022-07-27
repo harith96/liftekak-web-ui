@@ -1,5 +1,6 @@
 import { createRide } from 'actions';
 import * as _ from 'lodash';
+import moment from 'moment';
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -14,6 +15,9 @@ const formatRideValues = (values) => ({
     .unshift(values.startLocation)
     .map((town) => _.trim(town))
     .value(),
+  departure: moment(
+    `${values.departure.date.format('YYYY-MM-DD')}T${values.departure.time.format('HH:mm')}:00.000Z`
+  ).unix(),
 });
 
 function CreateRidePageContainer() {
