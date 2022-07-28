@@ -16,8 +16,11 @@ import {
   USER_VEHICLES,
   RESET_PASSWORD,
   SAVE_USER_DETAILS,
+  SAVE_VEHICLE,
+  BOOKINGS,
+  SAVE_BOOKING,
 } from 'actions/actionTypes';
-import { BAD_REQUEST_STATUS, NOT_FOUND_STATUS, USER_NOT_AUTHORIZED_STATUS } from 'util/constants';
+import { APP_ROUTES, BAD_REQUEST_STATUS, NOT_FOUND_STATUS, USER_NOT_AUTHORIZED_STATUS } from 'util/constants';
 import * as i18n from '_i18n';
 import { action } from 'reduxHelpers';
 import { FirebaseError, NotificationType, RideStatus, SignInProvider } from 'enums';
@@ -29,7 +32,16 @@ import {
   sendPasswordRestEmail,
   signUpWithEmailAndPassword,
 } from 'common/auth';
-import { getRides, getUserDetails, getUserVehicles, saveUserDetails } from 'common/db';
+import {
+  createRide,
+  getBookings,
+  getRide,
+  getRides,
+  getUserDetails,
+  getUserVehicles,
+  saveUserDetails,
+  saveVehicle,
+} from 'common/db';
 
 export const getRole = (state) => state.user.data.userRole;
 export const getUser = (state) => state.user.data;
@@ -175,10 +187,10 @@ function* loadUserAsync() {
 
 function* loadUserVehiclesAsync() {
   try {
-    yield getUserVehicles();
-    yield put({ type: SIGN_UP.SUCCESS });
+    const vehicles = yield getUserVehicles();
+    yield put({ type: USER_VEHICLES.SUCCESS, payload: vehicles });
   } catch (error) {
-    yield put({ type: SIGN_UP.FAILURE, payload: error.message });
+    yield put({ type: USER_VEHICLES.FAILURE, payload: error.message });
     const handled = yield handleUserSessionErrors(error);
     if (!handled)
       yield put(
@@ -191,10 +203,34 @@ function* loadUserVehiclesAsync() {
   }
 }
 
+function* saveVehicleAsync({ vehicle, callback }) {
+  try {
+    yield saveVehicle(vehicle);
+
+    yield loadUserVehiclesAsync();
+
+    if (callback) callback();
+
+    yield put({ type: SAVE_VEHICLE.SUCCESS });
+  } catch (error) {
+    yield put({ type: SAVE_VEHICLE.FAILURE, payload: error.message });
+    const handled = yield handleUserSessionErrors(error);
+    if (!handled)
+      yield put(
+        action(SHOW_NOTIFICATION, {
+          description: i18n.t('liftEkak.user.error.description'),
+          className: NotificationType.ERROR,
+          message: i18n.t('liftEkak.user.error.message'),
+        })
+      );
+  }
+}
+
 function* loadRidesAsync({ pageAction }) {
   try {
+    const { gender: userGender } = yield select((state) => state.user.data);
     const ridesFilters = yield select((state) => state.rideFilters.data);
-    const ridesList = yield getRides({ ...ridesFilters, pageAction });
+    const ridesList = yield getRides({ ...ridesFilters, pageAction, userGender });
     yield put({ type: RIDES.SUCCESS, payload: ridesList });
   } catch (error) {
     yield put({ type: RIDES.FAILURE, payload: error.message });
@@ -242,8 +278,19 @@ function* loadAllNonExpiredRidesAsync() {
 
 function* loadRideAsync({ selectedRideId }) {
   try {
-    const response = yield call(getRequest, `/offer-code/${selectedRideId}`);
-    yield put({ type: RIDE.SUCCESS, payload: response.data });
+    const ride = yield getRide(selectedRideId);
+
+    if (ride) yield put({ type: RIDE.SUCCESS, payload: ride });
+    else {
+      yield put({ type: RIDE.FAILURE, error: 'RIDE_NOT_FOUND' });
+      yield put(
+        action(SHOW_NOTIFICATION, {
+          message: i18n.t('liftEkak.ride.error.message'),
+          description: 'Invalid Ride Id',
+          className: NotificationType.ERROR,
+        })
+      );
+    }
   } catch (error) {
     yield put({ type: RIDE.FAILURE, error: error.message });
 
@@ -293,14 +340,17 @@ function* updateRideAsync({ data: { rideId, endDate, comment } = {}, history }) 
   }
 }
 
-function* createRideAsync({ data }) {
+function* createRideAsync({ data, history }) {
   try {
-    const { name: associateName, userId: associateId } = yield select(getUser);
-    const response = yield call(postRequest, '/offer-code', { ...data, associateName, associateId });
+    console.log('***************** CREATE RIDE');
+    const driver = yield select(getUser);
+    yield createRide({ ...data, driver });
 
-    yield loadRidesAsync();
+    history.push(APP_ROUTES.RIDES_LIST);
 
-    yield put({ type: CREATE_RIDE.SUCCESS, payload: response.data });
+    // yield loadRidesAsync();
+
+    yield put({ type: CREATE_RIDE.SUCCESS });
     yield put(
       action(SHOW_NOTIFICATION, {
         className: NotificationType.SUCCESS,
@@ -309,6 +359,7 @@ function* createRideAsync({ data }) {
       })
     );
   } catch (error) {
+    console.log(error);
     yield put({ type: CREATE_RIDE.FAILURE, error: error.message });
 
     const handled = yield handleUserSessionErrors(error);
@@ -325,6 +376,44 @@ function* createRideAsync({ data }) {
         })
       );
     }
+  }
+}
+
+function* loadBookingsAsync({ filters }) {
+  try {
+    const bookings = yield getBookings(filters);
+
+    yield put({ type: BOOKINGS.SUCCESS, payload: bookings });
+  } catch (error) {
+    yield put({ type: BOOKINGS.FAILURE, payload: error.message });
+    const handled = yield handleUserSessionErrors(error);
+    if (!handled)
+      yield put(
+        action(SHOW_NOTIFICATION, {
+          description: i18n.t('liftEkak.user.error.description'),
+          className: NotificationType.ERROR,
+          message: i18n.t('liftEkak.user.error.message'),
+        })
+      );
+  }
+}
+
+function* saveBooking(booking) {
+  try {
+    const bookings = yield saveBooking(booking);
+
+    yield put({ type: SAVE_BOOKING.SUCCESS, payload: bookings });
+  } catch (error) {
+    yield put({ type: SAVE_BOOKING.FAILURE, payload: error.message });
+    const handled = yield handleUserSessionErrors(error);
+    if (!handled)
+      yield put(
+        action(SHOW_NOTIFICATION, {
+          description: i18n.t('liftEkak.user.error.description'),
+          className: NotificationType.ERROR,
+          message: i18n.t('liftEkak.user.error.message'),
+        })
+      );
   }
 }
 
@@ -364,6 +453,10 @@ function* watchLoadUserVehicles() {
   yield takeLatest(USER_VEHICLES.REQUEST, loadUserVehiclesAsync);
 }
 
+function* watchSaveUserVehicle() {
+  yield takeLatest(SAVE_VEHICLE.REQUEST, saveVehicleAsync);
+}
+
 function* watchUpdateRideFilters() {
   yield takeLatest(UPDATE_RIDE_FILTERS.REQUEST, updateRideFiltersAsync);
 }
@@ -386,6 +479,14 @@ function* loadAllRides() {
   yield takeLatest(FETCH_ALL_RIDES.REQUEST, loadAllNonExpiredRidesAsync);
 }
 
+function* watchLoadBookings() {
+  yield takeLatest(BOOKINGS.REQUEST, loadBookingsAsync);
+}
+
+function* watchSaveBooking() {
+  yield takeLatest(SAVE_BOOKING.REQUEST, saveBooking);
+}
+
 export default function* rootSaga() {
   yield all([
     watchSignIn(),
@@ -394,6 +495,7 @@ export default function* rootSaga() {
     watchSaveUserDetails(),
     watchLoadUser(),
     watchLoadUserVehicles(),
+    watchSaveUserVehicle(),
     watchShowNotification(),
     watchLoadRides(),
     watchLoadRide(),
@@ -401,5 +503,7 @@ export default function* rootSaga() {
     watchUpdateRideFilters(),
     watchCreateRide(),
     loadAllRides(),
+    watchLoadBookings(),
+    watchSaveBooking(),
   ]);
 }

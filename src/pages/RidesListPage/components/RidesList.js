@@ -1,6 +1,7 @@
 import { Table } from 'antd';
 import moment from 'moment';
 import React, { useContext } from 'react';
+import { getFormattedDate, getFormattedTime } from 'util/dateUtil';
 
 import RidesListPageContext from '../RidesListPageContext';
 
@@ -29,17 +30,17 @@ const columns = [
     title: 'Departure Date',
     dataIndex: 'departure',
     key: 'departureDate',
-    render: (departure) => moment.utc(departure.seconds * 1000).format('MM/DD/YYYY'),
+    render: (departure) => getFormattedDate(departure),
   },
   {
     title: 'Departure Time',
     dataIndex: 'departure',
     key: 'departureTime',
-    render: (departure) => moment.utc(departure.seconds * 1000).format('HH:mmA'),
+    render: (departure) => getFormattedTime(departure),
   },
   {
     title: 'Available seat count',
-    dataIndex: 'details.availableSeatCount',
+    dataIndex: 'availableSeatCount',
     key: 'availableSeatCount',
   },
   {

@@ -1,6 +1,6 @@
 import { Button, Col, Form as AntdForm, Icon, Row, Tooltip } from 'antd';
 import { Formik } from 'formik';
-import { Form, Input, Select } from 'formik-antd';
+import { Form, Input } from 'formik-antd';
 import React, { useContext } from 'react';
 import * as yup from 'yup';
 import * as _ from 'lodash';
@@ -8,17 +8,11 @@ import * as _ from 'lodash';
 import * as i18n from '_i18n';
 import { Gender } from 'enums';
 import ImageUpload from 'components/ImageUpload';
+import GenderSelect from 'components/GenderSelect';
+import PassengerPreferenceFormikInput from 'components/PassengerPreferenceInput';
 import UserDetailsPageContext from '../UserDetailsPageContext';
 
-const { Option } = Select;
-
-const genders = _.map(Gender, (value, key) => ({ key, value }));
-
-const renderGenders = _.map(genders, ({ key, value }) => (
-  <Option value={key} key={key} id={key}>
-    {value}
-  </Option>
-));
+const validGenders = _.keys(Gender);
 
 const validationSchema = yup.object().shape({
   firstName: yup.string().required('First name is required.'),
@@ -28,10 +22,10 @@ const validationSchema = yup.object().shape({
     .required('Mobile number is required.')
     .matches(/7[0-9]{8}/, { excludeEmptyString: true, message: 'Please enter a valid mobile number.' })
     .max(9, 'Enter mobile number without leading zero.'),
-  gender: yup.string().required('Gender selection is required.').oneOf(_.keys(Gender)),
+  gender: yup.string().required('Gender selection is required.').oneOf(validGenders),
   passengerPreference: yup
     .array()
-    .of(yup.string().oneOf(_.keys(Gender)))
+    .of(yup.string().oneOf(validGenders))
     .min(1, 'Passenger preference selection is required.'),
   nic: yup.object().shape({
     idNo: yup
@@ -57,7 +51,14 @@ function UserDetailsForm() {
         setSubmitting(false);
         resetForm({ values });
       }}
-      initialValues={{ firstName, lastName, mobileNo, gender, passengerPreference, nic: { idNo, front, back } }}
+      initialValues={{
+        firstName,
+        lastName,
+        mobileNo,
+        gender,
+        passengerPreference: _.isEmpty(passengerPreference) ? validGenders : passengerPreference,
+        nic: { idNo, front, back },
+      }}
       validationSchema={validationSchema}
       validateOnMount
       enableReinitialize
@@ -77,7 +78,7 @@ function UserDetailsForm() {
                       id="user-first-name-input"
                       name="firstName"
                       size="default"
-                      placeholder={i18n.t('Ex: John')}
+                      placeholder={i18n.t('e.g. John')}
                     />
                   </Form.Item>
                 </div>
@@ -88,7 +89,7 @@ function UserDetailsForm() {
                     {i18n.t(`Last Name`)}
                   </label>
                   <Form.Item name="lastName">
-                    <Input id="user-last-name-input" name="lastName" size="default" placeholder={i18n.t('Ex: Doe')} />
+                    <Input id="user-last-name-input" name="lastName" size="default" placeholder={i18n.t('e.g. Doe')} />
                   </Form.Item>
                 </div>
               </Col>
@@ -103,7 +104,7 @@ function UserDetailsForm() {
                   name="mobileNo"
                   addonBefore="+94"
                   size="default"
-                  placeholder={i18n.t('Ex: 711234567')}
+                  placeholder={i18n.t('e.g. 711234567')}
                 />
               </Form.Item>
             </Row>
@@ -114,25 +115,13 @@ function UserDetailsForm() {
                     {i18n.t(`Gender`)}
                   </label>
                   <Form.Item name="gender">
-                    <Select id="user-gender-input" name="gender" size="default">
-                      {renderGenders}
-                    </Select>
+                    <GenderSelect id="user-gender-input" name="gender" />
                   </Form.Item>
                 </div>
               </Col>
               <Col span={12}>
                 <div className="right-column">
-                  <label id="user-passenger-preference-label" className="user-input">
-                    {i18n.t(`Passenger Preference`)}
-                    <Tooltip title={i18n.t('Gender preference for your fellow passengers.')}>
-                      <Icon type="info-circle" />
-                    </Tooltip>
-                  </label>
-                  <Form.Item name="passengerPreference">
-                    <Select id="user-gender-input" name="passengerPreference" size="default" mode="multiple" allowClear>
-                      {renderGenders}
-                    </Select>
-                  </Form.Item>
+                  <PassengerPreferenceFormikInput />
                 </div>
               </Col>
             </Row>
@@ -145,7 +134,7 @@ function UserDetailsForm() {
                   id="user-first-name-input"
                   name="nic.idNo"
                   size="default"
-                  placeholder={i18n.t('Ex: 123456789V')}
+                  placeholder={i18n.t('e.g. 123456789V')}
                 />
               </Form.Item>
             </Row>

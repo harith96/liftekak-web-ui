@@ -11,9 +11,11 @@ import {
   SIGN_IN,
   SIGN_UP,
   USER_VEHICLES,
-  SAVE_VEHICLES,
+  SAVE_VEHICLE,
   SAVE_USER_DETAILS,
   RESET_PASSWORD,
+  BOOKINGS,
+  SAVE_BOOKING,
 } from 'actions/actionTypes';
 import { createReducer } from 'reduxHelpers';
 
@@ -24,13 +26,15 @@ const saveUserDetails = createReducer(SAVE_USER_DETAILS, initialState.saveUserDe
 const user = createReducer(USER, initialState.user);
 
 const userVehicles = createReducer(USER_VEHICLES, initialState.userVehicles);
-const saveVehicles = createReducer(SAVE_VEHICLES, initialState.saveVehicles);
+const saveVehicle = createReducer(SAVE_VEHICLE, initialState.saveVehicle);
 
 const rides = createReducer(RIDES, initialState.rides);
 const ride = createReducer(RIDE, initialState.ride);
 const rideFilters = createReducer(UPDATE_RIDE_FILTERS, initialState.rideFilters);
 const updateRide = createReducer(UPDATE_RIDE, initialState.updateRide);
 const createRide = createReducer(CREATE_RIDE, initialState.createRide);
+const bookings = createReducer(BOOKINGS, initialState.bookings);
+const saveBooking = createReducer(SAVE_BOOKING, initialState.saveBookings);
 
 export default combineReducers({
   signUp,
@@ -39,7 +43,7 @@ export default combineReducers({
   saveUserDetails,
   user,
   userVehicles,
-  saveVehicles,
+  saveVehicle,
   rides,
   ride,
   rideFilters,

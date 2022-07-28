@@ -43,4 +43,23 @@ const PageAction = {
   BACK: 'BACK',
 };
 
-export { UserRole, NotificationType, SortOrder, RideStatus, SignInProvider, FirebaseError, Gender, PageAction };
+const VehicleType = {
+  CAR: 'CAR',
+  THREE_WHEEL: 'THREE_WHEEL',
+  VAN: 'VAN',
+  MOTOR_BIKE: 'MOTOR_BIKE',
+  BUS: 'BUS',
+  OTHER: 'OTHER',
+};
+
+export {
+  UserRole,
+  NotificationType,
+  SortOrder,
+  RideStatus,
+  SignInProvider,
+  FirebaseError,
+  Gender,
+  VehicleType,
+  PageAction,
+};

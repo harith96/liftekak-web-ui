@@ -26,7 +26,7 @@ const initialState = {
     data: null,
     error: null,
   },
-  saveVehicles: {
+  saveVehicle: {
     fetching: false,
     data: null,
     error: null,
@@ -60,7 +60,7 @@ const initialState = {
     error: null,
   },
   ride: {
-    fetching: true,
+    fetching: false,
     data: {
       rideId: null,
       startDate: 0,
@@ -84,6 +84,16 @@ const initialState = {
       rewardType: null,
       status: null,
     },
+    error: null,
+  },
+  bookings: {
+    fetching: false,
+    data: [],
+    error: null,
+  },
+  saveBooking: {
+    fetching: false,
+    data: null,
     error: null,
   },
 };

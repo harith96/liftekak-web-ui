@@ -11,9 +11,11 @@ import {
   SIGN_IN,
   SIGN_UP,
   SAVE_USER_DETAILS,
-  SAVE_VEHICLES,
+  SAVE_VEHICLE,
   USER_VEHICLES,
   RESET_PASSWORD,
+  BOOKINGS,
+  SAVE_BOOKING,
 } from './actionTypes';
 
 const signIn = (provider, signInDetails) => action(SIGN_IN.REQUEST, { provider, signInDetails });
@@ -22,15 +24,18 @@ const sendPasswordResetEmail = (email) => action(RESET_PASSWORD.REQUEST, { email
 const saveUserDetails = (data) => action(SAVE_USER_DETAILS.REQUEST, { data });
 const loadUserDetails = () => action(USER.REQUEST);
 
-const saveVehicles = ({ type, brand, model, year, registrationNumber }) =>
-  action(SAVE_VEHICLES.REQUEST, { type, brand, model, year, registrationNumber });
+const saveVehicle = (vehicle, callback) =>
+  action(SAVE_VEHICLE.REQUEST, {
+    vehicle,
+    callback,
+  });
 const loadUserVehicles = () => action(USER_VEHICLES.REQUEST);
 
 const showNotification = (message, description, notificationType) =>
   action(SHOW_NOTIFICATION, { message, description, className: notificationType });
 const loadRidesList = (pageAction) => action(RIDES.REQUEST, { pageAction });
 const loadRideDetails = (selectedRideId) => action(RIDE.REQUEST, { selectedRideId });
-const createRide = (data) => action(CREATE_RIDE.REQUEST, { data });
+const createRide = (data, history) => action(CREATE_RIDE.REQUEST, { data, history });
 const updateRideFilters = (data) => action(UPDATE_RIDE_FILTERS.REQUEST, { data });
 const updateRide = (data, history) =>
   action(UPDATE_RIDE.REQUEST, {
@@ -38,6 +43,8 @@ const updateRide = (data, history) =>
     history,
   });
 const loadAllRides = () => action(FETCH_ALL_RIDES.REQUEST);
+const loadBookings = () => action(BOOKINGS.REQUEST);
+const saveBookings = () => action(SAVE_BOOKING.REQUEST);
 
 export {
   // user actions
@@ -48,7 +55,7 @@ export {
   sendPasswordResetEmail,
   // vehicle actions
   loadUserVehicles,
-  saveVehicles,
+  saveVehicle,
   // ride actions
   loadRidesList,
   loadRideDetails,
@@ -57,4 +64,6 @@ export {
   updateRide,
   createRide,
   loadAllRides,
+  loadBookings,
+  saveBookings,
 };

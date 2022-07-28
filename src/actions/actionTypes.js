@@ -7,15 +7,19 @@ const SAVE_USER_DETAILS = createRequestTypes('SAVE_USER_DETAILS');
 const USER = createRequestTypes('USER');
 
 const USER_VEHICLES = createRequestTypes('USER_VEHICLES');
-const SAVE_VEHICLES = createRequestTypes('SAVE_VEHICLES');
+const SAVE_VEHICLE = createRequestTypes('SAVE_VEHICLE');
 
 const RIDES = createRequestTypes('RIDES');
 const RIDE = createRequestTypes('RIDE');
 const CREATE_RIDE = createRequestTypes('CREATE_RIDE');
-const SHOW_NOTIFICATION = 'SHOW_NOTIFICATION';
 const UPDATE_RIDE_FILTERS = createRequestTypes('UPDATE_RIDE_FILTERS');
 const UPDATE_RIDE = createRequestTypes('UPDATE_RIDE');
 const FETCH_ALL_RIDES = createRequestTypes('FETCH_ALL_RIDES');
+
+const BOOKINGS = createRequestTypes('BOOKINGS');
+const SAVE_BOOKING = createRequestTypes('SAVE_BOOKING');
+
+const SHOW_NOTIFICATION = 'SHOW_NOTIFICATION';
 
 export {
   SIGN_IN,
@@ -24,7 +28,7 @@ export {
   SAVE_USER_DETAILS,
   USER,
   USER_VEHICLES,
-  SAVE_VEHICLES,
+  SAVE_VEHICLE,
   RIDES,
   RIDE,
   CREATE_RIDE,
@@ -32,4 +36,6 @@ export {
   UPDATE_RIDE_FILTERS,
   UPDATE_RIDE,
   FETCH_ALL_RIDES,
+  BOOKINGS,
+  SAVE_BOOKING,
 };
