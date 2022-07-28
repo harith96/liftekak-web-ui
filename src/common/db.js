@@ -88,13 +88,11 @@ const getRides = async ({ startLocation, endLocation, departure, rideId, status,
 
   const ridesRef = collection(db, 'rides');
 
-  console.log(moment.now());
-
   const q = query(
     ridesRef,
     where('status', '==', status || RideStatus.NEW),
-    where('departure', '>', moment.now())
-    // orderBy('departure')
+    where('departure', '>', moment.now()),
+    orderBy('departure')
     // limit(DEFAULT_PAGE_SIZE)
     // startAt(!pageAction || !lastVisibleRide ? 1 : lastVisibleRide)
   );

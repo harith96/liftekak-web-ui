@@ -40,7 +40,7 @@ const columns = [
   },
   {
     title: 'Available seat count',
-    dataIndex: 'details.availableSeatCount',
+    dataIndex: 'availableSeatCount',
     key: 'availableSeatCount',
   },
   {
