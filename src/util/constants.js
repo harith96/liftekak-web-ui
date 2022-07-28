@@ -1,5 +1,5 @@
 export const DOWNLOAD_DATE_PATTERN = 'DD_MMM_YYYY_hh_mm_ss';
-export const BATCHES_PAGE_SIZE = 40;
+export const DEFAULT_PAGE_SIZE = 40;
 export const DATE_PATTERN = 'YYYY-MM-DD';
 export const DATE_PATTERN_DISPLAY = 'DD MMMM YYYY';
 export const COMMENT_TIME_PATTERN = 'DD MMMM YYYY hh:mm:ss';
@@ -25,8 +25,9 @@ export const NOT_APPLICABLE = 'N/A';
 export const APP_ROUTES = {
   USER: '/user',
   LOGIN: '/login',
+  CREATE_RIDE: '/create-ride',
   RIDES_LIST: '/rides',
-  RIDE_VIEW: '/ride', // /suite/rewards/ride/:id
+  RIDE_VIEW: '/ride', // /ride/:id
 };
 
 export const ISO_DATE_FORMAT = 'YYYY-MM-DDTHH:mm:ss.SSS[Z]';

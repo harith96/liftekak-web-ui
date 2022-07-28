@@ -1,0 +1,17 @@
+a {
+  &:link {
+    text-decoration: none;
+    color: $syscoblue;
+  }
+  &:visited {
+    color: $textstandard;
+  }
+  &:hover {
+    transition: color 200ms ease-in-out;
+    color: $syscoblue;
+    text-decoration: underline;
+  }
+  &:active {
+    color: $syscoblue;
+  }
+}

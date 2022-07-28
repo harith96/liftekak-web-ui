@@ -1,0 +1,93 @@
+.recent-activity {
+  @include flexbox(0 0 auto, column, flex-start);
+  width: 25vw;
+  height: 100%;
+
+  .section-header {
+    @include flexbox(0 0 auto, row, flex-start, center);
+    width: 100%;
+    padding: 1rem 0 1rem 0.2rem;
+    height: 5rem;
+    @include bg-border(bottom);
+    .title {
+      @include flexbox(0 0 auto, row);
+      // margin-top:1.5rem;
+      .icon {
+        font-size: 1.3rem;
+      }
+      .label {
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin: 0 1rem;
+      }
+    }
+  }
+  .activity {
+    @include flexbox(1 1 auto, column, flex-start, flex-start);
+    width: 100%;
+    padding: 1rem;
+    overflow-y: auto;
+
+    .activity-section-title {
+      font-weight: 300;
+      font-size: 1.3rem;
+      margin: 1rem 0;
+      &:first-of-type {
+        margin-top: 0;
+      }
+    }
+    .activity-item {
+      width: 100%;
+      @include flexbox(0 0 auto, row, flex-start, center);
+      padding-bottom: 1rem;
+    }
+    .label {
+      font-weight: 600;
+      padding-left: 1rem;
+      width: 90%;
+      &:hover {
+        text-decoration: underline;
+        cursor: pointer;
+      }
+      &:active {
+        filter: brightness(1.65);
+      }
+    }
+    //Responsive
+    @include breakpoint(xs) {
+      height: auto;
+      padding: 0;
+      overflow: hidden;
+      .label {
+        width: 100%;
+      }
+    }
+  }
+
+  .top-scroll-fader,
+  .bottom-scroll-fader {
+    width: 22vw;
+    height: 4vh;
+    margin-top: -0.8vw;
+    margin-left: -1vw;
+    position: absolute;
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAYCAYAAAAlBadpAAAAAXNSR0IArs4c6QAAADxJREFUOBFj/P///y8GMgELUN9XMvUyUKz52wi0maLQHrgAG6LOHg0wErLYaH4mIbBAShmBRS8riXrgygHjoBxq0ruVVgAAAABJRU5ErkJggg==)
+      repeat-x top center;
+    background-size: 100% 100%;
+    //Responsive
+    @include breakpoint(xs) {
+      display: none;
+    }
+  }
+  .bottom-scroll-fader {
+    bottom: 0;
+    transform: rotate(180deg);
+  }
+  //Responsive
+  @include breakpoint(xs) {
+    @include flexbox(1 1 auto, column, flex-start);
+    width: 100%;
+    height: auto;
+    padding: 1rem;
+  }
+}

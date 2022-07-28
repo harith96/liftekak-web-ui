@@ -1,0 +1,139 @@
+.notification-menu {
+  @include flexbox(0 0 auto, column);
+  display: none;
+  position: absolute;
+  top: 3rem;
+  margin-left: -5rem;
+  background: $background;
+  z-index: $bringToTop;
+  border-radius: 0.8rem;
+  box-shadow: 0px 3px 14px rgba(0, 0, 0, 0.4);
+  width: 18rem;
+
+  &:after {
+    bottom: 100%;
+    left: 80%;
+    border: solid transparent;
+    content: ' ';
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-color: rgba(213, 213, 213, 0);
+    border-bottom-color: #fff;
+    border-width: 12px;
+    margin-left: -12px;
+  }
+  .menu-header {
+    @include flexbox(0 0 auto);
+    padding: 1rem 1rem;
+    width: 100%;
+    color: $textstandard !important;
+    .title {
+      font-weight: 700;
+      font-size: 1rem;
+      @include flexbox(0 0 auto);
+      margin-right: 1rem;
+      .icon {
+        margin-right: 0.5rem;
+      }
+    }
+    .icon {
+      color: $textstandard;
+      font-size: 1.2rem;
+      margin: 0;
+    }
+  }
+
+  .notifications-list {
+    width: 100%;
+    ul {
+      width: 100%;
+      li {
+        @include flexbox(0 0 auto, row, flex-start, center);
+        width: 100%;
+        padding: 1rem 1rem;
+        color: $textstandard;
+        transition: all ease-in-out 100ms;
+        &:last-of-type {
+          border-bottom-left-radius: 0.8rem;
+          border-bottom-right-radius: 0.8rem;
+        }
+        &.unread {
+          background: lighten($syscoyellow, 46%);
+        }
+        &:hover {
+          background: lighten($syscoyellow, 47%);
+        }
+        &:active {
+          background: $syscoblue;
+          color: $textalternative;
+          .info .title {
+            color: $textalternative;
+          }
+        }
+        .preview {
+          width: 2.5rem;
+          height: 2.5rem;
+          background-size: cover;
+          box-shadow: 0 0 0.35rem rgba(0, 0, 0, 0.26);
+          margin-right: 0.6rem;
+        }
+        .info {
+          .action {
+            font-weight: 400;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+          }
+          .title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: darken($syscoblue, 4%);
+            margin: 0.3rem 0;
+          }
+          .subtitle {
+            width: 10rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 0.9rem;
+          }
+        }
+        .app-icon {
+          .tile-wrapper .tile {
+            animation-name: none;
+            border-width: 0.1rem;
+            border-radius: 0.2rem;
+            box-shadow: 0 0 0.35rem rgba(0, 0, 0, 0.26);
+            .icon {
+              font-size: 1rem;
+              margin-top: 0;
+            }
+            width: 2rem;
+            height: 2rem;
+          }
+        }
+      }
+    }
+  }
+
+  @include breakpoint(xs) {
+    position: fixed;
+    top: 5rem;
+    right: 0;
+    left: 0;
+    margin-left: 0;
+    width: 100vw;
+    &:after {
+      left: auto;
+    }
+    .menu-header {
+      .title {
+        font-size: 1.4rem;
+      }
+      .icon {
+        font-size: 2rem;
+      }
+    }
+  }
+}

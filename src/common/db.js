@@ -1,6 +1,35 @@
-import { setDoc, getDoc, getDocs, getFirestore, doc, writeBatch } from '@firebase/firestore';
+import {
+  setDoc,
+  getDoc,
+  getDocs,
+  getFirestore,
+  doc,
+  writeBatch,
+  FieldValue,
+  collection,
+  query,
+  where,
+  limit,
+  orderBy,
+  startAt,
+} from '@firebase/firestore';
 
+import * as _ from 'lodash';
+import { DEFAULT_PAGE_SIZE } from 'util/constants';
 import { getCurrentUserID } from './auth';
+
+let lastVisibleRide;
+
+const incrementCounter = (resource) => {
+  const db = getFirestore();
+  const increment = FieldValue.increment(1);
+
+  // Document reference
+  const counterDocRef = doc(db, 'counters', `${resource}-counter`);
+
+  // Update read count
+  counterDocRef.update({ count: increment });
+};
 
 const saveUserDetails = async (userDetails) => {
   const uid = getCurrentUserID();
@@ -65,9 +94,33 @@ const deleteVehicles = async (vehicles = []) => {
   await batch.commit();
 };
 
-const getRides = async ({ parameters: { startLocation, endLocation, departure, driver } }) => {};
+const getRides = async ({ startLocation, endLocation, departure, rideId, status, pageAction }) => {
+  const db = getFirestore();
+
+  const ridesRef = collection(db, 'rides');
+
+  const q = query(
+    ridesRef,
+    where('status', '==', status),
+    where('departure', '>', new Date()),
+    orderBy('departure'),
+    limit(DEFAULT_PAGE_SIZE),
+    startAt(!pageAction || !lastVisibleRide ? 1 : lastVisibleRide)
+  );
+
+  const querySnap = await getDocs(q);
+
+  if (!_.isEmpty(querySnap.docs)) {
+    lastVisibleRide = querySnap.docs[querySnap.docs.length - 1];
+  }
+
+  return querySnap.docs.map((docSnap) => docSnap.data());
+};
+
 const getRide = async (rideId) => {};
-const createRide = async () => {};
+const createRide = async () => {
+  incrementCounter('rides');
+};
 
 const createBooking = async () => {};
 const getBookings = async () => {};

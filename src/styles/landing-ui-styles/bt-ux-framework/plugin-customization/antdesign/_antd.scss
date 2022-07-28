@@ -1,0 +1,81 @@
+// The following contains overides and customization for the Ant design framework (https://ant.design)
+// The customizations are done to make the plugin adhere to Sysco and Supplier Suite Branding Guidelines and requirements
+
+// Table styles
+.ant-table-wrapper {
+  width: 100%;
+  height: 100%;
+}
+.ant-table-header {
+  background: transparent !important;
+}
+.ant-table-thead > tr > th {
+  background: transparent !important;
+  color: $textstandard !important;
+  font-weight: 600 !important;
+  padding: 0.6rem 0.7rem;
+  &:first-of-type {
+    padding-left: 1rem;
+  }
+}
+.ant-table {
+  tbody {
+    tr:not(.ant-table-expanded-row) {
+      td {
+        border: none;
+        padding: 0.6rem 0.7rem;
+        &:first-of-type {
+          padding-left: 1rem;
+        }
+        overflow: hidden;
+      }
+      &:nth-child(odd):not(.ant-table-row-hover) td {
+        background-color: $gridstripes;
+      }
+      &.ant-table-row-selected td {
+        background-color: $lightyellow !important;
+      }
+      &:hover td {
+        background-color: darken($lightyellow, 3%) !important;
+      }
+    }
+  }
+}
+.ant-table-row-hover td {
+  background-color: darken($lightyellow, 3%) !important;
+}
+.ant-table tbody tr.ant-table-expanded-row,
+.ant-table tbody tr.ant-table-expanded-row:hover {
+  background: white !important;
+  box-shadow: inset 0px 0px 11px 0px rgba(0, 0, 0, 0.17);
+
+  td {
+    background: transparent !important;
+  }
+}
+.ant-table tbody tr.ant-table-expanded-row .ant-table-wrapper {
+  margin-left: 0 !important;
+}
+.ant-table-fixed-left {
+  box-shadow: 17px -1px 25px -27px rgba(62, 92, 119, 0.98) !important;
+  // border-bottom: 20px solid white;
+  // padding-bottom: 1rem;
+  // overflow: hidden;
+  border-right: 2px solid white;
+  z-index: 3 !important;
+}
+.ant-table-body {
+  overflow: auto !important;
+}
+
+.ant-pagination {
+  padding: 0 1rem !important;
+}
+//Popover styles
+.ant-popover-inner {
+  border-radius: 1rem !important;
+}
+
+.ant-table-body-outer {
+  background: $background;
+}

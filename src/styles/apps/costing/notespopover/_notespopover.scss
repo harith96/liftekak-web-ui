@@ -1,0 +1,31 @@
+.notes-wrapper {
+  .notes {
+    max-height: 40vh;
+    overflow: auto;
+    margin-left: -1rem;
+    margin-right: -1rem;
+    .note {
+      padding: 0.5rem 1rem;
+      .type {
+        font-weight: 700;
+      }
+      .datetime {
+        font-weight: 300;
+      }
+    }
+    .note:nth-child(even) {
+      background: #f9f9f9;
+    }
+  }
+  .add-note {
+    margin-top: 1rem;
+    .add-note-title {
+      font-weight: 700;
+      padding: 0.2rem 0;
+    }
+    .add-note-btn-bar {
+      padding-top: 1rem;
+      @include flexbox(0 0 auto, row, flex-start, center);
+    }
+  }
+}

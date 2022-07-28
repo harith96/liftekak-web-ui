@@ -1,0 +1,18 @@
+.grid-panel {
+  overflow: hidden;
+  @include flexbox(1 1 auto, column, flex-start);
+  width: 98vw;
+  border-top-left-radius: 19px;
+  border-top-right-radius: 19px;
+  background: #fff;
+  border: 1px solid #b1c8d8;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+  margin: auto;
+  position: relative;
+
+  @include breakpoint(xs) {
+    border-radius: 0;
+    width: 100vw;
+    height: 93%;
+  }
+}
