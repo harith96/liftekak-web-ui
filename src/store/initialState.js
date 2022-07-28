@@ -86,5 +86,15 @@ const initialState = {
     },
     error: null,
   },
+  bookings: {
+    fetching: false,
+    data: [],
+    error: null,
+  },
+  saveBooking: {
+    fetching: false,
+    data: null,
+    error: null,
+  },
 };
 export default initialState;

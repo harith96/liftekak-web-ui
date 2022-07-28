@@ -14,6 +14,8 @@ import {
   SAVE_VEHICLE,
   USER_VEHICLES,
   RESET_PASSWORD,
+  BOOKINGS,
+  SAVE_BOOKING,
 } from './actionTypes';
 
 const signIn = (provider, signInDetails) => action(SIGN_IN.REQUEST, { provider, signInDetails });
@@ -41,6 +43,8 @@ const updateRide = (data, history) =>
     history,
   });
 const loadAllRides = () => action(FETCH_ALL_RIDES.REQUEST);
+const loadBookings = () => action(BOOKINGS.REQUEST);
+const saveBookings = () => action(SAVE_BOOKING.REQUEST);
 
 export {
   // user actions
@@ -60,4 +64,6 @@ export {
   updateRide,
   createRide,
   loadAllRides,
+  loadBookings,
+  saveBookings,
 };

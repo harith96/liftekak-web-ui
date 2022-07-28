@@ -12,10 +12,14 @@ const SAVE_VEHICLE = createRequestTypes('SAVE_VEHICLE');
 const RIDES = createRequestTypes('RIDES');
 const RIDE = createRequestTypes('RIDE');
 const CREATE_RIDE = createRequestTypes('CREATE_RIDE');
-const SHOW_NOTIFICATION = 'SHOW_NOTIFICATION';
 const UPDATE_RIDE_FILTERS = createRequestTypes('UPDATE_RIDE_FILTERS');
 const UPDATE_RIDE = createRequestTypes('UPDATE_RIDE');
 const FETCH_ALL_RIDES = createRequestTypes('FETCH_ALL_RIDES');
+
+const BOOKINGS = createRequestTypes('BOOKINGS');
+const SAVE_BOOKING = createRequestTypes('SAVE_BOOKING');
+
+const SHOW_NOTIFICATION = 'SHOW_NOTIFICATION';
 
 export {
   SIGN_IN,
@@ -32,4 +36,6 @@ export {
   UPDATE_RIDE_FILTERS,
   UPDATE_RIDE,
   FETCH_ALL_RIDES,
+  BOOKINGS,
+  SAVE_BOOKING,
 };

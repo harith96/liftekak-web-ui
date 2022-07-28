@@ -17,6 +17,8 @@ import {
   RESET_PASSWORD,
   SAVE_USER_DETAILS,
   SAVE_VEHICLE,
+  BOOKINGS,
+  SAVE_BOOKING,
 } from 'actions/actionTypes';
 import { APP_ROUTES, BAD_REQUEST_STATUS, NOT_FOUND_STATUS, USER_NOT_AUTHORIZED_STATUS } from 'util/constants';
 import * as i18n from '_i18n';
@@ -32,6 +34,7 @@ import {
 } from 'common/auth';
 import {
   createRide,
+  getBookings,
   getRide,
   getRides,
   getUserDetails,
@@ -181,6 +184,7 @@ function* loadUserAsync() {
       );
   }
 }
+
 function* loadUserVehiclesAsync() {
   try {
     const vehicles = yield getUserVehicles();
@@ -375,6 +379,44 @@ function* createRideAsync({ data, history }) {
   }
 }
 
+function* loadBookingsAsync({ filters }) {
+  try {
+    const bookings = yield getBookings(filters);
+
+    yield put({ type: BOOKINGS.SUCCESS, payload: bookings });
+  } catch (error) {
+    yield put({ type: BOOKINGS.FAILURE, payload: error.message });
+    const handled = yield handleUserSessionErrors(error);
+    if (!handled)
+      yield put(
+        action(SHOW_NOTIFICATION, {
+          description: i18n.t('liftEkak.user.error.description'),
+          className: NotificationType.ERROR,
+          message: i18n.t('liftEkak.user.error.message'),
+        })
+      );
+  }
+}
+
+function* saveBooking(booking) {
+  try {
+    const bookings = yield saveBooking(booking);
+
+    yield put({ type: SAVE_BOOKING.SUCCESS, payload: bookings });
+  } catch (error) {
+    yield put({ type: SAVE_BOOKING.FAILURE, payload: error.message });
+    const handled = yield handleUserSessionErrors(error);
+    if (!handled)
+      yield put(
+        action(SHOW_NOTIFICATION, {
+          description: i18n.t('liftEkak.user.error.description'),
+          className: NotificationType.ERROR,
+          message: i18n.t('liftEkak.user.error.message'),
+        })
+      );
+  }
+}
+
 function* updateRideFiltersAsync({ data }) {
   yield put({ type: UPDATE_RIDE_FILTERS.SUCCESS, payload: data });
 }
@@ -437,6 +479,14 @@ function* loadAllRides() {
   yield takeLatest(FETCH_ALL_RIDES.REQUEST, loadAllNonExpiredRidesAsync);
 }
 
+function* watchLoadBookings() {
+  yield takeLatest(BOOKINGS.REQUEST, loadBookingsAsync);
+}
+
+function* watchSaveBooking() {
+  yield takeLatest(SAVE_BOOKING.REQUEST, saveBooking);
+}
+
 export default function* rootSaga() {
   yield all([
     watchSignIn(),
@@ -453,5 +503,7 @@ export default function* rootSaga() {
     watchUpdateRideFilters(),
     watchCreateRide(),
     loadAllRides(),
+    watchLoadBookings(),
+    watchSaveBooking(),
   ]);
 }

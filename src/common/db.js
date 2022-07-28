@@ -13,6 +13,7 @@ import {
   orderBy,
   startAt,
   addDoc,
+  serverTimestamp,
 } from '@firebase/firestore';
 import { RideStatus } from 'enums';
 
@@ -179,7 +180,31 @@ const saveVehicle = async ({
   if (isDefaultVehicle) await setDoc(doc(db, 'users', uid), { defaultVehicle: vehicle }, { merge: true });
 };
 
-const createBooking = async () => {};
+const createBooking = async ({ ride, pickupLocation, dropLocation, note, user }) => {
+  const uid = getCurrentUserID();
+
+  const db = getFirestore();
+  const bookingId = moment.now();
+  const booking = {
+    bookingId,
+    ride,
+    details: {
+      pickupLocation,
+      dropLocation,
+      passengerNote: note,
+    },
+    user: {
+      uid,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      mobileNo: user.mobileNo,
+    },
+    bookedTimestamp: serverTimestamp,
+  };
+
+  await setDoc(doc(db, `bookings`, bookingId), booking);
+};
+
 const getBookings = async () => {};
 
 export {
