@@ -7,7 +7,7 @@ const SAVE_USER_DETAILS = createRequestTypes('SAVE_USER_DETAILS');
 const USER = createRequestTypes('USER');
 
 const USER_VEHICLES = createRequestTypes('USER_VEHICLES');
-const SAVE_VEHICLES = createRequestTypes('SAVE_VEHICLES');
+const SAVE_VEHICLE = createRequestTypes('SAVE_VEHICLE');
 
 const RIDES = createRequestTypes('RIDES');
 const RIDE = createRequestTypes('RIDE');
@@ -24,7 +24,7 @@ export {
   SAVE_USER_DETAILS,
   USER,
   USER_VEHICLES,
-  SAVE_VEHICLES,
+  SAVE_VEHICLE,
   RIDES,
   RIDE,
   CREATE_RIDE,

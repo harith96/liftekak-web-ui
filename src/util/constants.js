@@ -30,6 +30,15 @@ export const APP_ROUTES = {
   RIDE_VIEW: '/ride', // /ride/:id
 };
 
+export const MAX_PASSENGER_SEAT_COUNTS_BY_VEHICLE_TYPE = {
+  CAR: 4,
+  VAN: 20,
+  MOTOR_BIKE: 1,
+  BUS: 96,
+  THREE_WHEEL: 3,
+  OTHER: 20,
+};
+
 export const ISO_DATE_FORMAT = 'YYYY-MM-DDTHH:mm:ss.SSS[Z]';
 
 export const BAD_REQUEST_STATUS = 400;

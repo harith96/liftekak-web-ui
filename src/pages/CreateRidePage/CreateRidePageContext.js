@@ -2,7 +2,7 @@ import React from 'react';
 
 const CreateRidePageContext = React.createContext({
   onCreateRide: () => {},
-  isCreatingRide: false,
+  isRideCreating: false,
 });
 
 export const CreateRidePageContextProvider = CreateRidePageContext.Provider;

@@ -11,7 +11,7 @@ import {
   SIGN_IN,
   SIGN_UP,
   SAVE_USER_DETAILS,
-  SAVE_VEHICLES,
+  SAVE_VEHICLE,
   USER_VEHICLES,
   RESET_PASSWORD,
 } from './actionTypes';
@@ -22,8 +22,11 @@ const sendPasswordResetEmail = (email) => action(RESET_PASSWORD.REQUEST, { email
 const saveUserDetails = (data) => action(SAVE_USER_DETAILS.REQUEST, { data });
 const loadUserDetails = () => action(USER.REQUEST);
 
-const saveVehicles = ({ type, brand, model, year, registrationNumber }) =>
-  action(SAVE_VEHICLES.REQUEST, { type, brand, model, year, registrationNumber });
+const saveVehicle = (vehicle, callback) =>
+  action(SAVE_VEHICLE.REQUEST, {
+    vehicle,
+    callback,
+  });
 const loadUserVehicles = () => action(USER_VEHICLES.REQUEST);
 
 const showNotification = (message, description, notificationType) =>
@@ -48,7 +51,7 @@ export {
   sendPasswordResetEmail,
   // vehicle actions
   loadUserVehicles,
-  saveVehicles,
+  saveVehicle,
   // ride actions
   loadRidesList,
   loadRideDetails,

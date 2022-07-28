@@ -26,7 +26,7 @@ const initialState = {
     data: null,
     error: null,
   },
-  saveVehicles: {
+  saveVehicle: {
     fetching: false,
     data: null,
     error: null,

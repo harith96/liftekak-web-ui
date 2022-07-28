@@ -16,6 +16,7 @@ import {
   USER_VEHICLES,
   RESET_PASSWORD,
   SAVE_USER_DETAILS,
+  SAVE_VEHICLE,
 } from 'actions/actionTypes';
 import { APP_ROUTES, BAD_REQUEST_STATUS, NOT_FOUND_STATUS, USER_NOT_AUTHORIZED_STATUS } from 'util/constants';
 import * as i18n from '_i18n';
@@ -29,7 +30,15 @@ import {
   sendPasswordRestEmail,
   signUpWithEmailAndPassword,
 } from 'common/auth';
-import { createRide, getRide, getRides, getUserDetails, getUserVehicles, saveUserDetails } from 'common/db';
+import {
+  createRide,
+  getRide,
+  getRides,
+  getUserDetails,
+  getUserVehicles,
+  saveUserDetails,
+  saveVehicle,
+} from 'common/db';
 
 export const getRole = (state) => state.user.data.userRole;
 export const getUser = (state) => state.user.data;
@@ -172,13 +181,12 @@ function* loadUserAsync() {
       );
   }
 }
-
 function* loadUserVehiclesAsync() {
   try {
-    yield getUserVehicles();
-    yield put({ type: SIGN_UP.SUCCESS });
+    const vehicles = yield getUserVehicles();
+    yield put({ type: USER_VEHICLES.SUCCESS, payload: vehicles });
   } catch (error) {
-    yield put({ type: SIGN_UP.FAILURE, payload: error.message });
+    yield put({ type: USER_VEHICLES.FAILURE, payload: error.message });
     const handled = yield handleUserSessionErrors(error);
     if (!handled)
       yield put(
@@ -186,6 +194,29 @@ function* loadUserVehiclesAsync() {
           description: i18n.t('liftEkak.vehicles.error.description'),
           className: NotificationType.ERROR,
           message: i18n.t('liftEkak.vehicles.error.message'),
+        })
+      );
+  }
+}
+
+function* saveVehicleAsync({ vehicle, callback }) {
+  try {
+    yield saveVehicle(vehicle);
+
+    yield loadUserVehiclesAsync();
+
+    if (callback) callback();
+
+    yield put({ type: SAVE_VEHICLE.SUCCESS });
+  } catch (error) {
+    yield put({ type: SAVE_VEHICLE.FAILURE, payload: error.message });
+    const handled = yield handleUserSessionErrors(error);
+    if (!handled)
+      yield put(
+        action(SHOW_NOTIFICATION, {
+          description: i18n.t('liftEkak.user.error.description'),
+          className: NotificationType.ERROR,
+          message: i18n.t('liftEkak.user.error.message'),
         })
       );
   }
@@ -380,6 +411,10 @@ function* watchLoadUserVehicles() {
   yield takeLatest(USER_VEHICLES.REQUEST, loadUserVehiclesAsync);
 }
 
+function* watchSaveUserVehicle() {
+  yield takeLatest(SAVE_VEHICLE.REQUEST, saveVehicleAsync);
+}
+
 function* watchUpdateRideFilters() {
   yield takeLatest(UPDATE_RIDE_FILTERS.REQUEST, updateRideFiltersAsync);
 }
@@ -410,6 +445,7 @@ export default function* rootSaga() {
     watchSaveUserDetails(),
     watchLoadUser(),
     watchLoadUserVehicles(),
+    watchSaveUserVehicle(),
     watchShowNotification(),
     watchLoadRides(),
     watchLoadRide(),

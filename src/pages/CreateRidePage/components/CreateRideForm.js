@@ -1,8 +1,9 @@
-import { Button, Col, Row, Form as AntdForm, Tooltip, Icon, TimePicker, DatePicker } from 'antd';
+import { Button, Col, Row, Form as AntdForm, Tooltip, Icon, TimePicker, DatePicker, Spin, Empty, Select } from 'antd';
 import PassengerPreferenceFormikInput from 'components/PassengerPreferenceInput';
+import SaveVehicleContainer from 'components/SaveVehicle/SaveVehicleContainer';
 import { Gender } from 'enums';
 import { Formik } from 'formik';
-import { Form, Input, InputNumber, Select } from 'formik-antd';
+import { Form, Input, InputNumber } from 'formik-antd';
 import _ from 'lodash';
 import moment from 'moment';
 import React, { useContext } from 'react';
@@ -34,9 +35,12 @@ const validationSchema = yup.object().shape({
 function CreateRideForm() {
   const {
     onCreateRide,
-    isCreatingRide,
-    user: { defaultPassengerPreference, defaultVehicle, vehicles = [] } = {},
+    isRideCreating,
+    user: { passengerPreference: defaultPassengerPreference, defaultVehicle } = {},
+    vehicles,
+    isVehiclesLoading,
   } = useContext(CreateRidePageContext);
+
   return (
     <Formik
       id="user-details-form"
@@ -64,6 +68,7 @@ function CreateRideForm() {
           startLocation,
           endLocation,
           departure: { date: departureDate, time: departureTime },
+          vehicle: selectedVehicle,
         },
         submitForm,
         // values,
@@ -123,20 +128,40 @@ function CreateRideForm() {
               <Row className="form-elements">
                 <Col span={12}>
                   <div className="left-column">
-                    <label id="user-gender-label" className="user-input">
-                      {i18n.t(`Vehicle`)}
-                    </label>
+                    <div className="vehicle-title">
+                      <label id="user-gender-label" className="user-input">
+                        {i18n.t(`Vehicle`)}
+                      </label>
+                      <SaveVehicleContainer />
+                    </div>
                     <Form.Item name="vehicle">
-                      <Select name="vehicle">
+                      <Select
+                        value={selectedVehicle?.registrationNo}
+                        name="vehicle"
+                        notFoundContent={
+                          isVehiclesLoading ? <Spin size="small" /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                        }
+                        onChange={(value) =>
+                          setFieldValue(
+                            'vehicle',
+                            _.find(vehicles, (vehicle) => value === vehicle.registrationNo)
+                          )
+                        }
+                      >
                         {_.map(vehicles, (vehicle) => (
-                          <Option value={vehicle} key={vehicle.licenseNo} id={vehicle.licenseNo}>
-                            {vehicle.licenseNo}
+                          <Option
+                            value={vehicle.registrationNo}
+                            key={vehicle.registrationNo}
+                            id={vehicle.registrationNo}
+                          >
+                            {vehicle.registrationNo}
                           </Option>
                         ))}
                       </Select>
                     </Form.Item>
                   </div>
                 </Col>
+
                 <Col span={12}>
                   <div className="right-column">
                     <PassengerPreferenceFormikInput />
@@ -209,7 +234,7 @@ function CreateRideForm() {
               </Row>
               <AntdForm.Item>
                 <AntdForm.Item>
-                  <Button loading={isCreatingRide} onClick={submitForm} type="primary" className="submit-button">
+                  <Button loading={isRideCreating} onClick={submitForm} type="primary" className="submit-button">
                     {i18n.t('Create ride')}
                   </Button>
                 </AntdForm.Item>

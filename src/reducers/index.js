@@ -11,7 +11,7 @@ import {
   SIGN_IN,
   SIGN_UP,
   USER_VEHICLES,
-  SAVE_VEHICLES,
+  SAVE_VEHICLE,
   SAVE_USER_DETAILS,
   RESET_PASSWORD,
 } from 'actions/actionTypes';
@@ -24,7 +24,7 @@ const saveUserDetails = createReducer(SAVE_USER_DETAILS, initialState.saveUserDe
 const user = createReducer(USER, initialState.user);
 
 const userVehicles = createReducer(USER_VEHICLES, initialState.userVehicles);
-const saveVehicles = createReducer(SAVE_VEHICLES, initialState.saveVehicles);
+const saveVehicle = createReducer(SAVE_VEHICLE, initialState.saveVehicle);
 
 const rides = createReducer(RIDES, initialState.rides);
 const ride = createReducer(RIDE, initialState.ride);
@@ -39,7 +39,7 @@ export default combineReducers({
   saveUserDetails,
   user,
   userVehicles,
-  saveVehicles,
+  saveVehicle,
   rides,
   ride,
   rideFilters,

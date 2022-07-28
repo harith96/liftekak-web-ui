@@ -78,7 +78,7 @@ function UserDetailsForm() {
                       id="user-first-name-input"
                       name="firstName"
                       size="default"
-                      placeholder={i18n.t('Ex: John')}
+                      placeholder={i18n.t('e.g. John')}
                     />
                   </Form.Item>
                 </div>
@@ -89,7 +89,7 @@ function UserDetailsForm() {
                     {i18n.t(`Last Name`)}
                   </label>
                   <Form.Item name="lastName">
-                    <Input id="user-last-name-input" name="lastName" size="default" placeholder={i18n.t('Ex: Doe')} />
+                    <Input id="user-last-name-input" name="lastName" size="default" placeholder={i18n.t('e.g. Doe')} />
                   </Form.Item>
                 </div>
               </Col>
@@ -104,7 +104,7 @@ function UserDetailsForm() {
                   name="mobileNo"
                   addonBefore="+94"
                   size="default"
-                  placeholder={i18n.t('Ex: 711234567')}
+                  placeholder={i18n.t('e.g. 711234567')}
                 />
               </Form.Item>
             </Row>
@@ -134,7 +134,7 @@ function UserDetailsForm() {
                   id="user-first-name-input"
                   name="nic.idNo"
                   size="default"
-                  placeholder={i18n.t('Ex: 123456789V')}
+                  placeholder={i18n.t('e.g. 123456789V')}
                 />
               </Form.Item>
             </Row>
