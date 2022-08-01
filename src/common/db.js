@@ -20,7 +20,9 @@ import { RideStatus } from 'enums';
 import * as _ from 'lodash';
 import moment from 'moment';
 import { DEFAULT_PAGE_SIZE } from 'util/constants';
+import buildRouteIndex, { buildRouteIndexString } from 'util/buildRouteIndex';
 import { getCurrentUserID } from './auth';
+import buildPassengerPreferenceDB from 'util/buildPassengerPreferenceDB';
 
 let lastVisibleRide;
 
@@ -84,16 +86,39 @@ const deleteVehicles = async (vehicles = []) => {
   await batch.commit();
 };
 
-const getRides = async ({ startLocation, endLocation, departure, rideId, status, pageAction, userGender }) => {
+const getRides = async ({
+  startTown,
+  endTown,
+  departureFrom,
+  departureUntil,
+  availableSeatCount,
+  pageAction,
+  userGender,
+  vehicleType,
+}) => {
+  if (!userGender) return [];
   const db = getFirestore();
 
   const ridesRef = collection(db, 'rides');
 
+  const queries = [
+    startTown && !endTown && where('details.route', 'array-contains', startTown),
+    !startTown && endTown && where('details.route', 'array-contains', endTown),
+    startTown && endTown && where('indices.route', 'array-contains', buildRouteIndexString([startTown, endTown])),
+    departureFrom && where('departure', '>=', departureFrom),
+    departureUntil && where('departure', '<=', departureUntil),
+    vehicleType && where('details.vehicle.type', '==', vehicleType),
+    where(`details.passengerPreference.${userGender}`, '==', true),
+    where('status', '==', RideStatus.NEW),
+    where('departure', '>', moment.now()),
+    where('seatsAvailable', '==', true),
+    orderBy('departure'),
+  ].filter((v) => v);
+
   const q = query(
     ridesRef,
-    where('status', '==', status || RideStatus.NEW),
-    where('departure', '>', moment.now()),
-    orderBy('departure')
+    ...queries
+
     // limit(DEFAULT_PAGE_SIZE)
     // startAt(!pageAction || !lastVisibleRide ? 1 : lastVisibleRide)
   );
@@ -104,7 +129,9 @@ const getRides = async ({ startLocation, endLocation, departure, rideId, status,
   //   lastVisibleRide = querySnap.docs[querySnap.docs.length - 1];
   // }
 
-  return querySnap.docs.map((docSnap) => docSnap.data());
+  return querySnap.docs
+    .map((docSnap) => docSnap.data())
+    .filter((ride) => ride.details.availableSeatCount >= availableSeatCount);
 };
 
 const getRide = async (rideId) => {
@@ -125,20 +152,22 @@ const createRide = async ({
   availableSeatCount,
   driver,
   vehicle,
+  passengerPreference,
 } = {}) => {
   const db = getFirestore();
   const rideId = `${moment.now()}`;
   const ride = {
     rideId,
-    start: { location: startLocation },
-    destination: { location: endLocation },
     departure,
-    availableSeatCount,
     details: {
+      start: { location: startLocation },
+      destination: { location: endLocation },
+      availableSeatCount,
       driverNote,
       route,
       totalSeatCount: availableSeatCount,
       vehicle,
+      passengerPreference: buildPassengerPreferenceDB(passengerPreference),
     },
     driver: {
       mobileNo: driver.mobileNo,
@@ -147,6 +176,10 @@ const createRide = async ({
       uid: getCurrentUserID(),
     },
     status: RideStatus.NEW,
+    seatsAvailable: true,
+    indices: {
+      route: buildRouteIndex(route),
+    },
   };
 
   await setDoc(doc(db, 'rides', rideId), ride);

@@ -1,5 +1,229 @@
 {
-  "indexes": [],
+  "indexes": [
+    {
+      "collectionGroup": "rides",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "details.passengerPreference.FEMALE",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "seatsAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "departure",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "rides",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "details.passengerPreference.MALE",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "seatsAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "departure",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "rides",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "details.passengerPreference.OTHER",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "seatsAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "departure",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "rides",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "details.passengerPreference.MALE",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "details.vehicle.type",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "seatsAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "departure",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "rides",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "details.passengerPreference.FEMALE",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "details.vehicle.type",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "seatsAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "departure",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "rides",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "details.passengerPreference.OTHER",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "details.vehicle.type",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "seatsAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "departure",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+
+    {
+      "collectionGroup": "rides",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "details.route",
+          "arrayConfig": "CONTAINS"
+        },
+        {
+          "fieldPath": "details.passengerPreference.OTHER",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "seatsAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "departure",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "rides",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "details.route",
+          "arrayConfig": "CONTAINS"
+        },
+        {
+          "fieldPath": "details.passengerPreference.FEMALE",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "departure",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "seatsAvailable",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "rides",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "details.route",
+          "arrayConfig": "CONTAINS"
+        },
+        {
+          "fieldPath": "details.passengerPreference.MALE",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "seatsAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "departure",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ],
   "fieldOverrides": [
     {
       "collectionGroup": "admins",

@@ -18,12 +18,12 @@ const columns = [
   },
   {
     title: 'Start Location',
-    dataIndex: 'start.location',
+    dataIndex: 'details.start.location',
     key: 'startLocation',
   },
   {
     title: 'Destination',
-    dataIndex: 'destination.location',
+    dataIndex: 'details.destination.location',
     key: 'destination',
   },
   {
@@ -40,7 +40,7 @@ const columns = [
   },
   {
     title: 'Available seat count',
-    dataIndex: 'availableSeatCount',
+    dataIndex: 'details.availableSeatCount',
     key: 'availableSeatCount',
   },
   {

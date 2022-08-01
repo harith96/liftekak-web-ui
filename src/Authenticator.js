@@ -12,7 +12,7 @@ export const getAuth = () => {
 
 export const getIdToken = async () => {
   const currentUser = authenticator && (await authenticator.currentAuthenticatedUser());
-  return currentUser.signInUserSession.idToken;
+  return currentUser?.signInUserSession?.idToken;
 };
 
 export const getCurrentUserRole = async () => {
