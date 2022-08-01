@@ -14,8 +14,10 @@ import {
   startAt,
   addDoc,
   serverTimestamp,
+  startAfter,
+  endAt,
 } from '@firebase/firestore';
-import { RideStatus } from 'enums';
+import { PageAction, RideStatus } from 'enums';
 
 import * as _ from 'lodash';
 import moment from 'moment';
@@ -113,25 +115,24 @@ const getRides = async ({
     where('departure', '>', moment.now()),
     where('seatsAvailable', '==', true),
     orderBy('departure'),
+    limit(DEFAULT_PAGE_SIZE),
+    pageAction === PageAction.NEXT && startAfter(lastVisibleRide || 0),
+    pageAction === PageAction.BACK && endAt(lastVisibleRide),
   ].filter((v) => v);
 
-  const q = query(
-    ridesRef,
-    ...queries
-
-    // limit(DEFAULT_PAGE_SIZE)
-    // startAt(!pageAction || !lastVisibleRide ? 1 : lastVisibleRide)
-  );
+  const q = query(ridesRef, ...queries);
 
   const querySnap = await getDocs(q);
 
-  // if (!_.isEmpty(querySnap.docs)) {
-  //   lastVisibleRide = querySnap.docs[querySnap.docs.length - 1];
-  // }
+  if (!_.isEmpty(querySnap.docs)) {
+    lastVisibleRide = querySnap.docs[querySnap.docs.length - 1];
+  }
 
-  return querySnap.docs
-    .map((docSnap) => docSnap.data())
-    .filter((ride) => ride.details.availableSeatCount >= availableSeatCount);
+  const rides = querySnap.docs.map((docSnap) => docSnap.data());
+
+  return _.isNumber(availableSeatCount)
+    ? rides.filter((ride) => ride.details.availableSeatCount >= availableSeatCount)
+    : rides;
 };
 
 const getRide = async (rideId) => {
