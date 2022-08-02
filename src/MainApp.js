@@ -18,6 +18,8 @@ import UserDetailsPageContainer from 'pages/UserDetailsPage/UserDetailsPageConta
 import { listenForAuthStateChanged } from 'common/auth';
 import { loadUserDetails } from 'actions';
 import SaveRidePageContainer from 'pages/SaveRidePage/SaveRidePageContainer';
+import BookingsPageContainer from 'pages/BookingsPage/BookingsPageContainer';
+import VehiclesPageContainer from 'pages/VehiclesPage/VehiclesPageContainer';
 
 const { Option } = Select;
 
@@ -60,6 +62,18 @@ function MainApp() {
           <PrivateRoute
             path={`${APP_ROUTES.RIDE_VIEW}/:rideId`}
             component={RideDetailsPageContainer}
+            roles={[UserRole.PASSENGER]}
+          />
+          <PrivateRoute
+            exact
+            path={APP_ROUTES.BOOKINGS}
+            component={BookingsPageContainer}
+            roles={[UserRole.PASSENGER]}
+          />
+          <PrivateRoute
+            exact
+            path={APP_ROUTES.VEHICLES}
+            component={VehiclesPageContainer}
             roles={[UserRole.PASSENGER]}
           />
           <Redirect to={APP_ROUTES.RIDES_LIST} />

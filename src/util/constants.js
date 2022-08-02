@@ -26,9 +26,13 @@ export const APP_ROUTES = {
   USER: '/user',
   LOGIN: '/login',
   CREATE_RIDE: '/create-ride',
-  UPDATE_RIDE: '/update-ride',
+  UPDATE_RIDE: '/update-ride', // /update-ride/:id
   RIDES_LIST: '/rides',
   RIDE_VIEW: '/ride', // /ride/:id
+  CREATE_BOOKING: '/book-ride',
+  UPDATE_BOOKING: '/update-booking',
+  BOOKINGS: '/bookings',
+  VEHICLES: '/vehicles',
 };
 
 export const MAX_PASSENGER_SEAT_COUNTS_BY_VEHICLE_TYPE = {
