@@ -1,5 +1,4 @@
 import { takeLatest, put, all, select, call, takeEvery } from 'redux-saga/effects';
-import { getRequest, patchRequest, postRequest } from '_http';
 import * as _ from 'lodash';
 
 import {
@@ -226,12 +225,13 @@ function* saveVehicleAsync({ vehicle, callback }) {
   }
 }
 
-function* loadRidesAsync({ pageAction }) {
+function* loadRidesAsync({ pageAction } = {}) {
   try {
     const { gender: userGender } = yield select((state) => state.user.data);
     const ridesFilters = yield select((state) => state.rideFilters.data);
+    const rides = yield select((state) => state.rides.data);
     const ridesList = yield getRides({ ...ridesFilters, pageAction, userGender });
-    yield put({ type: RIDES.SUCCESS, payload: ridesList });
+    yield put({ type: RIDES.SUCCESS, payload: ridesList || rides });
   } catch (error) {
     yield put({ type: RIDES.FAILURE, payload: error.message });
     const handled = yield handleUserSessionErrors(error);
@@ -258,10 +258,9 @@ function* loadAllNonExpiredRidesAsync() {
       rewardType: 'All',
     };
 
-    const response = yield call(postRequest, `/offer-code/header/user?page=0&size=0`, filtersApplied);
-    response.data.groupedRides = _.groupBy(response?.data?.items, 'rewardType');
+    // const response = yield call(postRequest, `/offer-code/header/user?page=0&size=0`, filtersApplied);
 
-    yield put({ type: RIDES.SUCCESS, payload: response.data });
+    yield put({ type: RIDES.SUCCESS });
   } catch (error) {
     yield put({ type: RIDES.FAILURE, payload: error.message });
     const handled = yield handleUserSessionErrors(error);
@@ -311,11 +310,11 @@ function* loadRideAsync({ selectedRideId }) {
 }
 function* updateRideAsync({ data: { rideId, endDate, comment } = {}, history }) {
   try {
-    yield call(patchRequest, `/offer-code/${rideId}/update`, {
-      rideId,
-      endDate,
-      comment,
-    });
+    // yield call(patchRequest, `/offer-code/${rideId}/update`, {
+    //   rideId,
+    //   endDate,
+    //   comment,
+    // });
     yield put({ type: UPDATE_RIDE.SUCCESS });
     yield put(
       action(SHOW_NOTIFICATION, {
@@ -342,13 +341,12 @@ function* updateRideAsync({ data: { rideId, endDate, comment } = {}, history }) 
 
 function* createRideAsync({ data, history }) {
   try {
-    console.log('***************** CREATE RIDE');
     const driver = yield select(getUser);
     yield createRide({ ...data, driver });
 
-    history.push(APP_ROUTES.RIDES_LIST);
+    yield loadRidesAsync();
 
-    // yield loadRidesAsync();
+    history.push(APP_ROUTES.RIDES_LIST);
 
     yield put({ type: CREATE_RIDE.SUCCESS });
     yield put(
@@ -359,7 +357,6 @@ function* createRideAsync({ data, history }) {
       })
     );
   } catch (error) {
-    console.log(error);
     yield put({ type: CREATE_RIDE.FAILURE, error: error.message });
 
     const handled = yield handleUserSessionErrors(error);
@@ -417,9 +414,12 @@ function* saveBooking(booking) {
   }
 }
 
-function* updateRideFiltersAsync({ data }) {
-  yield put({ type: UPDATE_RIDE_FILTERS.SUCCESS, payload: data });
+function* updateRideFiltersAsync({ filters: updatedFilters }) {
+  const filters = yield select((state) => state.rideFilters.data);
+
+  yield put({ type: UPDATE_RIDE_FILTERS.SUCCESS, payload: { ...filters, ...updatedFilters } });
 }
+
 function* showNotificationAsync(notificationAction) {
   const { message, description, className, isClosable } = notificationAction;
   yield openNotification({ message, description, className, isClosable });

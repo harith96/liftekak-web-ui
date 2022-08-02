@@ -4,8 +4,8 @@ import * as _ from 'lodash';
 import { getFormattedDateAndTime } from 'util/dateUtil';
 import getFullName from 'util/getFullName';
 import * as i18n from '_i18n';
-import RideDetailsPageContext from '../RidesDetailsPageContext';
 import { Spin } from 'antd';
+import RideDetailsPageContext from '../RidesDetailsPageContext';
 
 const renderRideDetail = (title, value) => {
   return (

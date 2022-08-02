@@ -79,3 +79,9 @@ code {
 .antd-clickable-row {
   cursor: pointer;
 }
+
+.horizontal-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

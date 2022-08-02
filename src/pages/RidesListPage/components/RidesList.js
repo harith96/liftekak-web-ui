@@ -1,8 +1,8 @@
-import { Table } from 'antd';
-import moment from 'moment';
 import React, { useContext } from 'react';
-import { getFormattedDate, getFormattedTime } from 'util/dateUtil';
+import { Table } from 'antd';
 
+import PaginationBar from 'components/PaginationBar';
+import { getFormattedDate, getFormattedTime } from 'util/dateUtil';
 import RidesListPageContext from '../RidesListPageContext';
 
 const columns = [
@@ -18,12 +18,12 @@ const columns = [
   },
   {
     title: 'Start Location',
-    dataIndex: 'start.location',
+    dataIndex: 'details.start.location',
     key: 'startLocation',
   },
   {
     title: 'Destination',
-    dataIndex: 'destination.location',
+    dataIndex: 'details.destination.location',
     key: 'destination',
   },
   {
@@ -40,7 +40,7 @@ const columns = [
   },
   {
     title: 'Available seat count',
-    dataIndex: 'availableSeatCount',
+    dataIndex: 'details.availableSeatCount',
     key: 'availableSeatCount',
   },
   {
@@ -51,7 +51,7 @@ const columns = [
 ];
 
 function RidesList() {
-  const { ridesList, isRidesFetching, onRideSelected } = useContext(RidesListPageContext);
+  const { ridesList, isRidesFetching, onRideSelected, onNextPage, onPreviousPage } = useContext(RidesListPageContext);
 
   return (
     <div id="rewards-batches-table-panel" className="grid-panel">
@@ -63,7 +63,9 @@ function RidesList() {
         columns={columns}
         onRowClick={onRideSelected}
         rowClassName="antd-clickable-row"
+        pagination={false}
       />
+      <PaginationBar onNextPage={onNextPage} onPreviousPage={onPreviousPage} />
     </div>
   );
 }

@@ -11,17 +11,22 @@ import {
   where,
   limit,
   orderBy,
-  startAt,
-  addDoc,
   serverTimestamp,
+  startAfter,
+  endBefore,
+  endAt,
+  startAt,
 } from '@firebase/firestore';
-import { RideStatus } from 'enums';
+import { PageAction, RideStatus } from 'enums';
 
 import * as _ from 'lodash';
 import moment from 'moment';
 import { DEFAULT_PAGE_SIZE } from 'util/constants';
+import buildRouteIndex, { buildRouteIndexString } from 'util/buildRouteIndex';
+import buildPassengerPreferenceDB from 'util/buildPassengerPreferenceDB';
 import { getCurrentUserID } from './auth';
 
+const firstVisibleRides = [];
 let lastVisibleRide;
 
 const incrementCounter = (resource) => {
@@ -33,6 +38,15 @@ const incrementCounter = (resource) => {
 
   // Update read count
   counterDocRef.update({ count: increment });
+};
+
+const getPreviousFirstDoc = () => {
+  const prevFirstDoc =
+    firstVisibleRides.length > 1 ? firstVisibleRides[firstVisibleRides.length - 2] : firstVisibleRides[0];
+
+  firstVisibleRides.pop();
+
+  return prevFirstDoc;
 };
 
 const saveUserDetails = async (userDetails) => {
@@ -84,27 +98,57 @@ const deleteVehicles = async (vehicles = []) => {
   await batch.commit();
 };
 
-const getRides = async ({ startLocation, endLocation, departure, rideId, status, pageAction, userGender }) => {
+const getRides = async ({
+  startTown,
+  endTown,
+  departureFrom,
+  departureUntil,
+  availableSeatCount,
+  pageAction,
+  userGender,
+  vehicleType,
+}) => {
+  if (!userGender) return [];
+  if (!pageAction) {
+    lastVisibleRide = null;
+    firstVisibleRides.length = 0;
+  }
+
   const db = getFirestore();
 
   const ridesRef = collection(db, 'rides');
-
-  const q = query(
-    ridesRef,
-    where('status', '==', status || RideStatus.NEW),
-    where('departure', '>', moment.now()),
-    orderBy('departure')
-    // limit(DEFAULT_PAGE_SIZE)
-    // startAt(!pageAction || !lastVisibleRide ? 1 : lastVisibleRide)
-  );
+  const queries = [
+    startTown && !endTown && where('details.route', 'array-contains', startTown),
+    !startTown && endTown && where('details.route', 'array-contains', endTown),
+    startTown && endTown && where('indices.route', 'array-contains', buildRouteIndexString([startTown, endTown])),
+    departureFrom && where('departure', '>=', departureFrom),
+    departureUntil && where('departure', '<=', departureUntil),
+    vehicleType && where('details.vehicle.type', '==', vehicleType),
+    where(`details.passengerPreference.${userGender}`, '==', true),
+    where('status', '==', RideStatus.NEW),
+    // where('departure', '>', moment.now()),
+    where('seatsAvailable', '==', true),
+    orderBy('departure'),
+    pageAction === PageAction.NEXT && startAfter(lastVisibleRide),
+    pageAction === PageAction.BACK && startAt(getPreviousFirstDoc()),
+    limit(DEFAULT_PAGE_SIZE),
+  ].filter((v) => v);
+  const q = query(ridesRef, ...queries);
 
   const querySnap = await getDocs(q);
 
-  // if (!_.isEmpty(querySnap.docs)) {
-  //   lastVisibleRide = querySnap.docs[querySnap.docs.length - 1];
-  // }
+  if (!_.isEmpty(querySnap.docs)) {
+    const [firstDoc] = querySnap.docs;
+    if (firstDoc.data().rideId !== firstVisibleRides[firstVisibleRides.length - 1]?.data().rideId)
+      firstVisibleRides.push(firstDoc);
+    lastVisibleRide = querySnap.docs[querySnap.docs.length - 1];
+    const rides = querySnap.docs.map((docSnap) => docSnap.data());
+    return _.isNumber(availableSeatCount)
+      ? rides.filter((ride) => ride.details.availableSeatCount >= availableSeatCount)
+      : rides;
+  }
 
-  return querySnap.docs.map((docSnap) => docSnap.data());
+  return null;
 };
 
 const getRide = async (rideId) => {
@@ -125,20 +169,22 @@ const createRide = async ({
   availableSeatCount,
   driver,
   vehicle,
+  passengerPreference,
 } = {}) => {
   const db = getFirestore();
   const rideId = `${moment.now()}`;
   const ride = {
     rideId,
-    start: { location: startLocation },
-    destination: { location: endLocation },
     departure,
-    availableSeatCount,
     details: {
+      start: { location: startLocation },
+      destination: { location: endLocation },
+      availableSeatCount,
       driverNote,
       route,
       totalSeatCount: availableSeatCount,
       vehicle,
+      passengerPreference: buildPassengerPreferenceDB(passengerPreference),
     },
     driver: {
       mobileNo: driver.mobileNo,
@@ -147,6 +193,10 @@ const createRide = async ({
       uid: getCurrentUserID(),
     },
     status: RideStatus.NEW,
+    seatsAvailable: true,
+    indices: {
+      route: buildRouteIndex(route),
+    },
   };
 
   await setDoc(doc(db, 'rides', rideId), ride);

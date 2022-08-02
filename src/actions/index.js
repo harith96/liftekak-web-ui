@@ -36,7 +36,7 @@ const showNotification = (message, description, notificationType) =>
 const loadRidesList = (pageAction) => action(RIDES.REQUEST, { pageAction });
 const loadRideDetails = (selectedRideId) => action(RIDE.REQUEST, { selectedRideId });
 const createRide = (data, history) => action(CREATE_RIDE.REQUEST, { data, history });
-const updateRideFilters = (data) => action(UPDATE_RIDE_FILTERS.REQUEST, { data });
+const updateRideFilters = (filters) => action(UPDATE_RIDE_FILTERS.REQUEST, { filters });
 const updateRide = (data, history) =>
   action(UPDATE_RIDE.REQUEST, {
     data,

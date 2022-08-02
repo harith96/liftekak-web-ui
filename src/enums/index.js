@@ -1,49 +1,49 @@
-const UserRole = {
+export const UserRole = {
   DRIVER: 'DRIVER',
   PASSENGER: 'PASSENGER',
   ADMIN: 'ADMIN',
 };
 
 // Antd notification types
-const NotificationType = {
+export const NotificationType = {
   SUCCESS: 'success',
   ERROR: 'error',
   INFO: 'info',
 };
 
-const SortOrder = {
+export const SortOrder = {
   DESC: 'DESC',
   ASC: 'ASC',
 };
 
-const RideStatus = {
+export const RideStatus = {
   NEW: 'NEW',
   ACTIVE: 'ACTIVE',
   INACTIVE: 'INACTIVE',
   EXPIRED: 'EXPIRED',
 };
 
-const SignInProvider = {
+export const SignInProvider = {
   EMAIL_PASSWORD: 'EMAIL_PASSWORD',
   GOOGLE: 'GOOGLE',
 };
 
-const FirebaseError = {
+export const FirebaseError = {
   USER_NOT_FOUND: 'auth/user-not-found',
 };
 
-const Gender = {
+export const Gender = {
   MALE: 'Male',
   FEMALE: 'Female',
   OTHER: 'Other',
 };
 
-const PageAction = {
+export const PageAction = {
   NEXT: 'NEXT',
   BACK: 'BACK',
 };
 
-const VehicleType = {
+export const VehicleType = {
   CAR: 'CAR',
   THREE_WHEEL: 'THREE_WHEEL',
   VAN: 'VAN',
@@ -52,14 +52,9 @@ const VehicleType = {
   OTHER: 'OTHER',
 };
 
-export {
-  UserRole,
-  NotificationType,
-  SortOrder,
-  RideStatus,
-  SignInProvider,
-  FirebaseError,
-  Gender,
-  VehicleType,
-  PageAction,
+export const FilterTypes = {
+  TEXT: 'TEXT',
+  SELECT: 'SELECT',
+  NUMBER: 'NUMBER',
+  TIME_RANGE: 'TIME_RANGE',
 };
