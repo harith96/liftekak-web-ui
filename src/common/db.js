@@ -11,11 +11,11 @@ import {
   where,
   limit,
   orderBy,
-  startAt,
-  addDoc,
   serverTimestamp,
   startAfter,
+  endBefore,
   endAt,
+  startAt,
 } from '@firebase/firestore';
 import { PageAction, RideStatus } from 'enums';
 
@@ -23,9 +23,10 @@ import * as _ from 'lodash';
 import moment from 'moment';
 import { DEFAULT_PAGE_SIZE } from 'util/constants';
 import buildRouteIndex, { buildRouteIndexString } from 'util/buildRouteIndex';
-import { getCurrentUserID } from './auth';
 import buildPassengerPreferenceDB from 'util/buildPassengerPreferenceDB';
+import { getCurrentUserID } from './auth';
 
+const firstVisibleRides = [];
 let lastVisibleRide;
 
 const incrementCounter = (resource) => {
@@ -37,6 +38,15 @@ const incrementCounter = (resource) => {
 
   // Update read count
   counterDocRef.update({ count: increment });
+};
+
+const getPreviousFirstDoc = () => {
+  const prevFirstDoc =
+    firstVisibleRides.length > 1 ? firstVisibleRides[firstVisibleRides.length - 2] : firstVisibleRides[0];
+
+  firstVisibleRides.pop();
+
+  return prevFirstDoc;
 };
 
 const saveUserDetails = async (userDetails) => {
@@ -99,10 +109,14 @@ const getRides = async ({
   vehicleType,
 }) => {
   if (!userGender) return [];
+  if (!pageAction) {
+    lastVisibleRide = null;
+    firstVisibleRides.length = 0;
+  }
+
   const db = getFirestore();
 
   const ridesRef = collection(db, 'rides');
-
   const queries = [
     startTown && !endTown && where('details.route', 'array-contains', startTown),
     !startTown && endTown && where('details.route', 'array-contains', endTown),
@@ -112,27 +126,29 @@ const getRides = async ({
     vehicleType && where('details.vehicle.type', '==', vehicleType),
     where(`details.passengerPreference.${userGender}`, '==', true),
     where('status', '==', RideStatus.NEW),
-    where('departure', '>', moment.now()),
+    // where('departure', '>', moment.now()),
     where('seatsAvailable', '==', true),
     orderBy('departure'),
+    pageAction === PageAction.NEXT && startAfter(lastVisibleRide),
+    pageAction === PageAction.BACK && startAt(getPreviousFirstDoc()),
     limit(DEFAULT_PAGE_SIZE),
-    pageAction === PageAction.NEXT && startAfter(lastVisibleRide || 0),
-    pageAction === PageAction.BACK && endAt(lastVisibleRide),
   ].filter((v) => v);
-
   const q = query(ridesRef, ...queries);
 
   const querySnap = await getDocs(q);
 
   if (!_.isEmpty(querySnap.docs)) {
+    const [firstDoc] = querySnap.docs;
+    if (firstDoc.data().rideId !== firstVisibleRides[firstVisibleRides.length - 1]?.data().rideId)
+      firstVisibleRides.push(firstDoc);
     lastVisibleRide = querySnap.docs[querySnap.docs.length - 1];
+    const rides = querySnap.docs.map((docSnap) => docSnap.data());
+    return _.isNumber(availableSeatCount)
+      ? rides.filter((ride) => ride.details.availableSeatCount >= availableSeatCount)
+      : rides;
   }
 
-  const rides = querySnap.docs.map((docSnap) => docSnap.data());
-
-  return _.isNumber(availableSeatCount)
-    ? rides.filter((ride) => ride.details.availableSeatCount >= availableSeatCount)
-    : rides;
+  return null;
 };
 
 const getRide = async (rideId) => {

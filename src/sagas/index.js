@@ -229,8 +229,9 @@ function* loadRidesAsync({ pageAction } = {}) {
   try {
     const { gender: userGender } = yield select((state) => state.user.data);
     const ridesFilters = yield select((state) => state.rideFilters.data);
+    const rides = yield select((state) => state.rides.data);
     const ridesList = yield getRides({ ...ridesFilters, pageAction, userGender });
-    yield put({ type: RIDES.SUCCESS, payload: ridesList });
+    yield put({ type: RIDES.SUCCESS, payload: ridesList || rides });
   } catch (error) {
     yield put({ type: RIDES.FAILURE, payload: error.message });
     const handled = yield handleUserSessionErrors(error);

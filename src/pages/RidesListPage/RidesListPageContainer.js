@@ -7,9 +7,9 @@ import * as _ from 'lodash';
 import { loadRidesList, updateRideFilters } from 'actions';
 import { PageAction } from 'enums';
 import { APP_ROUTES } from 'util/constants';
+import moment from 'moment';
 import RidesListPageComponent from './components/RidesListPageComponent';
 import { RidesListPageContextProvider } from './RidesListPageContext';
-import moment from 'moment';
 
 const searchTimeFormat = 'YYYY-MM-DDTHH:mm';
 
@@ -77,6 +77,7 @@ function RidesListPageContainer() {
   const onPreviousPage = useCallback(() => dispatch(loadRidesList(PageAction.BACK)), [dispatch]);
 
   const onRideSelected = useCallback(({ rideId }) => history.push(`${APP_ROUTES.RIDE_VIEW}/${rideId}`), [history]);
+
   const createRide = useCallback(() => history.push(APP_ROUTES.CREATE_RIDE), [history]);
 
   const onSearch = useCallback(
