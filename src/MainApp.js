@@ -44,7 +44,7 @@ function MainApp() {
         <Switch>
           <Route path={APP_ROUTES.LOGIN} component={SignInPageContainer} />
           <PrivateRoute exact path={APP_ROUTES.CREATE_RIDE} component={SaveRidePageContainer} />
-          <PrivateRoute exact path={APP_ROUTES.UPDATE_RIDE} component={SaveRidePageContainer} />
+          <PrivateRoute exact path={`${APP_ROUTES.UPDATE_RIDE}/:rideId`} component={SaveRidePageContainer} />
           <PrivateRoute
             exact
             path={APP_ROUTES.USER}
