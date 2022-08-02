@@ -8,7 +8,7 @@ import {
   RIDE,
   UPDATE_RIDE,
   UPDATE_RIDE_FILTERS,
-  CREATE_RIDE,
+  SAVE_RIDE,
   FETCH_ALL_RIDES,
   SIGN_IN,
   SIGN_UP,
@@ -32,7 +32,7 @@ import {
   signUpWithEmailAndPassword,
 } from 'common/auth';
 import {
-  createRide,
+  saveRide,
   getBookings,
   getRide,
   getRides,
@@ -339,16 +339,16 @@ function* updateRideAsync({ data: { rideId, endDate, comment } = {}, history }) 
   }
 }
 
-function* createRideAsync({ data, history }) {
+function* saveRideAsync({ data, history }) {
   try {
     const driver = yield select(getUser);
-    yield createRide({ ...data, driver });
+    yield saveRide({ ...data, driver });
 
     yield loadRidesAsync();
 
     history.push(APP_ROUTES.RIDES_LIST);
 
-    yield put({ type: CREATE_RIDE.SUCCESS });
+    yield put({ type: SAVE_RIDE.SUCCESS });
     yield put(
       action(SHOW_NOTIFICATION, {
         className: NotificationType.SUCCESS,
@@ -357,7 +357,7 @@ function* createRideAsync({ data, history }) {
       })
     );
   } catch (error) {
-    yield put({ type: CREATE_RIDE.FAILURE, error: error.message });
+    yield put({ type: SAVE_RIDE.FAILURE, error: error.message });
 
     const handled = yield handleUserSessionErrors(error);
     if (!handled) {
@@ -471,8 +471,8 @@ function* watchLoadRide() {
 function* watchUpdateRide() {
   yield takeLatest(UPDATE_RIDE.REQUEST, updateRideAsync);
 }
-function* watchCreateRide() {
-  yield takeLatest(CREATE_RIDE.REQUEST, createRideAsync);
+function* watchSaveRide() {
+  yield takeLatest(SAVE_RIDE.REQUEST, saveRideAsync);
 }
 
 function* loadAllRides() {
@@ -501,7 +501,7 @@ export default function* rootSaga() {
     watchLoadRide(),
     watchUpdateRide(),
     watchUpdateRideFilters(),
-    watchCreateRide(),
+    watchSaveRide(),
     loadAllRides(),
     watchLoadBookings(),
     watchSaveBooking(),

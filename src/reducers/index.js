@@ -7,7 +7,7 @@ import {
   RIDE,
   UPDATE_RIDE_FILTERS,
   UPDATE_RIDE,
-  CREATE_RIDE,
+  SAVE_RIDE,
   SIGN_IN,
   SIGN_UP,
   USER_VEHICLES,
@@ -32,7 +32,7 @@ const rides = createReducer(RIDES, initialState.rides);
 const ride = createReducer(RIDE, initialState.ride);
 const rideFilters = createReducer(UPDATE_RIDE_FILTERS, initialState.rideFilters);
 const updateRide = createReducer(UPDATE_RIDE, initialState.updateRide);
-const createRide = createReducer(CREATE_RIDE, initialState.createRide);
+const saveRide = createReducer(SAVE_RIDE, initialState.saveRide);
 const bookings = createReducer(BOOKINGS, initialState.bookings);
 const saveBooking = createReducer(SAVE_BOOKING, initialState.saveBookings);
 
@@ -48,5 +48,5 @@ export default combineReducers({
   ride,
   rideFilters,
   updateRide,
-  createRide,
+  saveRide,
 });

@@ -17,7 +17,7 @@ import SignInPageContainer from 'pages/SignInPage/SignInPageContainer';
 import UserDetailsPageContainer from 'pages/UserDetailsPage/UserDetailsPageContainer';
 import { listenForAuthStateChanged } from 'common/auth';
 import { loadUserDetails } from 'actions';
-import CreateRidePageContainer from 'pages/CreateRidePage/CreateRidePageContainer';
+import SaveRidePageContainer from 'pages/SaveRidePage/SaveRidePageContainer';
 
 const { Option } = Select;
 
@@ -43,7 +43,8 @@ function MainApp() {
       <Router>
         <Switch>
           <Route path={APP_ROUTES.LOGIN} component={SignInPageContainer} />
-          <PrivateRoute exact path={APP_ROUTES.CREATE_RIDE} component={CreateRidePageContainer} />
+          <PrivateRoute exact path={APP_ROUTES.CREATE_RIDE} component={SaveRidePageContainer} />
+          <PrivateRoute exact path={APP_ROUTES.UPDATE_RIDE} component={SaveRidePageContainer} />
           <PrivateRoute
             exact
             path={APP_ROUTES.USER}

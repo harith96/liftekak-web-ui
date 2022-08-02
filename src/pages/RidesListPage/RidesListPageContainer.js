@@ -78,7 +78,7 @@ function RidesListPageContainer() {
 
   const onRideSelected = useCallback(({ rideId }) => history.push(`${APP_ROUTES.RIDE_VIEW}/${rideId}`), [history]);
 
-  const createRide = useCallback(() => history.push(APP_ROUTES.CREATE_RIDE), [history]);
+  const saveRide = useCallback(() => history.push(APP_ROUTES.CREATE_RIDE), [history]);
 
   const onSearch = useCallback(
     ({ startTown, destinationTown, availableSeatCount, vehicleType, departure }) => {
@@ -111,7 +111,7 @@ function RidesListPageContainer() {
         onNextPage,
         onPreviousPage,
         onRideSelected,
-        gotToCreateRideView: createRide,
+        gotToSaveRideView: saveRide,
         onSearch,
       }}
     >

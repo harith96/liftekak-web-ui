@@ -160,7 +160,7 @@ const getRide = async (rideId) => {
   return docSnap.data();
 };
 
-const createRide = async ({
+const saveRide = async ({
   startLocation,
   endLocation,
   departure,
@@ -265,7 +265,7 @@ export {
   deleteVehicles,
   getRides,
   getRide,
-  createRide,
+  saveRide,
   createBooking,
   getBookings,
 };

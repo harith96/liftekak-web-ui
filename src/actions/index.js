@@ -6,7 +6,7 @@ import {
   RIDES,
   UPDATE_RIDE_FILTERS,
   UPDATE_RIDE,
-  CREATE_RIDE,
+  SAVE_RIDE,
   FETCH_ALL_RIDES,
   SIGN_IN,
   SIGN_UP,
@@ -35,7 +35,7 @@ const showNotification = (message, description, notificationType) =>
   action(SHOW_NOTIFICATION, { message, description, className: notificationType });
 const loadRidesList = (pageAction) => action(RIDES.REQUEST, { pageAction });
 const loadRideDetails = (selectedRideId) => action(RIDE.REQUEST, { selectedRideId });
-const createRide = (data, history) => action(CREATE_RIDE.REQUEST, { data, history });
+const saveRide = (data, history) => action(SAVE_RIDE.REQUEST, { data, history });
 const updateRideFilters = (filters) => action(UPDATE_RIDE_FILTERS.REQUEST, { filters });
 const updateRide = (data, history) =>
   action(UPDATE_RIDE.REQUEST, {
@@ -62,7 +62,7 @@ export {
   showNotification,
   updateRideFilters,
   updateRide,
-  createRide,
+  saveRide,
   loadAllRides,
   loadBookings,
   saveBookings,

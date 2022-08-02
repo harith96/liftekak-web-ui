@@ -5,10 +5,10 @@ import * as i18n from '_i18n';
 import RidesListPageContext from '../RidesListPageContext';
 
 function CreateRideButton() {
-  const { gotToCreateRideView } = useContext(RidesListPageContext);
+  const { gotToSaveRideView } = useContext(RidesListPageContext);
 
   return (
-    <Button type="primary" id="create-ride-button" onClick={gotToCreateRideView}>
+    <Button type="primary" id="create-ride-button" onClick={gotToSaveRideView}>
       {i18n.t('Create A Ride')}
     </Button>
   );
