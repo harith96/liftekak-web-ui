@@ -4,6 +4,7 @@ import { Table } from 'antd';
 import PaginationBar from 'components/PaginationBar';
 import { getFormattedDate, getFormattedTime } from 'util/dateUtil';
 import RidesListPageContext from '../RidesListPageContext';
+import { DEFAULT_PAGE_SIZE } from 'util/constants';
 
 const columns = [
   {
@@ -65,7 +66,11 @@ function RidesList() {
         rowClassName="antd-clickable-row"
         pagination={false}
       />
-      <PaginationBar onNextPage={onNextPage} onPreviousPage={onPreviousPage} />
+      <PaginationBar
+        onNextPage={onNextPage}
+        onPreviousPage={onPreviousPage}
+        isNextButtonDisabled={ridesList.length < DEFAULT_PAGE_SIZE}
+      />
     </div>
   );
 }
