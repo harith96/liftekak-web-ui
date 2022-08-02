@@ -26,6 +26,7 @@ export const APP_ROUTES = {
   USER: '/user',
   LOGIN: '/login',
   CREATE_RIDE: '/create-ride',
+  UPDATE_RIDE: '/update-ride',
   RIDES_LIST: '/rides',
   RIDE_VIEW: '/ride', // /ride/:id
 };

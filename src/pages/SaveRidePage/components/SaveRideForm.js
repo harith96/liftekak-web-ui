@@ -10,7 +10,7 @@ import React, { useContext } from 'react';
 import * as yup from 'yup';
 
 import * as i18n from '_i18n';
-import CreateRidePageContext from '../CreateRidePageContext';
+import SaveRidePageContext from '../SaveRidePageContext';
 
 const { Option } = Select;
 const DEPARTURE_TIME_MIN_STEP = 5;
@@ -32,20 +32,20 @@ const validationSchema = yup.object().shape({
     .required('Passenger preference is required.'),
 });
 
-function CreateRideForm() {
+function SaveRideForm() {
   const {
-    onCreateRide,
+    onSaveRide,
     isRideCreating,
     user: { passengerPreference: defaultPassengerPreference, defaultVehicle } = {},
     vehicles,
     isVehiclesLoading,
-  } = useContext(CreateRidePageContext);
+  } = useContext(SaveRidePageContext);
 
   return (
     <Formik
       id="user-details-form"
       onSubmit={(values, { setSubmitting, resetForm }) => {
-        onCreateRide(values);
+        onSaveRide(values);
         setSubmitting(false);
         resetForm({ values });
       }}
@@ -247,4 +247,4 @@ function CreateRideForm() {
   );
 }
 
-export default CreateRideForm;
+export default SaveRideForm;

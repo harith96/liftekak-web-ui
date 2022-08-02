@@ -73,7 +73,7 @@ const initialState = {
     },
     error: null,
   },
-  createRide: {
+  saveRide: {
     fetching: false,
     data: {
       rideId: null,

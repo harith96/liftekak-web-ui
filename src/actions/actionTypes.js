@@ -11,7 +11,7 @@ const SAVE_VEHICLE = createRequestTypes('SAVE_VEHICLE');
 
 const RIDES = createRequestTypes('RIDES');
 const RIDE = createRequestTypes('RIDE');
-const CREATE_RIDE = createRequestTypes('CREATE_RIDE');
+const SAVE_RIDE = createRequestTypes('SAVE_RIDE');
 const UPDATE_RIDE_FILTERS = createRequestTypes('UPDATE_RIDE_FILTERS');
 const UPDATE_RIDE = createRequestTypes('UPDATE_RIDE');
 const FETCH_ALL_RIDES = createRequestTypes('FETCH_ALL_RIDES');
@@ -31,7 +31,7 @@ export {
   SAVE_VEHICLE,
   RIDES,
   RIDE,
-  CREATE_RIDE,
+  SAVE_RIDE,
   SHOW_NOTIFICATION,
   UPDATE_RIDE_FILTERS,
   UPDATE_RIDE,

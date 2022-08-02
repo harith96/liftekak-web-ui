@@ -1,12 +1,12 @@
-import { createRide, loadUserVehicles } from 'actions';
+import { saveRide, loadUserVehicles } from 'actions';
 import { SaveVehicleContextProvider } from 'components/SaveVehicle/context/SaveVehicleContext';
 import * as _ from 'lodash';
 import moment from 'moment';
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import CreateRidePageComponent from './components/CreateRidePageComponent';
-import { CreateRidePageContextProvider } from './CreateRidePageContext';
+import SaveRidePageComponent from './components/SaveRidePageComponent';
+import { SaveRidePageContextProvider } from './SaveRidePageContext';
 
 const formatRideValues = (values) => ({
   ...values,
@@ -21,11 +21,11 @@ const formatRideValues = (values) => ({
   ).valueOf(),
 });
 
-function CreateRidePageContainer() {
+function SaveRidePageContainer() {
   const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector((state) => state.user.data);
-  const isRideCreating = useSelector((state) => state.createRide.fetching);
+  const isRideCreating = useSelector((state) => state.saveRide.fetching);
   const isVehiclesLoading = useSelector((state) => state.userVehicles.fetching);
   const vehicles = useSelector((state) => state.userVehicles.data);
 
@@ -33,18 +33,18 @@ function CreateRidePageContainer() {
     dispatch(loadUserVehicles());
   }, []);
 
-  const onCreateRide = useCallback(
-    (values) => dispatch(createRide(formatRideValues(values), history)),
+  const onSaveRide = useCallback(
+    (values) => dispatch(saveRide(formatRideValues(values), history)),
     [dispatch, history]
   );
 
   return (
-    <CreateRidePageContextProvider value={{ onCreateRide, isRideCreating, vehicles, isVehiclesLoading, user }}>
+    <SaveRidePageContextProvider value={{ onSaveRide, isRideCreating, vehicles, isVehiclesLoading, user }}>
       <SaveVehicleContextProvider>
-        <CreateRidePageComponent />
+        <SaveRidePageComponent />
       </SaveVehicleContextProvider>
-    </CreateRidePageContextProvider>
+    </SaveRidePageContextProvider>
   );
 }
 
-export default CreateRidePageContainer;
+export default SaveRidePageContainer;
