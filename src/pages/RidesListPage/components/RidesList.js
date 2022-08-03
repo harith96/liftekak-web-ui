@@ -4,7 +4,7 @@ import { Table } from 'antd';
 import PaginationBar from 'components/PaginationBar';
 import { getFormattedDate, getFormattedTime } from 'util/dateUtil';
 import RidesListPageContext from '../RidesListPageContext';
-import { DEFAULT_PAGE_SIZE } from 'util/constants';
+import { DEFAULT_PAGE_SIZE, RidesTabs } from 'util/constants';
 
 const columns = [
   {
@@ -51,18 +51,24 @@ const columns = [
   },
 ];
 
-function RidesList() {
-  const { ridesList, isRidesFetching, onRideSelected, onNextPage, onPreviousPage } = useContext(RidesListPageContext);
+function RidesList({ activeTabKey }) {
+  const isAllRides = activeTabKey === RidesTabs.ALL_RIDES;
+  const { ridesList, isRidesFetching, onRideSelected, onNextPage, onPreviousPage, myRides, isMyRidesFetching } =
+    useContext(RidesListPageContext);
+
+  const onRow = (record, rowIndex) => ({
+    onClick: () => onRideSelected(record),
+  });
 
   return (
     <div id="rewards-batches-table-panel" className="grid-panel">
       <Table
         id="rides-list-table"
         className="costing-batches-table"
-        loading={isRidesFetching}
-        dataSource={ridesList}
+        loading={isAllRides ? isRidesFetching : isMyRidesFetching}
+        dataSource={isAllRides ? ridesList : myRides}
         columns={columns}
-        onRowClick={onRideSelected}
+        onRow={onRow}
         rowClassName="antd-clickable-row"
         pagination={false}
       />

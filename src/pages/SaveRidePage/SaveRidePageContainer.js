@@ -1,10 +1,12 @@
-import { saveRide, loadUserVehicles } from 'actions';
+import { saveRide, loadUserVehicles, showNotification, loadRideDetails } from 'actions';
 import { SaveVehicleContextProvider } from 'components/SaveVehicle/context/SaveVehicleContext';
+import { NotificationType } from 'enums';
 import * as _ from 'lodash';
 import moment from 'moment';
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useHistory, useLocation, useParams } from 'react-router';
+import { APP_ROUTES } from 'util/constants';
 import SaveRidePageComponent from './components/SaveRidePageComponent';
 import { SaveRidePageContextProvider } from './SaveRidePageContext';
 
@@ -29,6 +31,25 @@ function SaveRidePageContainer() {
   const isVehiclesLoading = useSelector((state) => state.userVehicles.fetching);
   const vehicles = useSelector((state) => state.userVehicles.data);
 
+  // Start - Logic for ride update
+  const { rideId } = useParams();
+  const { pathname } = useLocation();
+  const isRideUpdate = pathname.includes(APP_ROUTES.UPDATE_RIDE);
+
+  const rideDetails = useSelector(
+    (state) => state.rides.data?.find((ride) => ride.rideId === rideId) || state.ride.data
+  );
+  const isRidesDetailsFetching = useSelector((state) => state.ride.fetching);
+  const rideError = useSelector((state) => state.ride.error);
+
+  useEffect(() => {
+    if (rideId && isRideUpdate) {
+      if ((!rideDetails?.rideId || rideDetails?.rideId !== rideId) && !rideError) dispatch(loadRideDetails(rideId));
+    }
+  }, [dispatch, rideDetails, rideError]);
+
+  // End - Logic for ride update
+
   useEffect(() => {
     dispatch(loadUserVehicles());
   }, []);
@@ -39,7 +60,18 @@ function SaveRidePageContainer() {
   );
 
   return (
-    <SaveRidePageContextProvider value={{ onSaveRide, isRideCreating, vehicles, isVehiclesLoading, user }}>
+    <SaveRidePageContextProvider
+      value={{
+        onSaveRide,
+        isRideCreating,
+        vehicles,
+        isVehiclesLoading,
+        user,
+        rideDetails,
+        isRidesDetailsFetching,
+        isRideUpdate,
+      }}
+    >
       <SaveVehicleContextProvider>
         <SaveRidePageComponent />
       </SaveVehicleContextProvider>

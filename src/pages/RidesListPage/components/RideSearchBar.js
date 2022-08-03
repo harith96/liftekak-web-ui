@@ -34,7 +34,7 @@ const searchIndexes = [
   {
     name: 'availableSeatCount',
     dataIndex: 'availableSeatCount',
-    title: 'Minimum available seat count',
+    title: 'Seat count',
     placeholder: 'Search minimum seat count',
     props: { type: FilterTypes.NUMBER },
   },

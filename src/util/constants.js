@@ -49,3 +49,8 @@ export const ISO_DATE_FORMAT = 'YYYY-MM-DDTHH:mm:ss.SSS[Z]';
 export const BAD_REQUEST_STATUS = 400;
 export const NOT_FOUND_STATUS = 404;
 export const USER_NOT_AUTHORIZED_STATUS = 401;
+
+export const RidesTabs = {
+  ALL_RIDES: 'all-rides',
+  MY_RIDES: 'my-rides',
+};
