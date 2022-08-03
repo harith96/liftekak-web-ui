@@ -1,5 +1,5 @@
 export const DOWNLOAD_DATE_PATTERN = 'DD_MMM_YYYY_hh_mm_ss';
-export const DEFAULT_PAGE_SIZE = 40;
+export const DEFAULT_PAGE_SIZE = 20;
 export const DATE_PATTERN = 'YYYY-MM-DD';
 export const DATE_PATTERN_DISPLAY = 'DD MMMM YYYY';
 export const COMMENT_TIME_PATTERN = 'DD MMMM YYYY hh:mm:ss';
@@ -26,9 +26,13 @@ export const APP_ROUTES = {
   USER: '/user',
   LOGIN: '/login',
   CREATE_RIDE: '/create-ride',
-  UPDATE_RIDE: '/update-ride',
+  UPDATE_RIDE: '/update-ride', // /update-ride/:id
   RIDES_LIST: '/rides',
   RIDE_VIEW: '/ride', // /ride/:id
+  CREATE_BOOKING: '/book-ride',
+  UPDATE_BOOKING: '/update-booking',
+  BOOKINGS: '/bookings',
+  VEHICLES: '/vehicles',
 };
 
 export const MAX_PASSENGER_SEAT_COUNTS_BY_VEHICLE_TYPE = {
