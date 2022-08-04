@@ -16,6 +16,7 @@ import {
   RESET_PASSWORD,
   BOOKINGS,
   SAVE_BOOKING,
+  MY_RIDES,
 } from 'actions/actionTypes';
 import { createReducer } from 'reduxHelpers';
 
@@ -29,6 +30,7 @@ const userVehicles = createReducer(USER_VEHICLES, initialState.userVehicles);
 const saveVehicle = createReducer(SAVE_VEHICLE, initialState.saveVehicle);
 
 const rides = createReducer(RIDES, initialState.rides);
+const myRides = createReducer(MY_RIDES, initialState.myRides);
 const ride = createReducer(RIDE, initialState.ride);
 const rideFilters = createReducer(UPDATE_RIDE_FILTERS, initialState.rideFilters);
 const updateRide = createReducer(UPDATE_RIDE, initialState.updateRide);
@@ -45,6 +47,7 @@ export default combineReducers({
   userVehicles,
   saveVehicle,
   rides,
+  myRides,
   ride,
   rideFilters,
   updateRide,

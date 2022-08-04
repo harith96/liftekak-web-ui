@@ -16,6 +16,7 @@ import {
   RESET_PASSWORD,
   BOOKINGS,
   SAVE_BOOKING,
+  MY_RIDES,
 } from './actionTypes';
 
 const signIn = (provider, signInDetails) => action(SIGN_IN.REQUEST, { provider, signInDetails });
@@ -34,6 +35,7 @@ const loadUserVehicles = () => action(USER_VEHICLES.REQUEST);
 const showNotification = (message, description, notificationType) =>
   action(SHOW_NOTIFICATION, { message, description, className: notificationType });
 const loadRidesList = (pageAction) => action(RIDES.REQUEST, { pageAction });
+const loadMyRides = (pageAction) => action(MY_RIDES.REQUEST, { pageAction });
 const loadRideDetails = (selectedRideId) => action(RIDE.REQUEST, { selectedRideId });
 const saveRide = (data, history) => action(SAVE_RIDE.REQUEST, { data, history });
 const updateRideFilters = (filters) => action(UPDATE_RIDE_FILTERS.REQUEST, { filters });
@@ -58,6 +60,7 @@ export {
   saveVehicle,
   // ride actions
   loadRidesList,
+  loadMyRides,
   loadRideDetails,
   showNotification,
   updateRideFilters,

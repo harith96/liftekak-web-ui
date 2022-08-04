@@ -27,10 +27,14 @@ function RideDetails() {
       rideId,
       driver: { firstName, lastName, mobileNo } = {},
       availableSeatCount,
-      destination: { location: destinationLocation } = {},
-      start: { location: startLocation } = {},
       departure: { seconds: departure } = {},
-      details: { route, driverNote, vehicle: { type: vehicleType } = {} } = {},
+      details: {
+        route,
+        driverNote,
+        vehicle: { type: vehicleType } = {},
+        destination: { location: destinationLocation } = {},
+        start: { location: startLocation } = {},
+      } = {},
     } = {},
   } = useContext(RideDetailsPageContext);
 

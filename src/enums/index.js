@@ -19,7 +19,7 @@ export const SortOrder = {
 export const RideStatus = {
   NEW: 'NEW',
   ACTIVE: 'ACTIVE',
-  INACTIVE: 'INACTIVE',
+  COMPLETED: 'COMPLETED',
   EXPIRED: 'EXPIRED',
 };
 

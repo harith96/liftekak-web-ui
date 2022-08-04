@@ -1,9 +1,10 @@
 import { Col, Icon, Row, Button } from 'antd';
-import { FilterTypes, VehicleType } from 'enums';
+import { FilterTypes, RideStatus, VehicleType } from 'enums';
 import { Formik } from 'formik';
 import { DatePicker, Form, Input, Select } from 'formik-antd';
 import _ from 'lodash';
-import React, { useCallback, useContext } from 'react';
+import React, { useContext } from 'react';
+import { RidesTabs } from 'util/constants';
 import RidesListPageContext from '../RidesListPageContext';
 
 const { Option } = Select;
@@ -34,9 +35,18 @@ const searchIndexes = [
   {
     name: 'availableSeatCount',
     dataIndex: 'availableSeatCount',
-    title: 'Minimum available seat count',
+    title: 'Seat count',
     placeholder: 'Search minimum seat count',
     props: { type: FilterTypes.NUMBER },
+    tab: RidesTabs.ALL_RIDES,
+  },
+  {
+    name: 'rideStatus',
+    dataIndex: 'status',
+    title: 'Ride Status',
+    placeholder: 'Filter by ride status',
+    props: { type: FilterTypes.SELECT, data: { options: _.keys(RideStatus) } },
+    tab: RidesTabs.MY_RIDES,
   },
   {
     name: 'vehicleType',
@@ -72,22 +82,36 @@ const getFilterSpan = (type) => {
 };
 
 function RideSearchBar() {
-  const { onSearch } = useContext(RidesListPageContext);
+  const {
+    onSearch,
+    rideFilters: {
+      startTown,
+      destinationTown,
+      departureFrom,
+      departureUntil,
+      availableSeatCount,
+      vehicleType,
+      rideStatus,
+    },
+    activeTabKey,
+  } = useContext(RidesListPageContext);
 
   return (
     <Formik
       initialValues={{
-        startTown: undefined,
-        destinationTown: undefined,
-        departure: [],
-        availableSeatCount: 1,
-        vehicleType: null,
+        startTown,
+        destinationTown,
+        departure: [departureFrom, departureUntil],
+        availableSeatCount,
+        vehicleType,
+        rideStatus,
       }}
       onSubmit={(values, { setSubmitting, resetForm }) => {
         onSearch(values);
         setSubmitting(false);
         resetForm({ values });
       }}
+      enableReinitialize
     >
       {({ submitForm }) => {
         return (
@@ -100,42 +124,46 @@ function RideSearchBar() {
           >
             <div className="search-container">
               <Row type="flex" align="bottom" justify="space-around">
-                {searchIndexes.map(({ dataIndex, name, title, placeholder, props: { type, data } }) => (
-                  <Col span={getFilterSpan(type)} key={name}>
-                    <label id="user-last-name-label" className="user-input">
-                      {title}
-                    </label>
-                    <>
-                      {(type === FilterTypes.TEXT || type === FilterTypes.NUMBER) && (
-                        <Input
-                          id="user-last-name-input"
-                          name={name}
-                          type={type === FilterTypes.NUMBER ? 'number' : 'text'}
-                          size="default"
-                          placeholder={placeholder}
-                        />
-                      )}
-                    </>
-                    <>
-                      {type === FilterTypes.SELECT && (
-                        <Select
-                          name={name}
-                          allowClear
-                          size="default"
-                          className="search-select"
-                          placeholder={placeholder}
-                        >
-                          {_.map(data.options, (option) => (
-                            <Option key={option} value={option}>
-                              {_.startCase(option)}
-                            </Option>
-                          ))}
-                        </Select>
-                      )}
-                    </>
-                    <>{type === FilterTypes.TIME_RANGE && <RangePicker name={name} showTime />}</>
-                  </Col>
-                ))}
+                {searchIndexes.map(
+                  ({ name, title, placeholder, props: { type, data }, tab }) =>
+                    (!tab || activeTabKey === tab) && (
+                      <Col span={getFilterSpan(type)} key={name}>
+                        <label id="user-last-name-label" className="user-input">
+                          {title}
+                        </label>
+                        <>
+                          {(type === FilterTypes.TEXT || type === FilterTypes.NUMBER) && (
+                            <Input
+                              id="user-last-name-input"
+                              name={name}
+                              type={type === FilterTypes.NUMBER ? 'number' : 'text'}
+                              size="default"
+                              placeholder={placeholder}
+                              min={1}
+                            />
+                          )}
+                        </>
+                        <>
+                          {type === FilterTypes.SELECT && (
+                            <Select
+                              name={name}
+                              allowClear
+                              size="default"
+                              className="search-select"
+                              placeholder={placeholder}
+                            >
+                              {_.map(data.options, (option) => (
+                                <Option key={option} value={option}>
+                                  {_.startCase(option)}
+                                </Option>
+                              ))}
+                            </Select>
+                          )}
+                        </>
+                        <>{type === FilterTypes.TIME_RANGE && <RangePicker name={name} showTime />}</>
+                      </Col>
+                    )
+                )}
                 <Button type="primary" onClick={submitForm}>
                   <Icon type="search" />
                   Search

@@ -1,76 +1,31 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useLocation } from 'react-router';
-import qs from 'query-string';
+import { useHistory } from 'react-router';
 import * as _ from 'lodash';
 
-import { loadRidesList, updateRideFilters } from 'actions';
-import { PageAction } from 'enums';
-import { APP_ROUTES } from 'util/constants';
-import moment from 'moment';
+import { loadMyRides, loadRidesList, updateRideFilters } from 'actions';
+import { PageAction, RideStatus } from 'enums';
+import { APP_ROUTES, RidesTabs } from 'util/constants';
 import RidesListPageComponent from './components/RidesListPageComponent';
 import { RidesListPageContextProvider } from './RidesListPageContext';
-
-const searchTimeFormat = 'YYYY-MM-DDTHH:mm';
 
 function RidesListPageContainer() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { search } = useLocation();
-  const {
-    startTown: startTownQuery,
-    destinationTown: destinationTownQuery,
-    availableSeatCount: availableSeatCountQuery,
-    vehicleType: vehicleTypeQuery,
-    departureFrom: departureFromQuery,
-    departureUntil: departureUntilQuery,
-  } = qs.parse(search);
   const ridesList = useSelector((state) => state.rides.data);
+  const myRides = useSelector((state) => state.myRides.data);
+  const isMyRidesFetching = useSelector((state) => state.myRides.fetching);
+  const rideFilters = useSelector((state) => state.rideFilters.data);
   const isRidesFetching = useSelector((state) => state.rides.fetching);
-  const {
-    startTown: startTownFilter,
-    destinationTown: destinationTownFilter,
-    availableSeatCount: availableSeatCountFilter,
-    vehicleType: vehicleTypeFilter,
-    departureFrom: departureFromFilter,
-    departureUntil: departureUntilFilter,
-  } = useSelector((state) => state.rideFilters.data);
 
-  useEffect(
-    () =>
-      dispatch(
-        updateRideFilters({
-          startTown: startTownQuery,
-          destinationTown: destinationTownQuery,
-          availableSeatCount: availableSeatCountQuery,
-          vehicleType: vehicleTypeQuery,
-          departureFrom: moment(departureFromQuery, searchTimeFormat).valueOf(),
-          departureUntil: moment(departureUntilQuery, searchTimeFormat).valueOf(),
-        })
-      ),
-    [
-      dispatch,
-      startTownQuery,
-      destinationTownQuery,
-      availableSeatCountQuery,
-      vehicleTypeQuery,
-      departureFromQuery,
-      departureUntilQuery,
-    ]
-  );
+  const [activeTabKey, setActiveTabKey] = useState(RidesTabs.ALL_RIDES);
 
-  useEffect(
-    () => dispatch(loadRidesList()),
-    [
-      dispatch,
-      startTownFilter,
-      destinationTownFilter,
-      availableSeatCountFilter,
-      vehicleTypeFilter,
-      departureFromFilter,
-      departureUntilFilter,
-    ]
-  );
+  const isAllRidesPageVisible = activeTabKey === RidesTabs.ALL_RIDES;
+
+  useEffect(() => {
+    dispatch(loadRidesList());
+    dispatch(loadMyRides());
+  }, [dispatch, rideFilters]);
 
   const onNextPage = useCallback(() => dispatch(loadRidesList(PageAction.NEXT)), [dispatch]);
 
@@ -78,41 +33,52 @@ function RidesListPageContainer() {
 
   const onRideSelected = useCallback(({ rideId }) => history.push(`${APP_ROUTES.RIDE_VIEW}/${rideId}`), [history]);
 
+  const onNextMyRidePage = useCallback(() => dispatch(loadMyRides(PageAction.NEXT)), [dispatch]);
+
+  const onPreviousMyRidePage = useCallback(() => dispatch(loadMyRides(PageAction.BACK)), [dispatch]);
+
+  const onMyRideSelected = useCallback(
+    ({ rideId, status }) =>
+      history.push(
+        status === RideStatus.NEW ? `${APP_ROUTES.UPDATE_RIDE}/${rideId}` : `${APP_ROUTES.RIDE_VIEW}/${rideId}`
+      ),
+    [history]
+  );
+
   const saveRide = useCallback(() => history.push(APP_ROUTES.CREATE_RIDE), [history]);
 
   const onSearch = useCallback(
-    ({ startTown, destinationTown, availableSeatCount, vehicleType, departure }) => {
+    ({
+      startTown,
+      destinationTown,
+      availableSeatCount,
+      vehicleType,
+      departure: [departureFrom, departureUntil],
+      rideStatus,
+    }) => {
       const filters = _.pickBy(
-        { startTown, destinationTown, availableSeatCount, vehicleType },
-        (v) => !_.isEmpty(v) || _.isNumber(v)
+        { startTown, destinationTown, availableSeatCount, vehicleType, departureFrom, departureUntil, rideStatus },
+        (v) => v
       );
 
-      // departure must be an array of moment objects
-      if (departure.length) {
-        filters.departureFrom = departure[0].format(searchTimeFormat);
-      }
-
-      if (departure.length > 1) {
-        filters.departureUntil = departure[1].format(searchTimeFormat);
-      }
-
-      const searchQuery = qs.stringify(filters);
-
-      history.push({ search: searchQuery });
+      dispatch(updateRideFilters(filters));
     },
-    [history]
+    [history, dispatch]
   );
 
   return (
     <RidesListPageContextProvider
       value={{
-        ridesList,
-        isRidesFetching,
-        onNextPage,
-        onPreviousPage,
-        onRideSelected,
+        ridesList: isAllRidesPageVisible ? ridesList : myRides,
+        isRidesFetching: isAllRidesPageVisible ? isRidesFetching : isMyRidesFetching,
+        onNextPage: isAllRidesPageVisible ? onNextPage : onNextMyRidePage,
+        onPreviousPage: isAllRidesPageVisible ? onPreviousPage : onPreviousMyRidePage,
+        onRideSelected: isAllRidesPageVisible ? onRideSelected : onMyRideSelected,
         gotToSaveRideView: saveRide,
         onSearch,
+        rideFilters,
+        activeTabKey,
+        setActiveTabKey,
       }}
     >
       <RidesListPageComponent />

@@ -1,5 +1,5 @@
 export const DOWNLOAD_DATE_PATTERN = 'DD_MMM_YYYY_hh_mm_ss';
-export const DEFAULT_PAGE_SIZE = 20;
+export const DEFAULT_PAGE_SIZE = 5;
 export const DATE_PATTERN = 'YYYY-MM-DD';
 export const DATE_PATTERN_DISPLAY = 'DD MMMM YYYY';
 export const COMMENT_TIME_PATTERN = 'DD MMMM YYYY hh:mm:ss';
@@ -49,3 +49,8 @@ export const ISO_DATE_FORMAT = 'YYYY-MM-DDTHH:mm:ss.SSS[Z]';
 export const BAD_REQUEST_STATUS = 400;
 export const NOT_FOUND_STATUS = 404;
 export const USER_NOT_AUTHORIZED_STATUS = 401;
+
+export const RidesTabs = {
+  ALL_RIDES: 'all-rides',
+  MY_RIDES: 'my-rides',
+};
