@@ -40,10 +40,14 @@ function SaveRideForm() {
     vehicles,
     isVehiclesLoading,
     rideDetails: {
-      start: { location: currentStartLocation } = {},
-      destination: { location: currentEndLocation } = {},
       departure,
-      details: { availableSeatCount, route, driverNote } = {},
+      details: {
+        availableSeatCount,
+        route,
+        driverNote,
+        start: { location: currentStartLocation } = {},
+        destination: { location: currentEndLocation } = {},
+      } = {},
     },
     isRidesDetailsFetching,
     isRideUpdate,
@@ -68,7 +72,7 @@ function SaveRideForm() {
           vehicle: defaultVehicle,
           passengerPreference: defaultPassengerPreference,
           availableSeatCount: availableSeatCount || 1,
-          route: _.join(route, ',') || '',
+          route: _.chain(route).slice(1, -1).join(', ').value() || '',
           note: driverNote || '',
         }}
         validationSchema={validationSchema}

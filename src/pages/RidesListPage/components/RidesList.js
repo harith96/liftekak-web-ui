@@ -51,12 +51,10 @@ const columns = [
   },
 ];
 
-function RidesList({ activeTabKey }) {
-  const isAllRides = activeTabKey === RidesTabs.ALL_RIDES;
-  const { ridesList, isRidesFetching, onRideSelected, onNextPage, onPreviousPage, myRides, isMyRidesFetching } =
-    useContext(RidesListPageContext);
+function RidesList() {
+  const { ridesList, isRidesFetching, onRideSelected, onNextPage, onPreviousPage } = useContext(RidesListPageContext);
 
-  const onRow = (record, rowIndex) => ({
+  const onRow = (record) => ({
     onClick: () => onRideSelected(record),
   });
 
@@ -65,8 +63,8 @@ function RidesList({ activeTabKey }) {
       <Table
         id="rides-list-table"
         className="costing-batches-table"
-        loading={isAllRides ? isRidesFetching : isMyRidesFetching}
-        dataSource={isAllRides ? ridesList : myRides}
+        loading={isRidesFetching}
+        dataSource={ridesList}
         columns={columns}
         onRow={onRow}
         rowClassName="antd-clickable-row"
@@ -75,7 +73,8 @@ function RidesList({ activeTabKey }) {
       <PaginationBar
         onNextPage={onNextPage}
         onPreviousPage={onPreviousPage}
-        isNextButtonDisabled={ridesList.length < DEFAULT_PAGE_SIZE}
+        // This won't work as available seat count is checked only after fetching docs
+        // isNextButtonDisabled={ridesList.length < DEFAULT_PAGE_SIZE}
       />
     </div>
   );

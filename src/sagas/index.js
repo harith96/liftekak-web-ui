@@ -18,6 +18,7 @@ import {
   SAVE_VEHICLE,
   BOOKINGS,
   SAVE_BOOKING,
+  MY_RIDES,
 } from 'actions/actionTypes';
 import { APP_ROUTES, BAD_REQUEST_STATUS, NOT_FOUND_STATUS, USER_NOT_AUTHORIZED_STATUS } from 'util/constants';
 import * as i18n from '_i18n';
@@ -26,6 +27,7 @@ import { FirebaseError, NotificationType, RideStatus, SignInProvider } from 'enu
 import openNotification from 'components/openNotification';
 import { getAuth } from '@firebase/auth';
 import {
+  getCurrentUserID,
   loginWithEmailAndPassword,
   loginWithGoogle,
   sendPasswordRestEmail,
@@ -40,6 +42,7 @@ import {
   getUserVehicles,
   saveUserDetails,
   saveVehicle,
+  getMyRides,
 } from 'common/db';
 
 export const getRole = (state) => state.user.data.userRole;
@@ -231,9 +234,32 @@ function* loadRidesAsync({ pageAction } = {}) {
     const ridesFilters = yield select((state) => state.rideFilters.data);
     const rides = yield select((state) => state.rides.data);
     const ridesList = yield getRides({ ...ridesFilters, pageAction, userGender });
-    yield put({ type: RIDES.SUCCESS, payload: ridesList || rides });
+    // if page action is defined and ride list is empty it means
+    // it has reached final page
+    yield put({ type: RIDES.SUCCESS, payload: pageAction && _.isEmpty(ridesList) ? rides : ridesList });
   } catch (error) {
     yield put({ type: RIDES.FAILURE, payload: error.message });
+    const handled = yield handleUserSessionErrors(error);
+    if (!handled)
+      yield put(
+        action(SHOW_NOTIFICATION, {
+          description: i18n.t('liftEkak.rides.error.description'),
+          className: NotificationType.ERROR,
+          message: i18n.t('liftEkak.rides.error.message'),
+        })
+      );
+  }
+}
+
+function* loadMyRidesAsync({ pageAction } = {}) {
+  try {
+    const uid = getCurrentUserID();
+    const ridesFilters = yield select((state) => state.rideFilters.data);
+    const myRides = yield select((state) => state.myRides.data);
+    const ridesList = yield getMyRides({ ...ridesFilters, pageAction, uid });
+    yield put({ type: MY_RIDES.SUCCESS, payload: pageAction && _.isEmpty(ridesList) ? myRides : ridesList });
+  } catch (error) {
+    yield put({ type: MY_RIDES.FAILURE, payload: error.message });
     const handled = yield handleUserSessionErrors(error);
     if (!handled)
       yield put(
@@ -464,6 +490,10 @@ function* watchLoadRides() {
   yield takeLatest(RIDES.REQUEST, loadRidesAsync);
 }
 
+function* watchMyLoadRides() {
+  yield takeLatest(MY_RIDES.REQUEST, loadMyRidesAsync);
+}
+
 function* watchLoadRide() {
   yield takeLatest(RIDE.REQUEST, loadRideAsync);
 }
@@ -498,6 +528,7 @@ export default function* rootSaga() {
     watchSaveUserVehicle(),
     watchShowNotification(),
     watchLoadRides(),
+    watchMyLoadRides(),
     watchLoadRide(),
     watchUpdateRide(),
     watchUpdateRideFilters(),

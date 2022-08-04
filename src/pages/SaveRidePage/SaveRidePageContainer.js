@@ -1,11 +1,12 @@
-import { saveRide, loadUserVehicles, showNotification, loadRideDetails } from 'actions';
+import { saveRide, loadUserVehicles, loadRideDetails } from 'actions';
+import { getCurrentUserID } from 'common/auth';
 import { SaveVehicleContextProvider } from 'components/SaveVehicle/context/SaveVehicleContext';
-import { NotificationType } from 'enums';
+import { RideStatus } from 'enums';
 import * as _ from 'lodash';
 import moment from 'moment';
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useLocation, useParams } from 'react-router';
+import { Redirect, useHistory, useLocation, useParams } from 'react-router';
 import { APP_ROUTES } from 'util/constants';
 import SaveRidePageComponent from './components/SaveRidePageComponent';
 import { SaveRidePageContextProvider } from './SaveRidePageContext';
@@ -59,23 +60,31 @@ function SaveRidePageContainer() {
     [dispatch, history]
   );
 
+  const isNotRideNewOrMyRide =
+    rideDetails &&
+    rideDetails?.rideId &&
+    (rideDetails.status !== RideStatus.NEW || rideDetails.details?.driver?.uid !== getCurrentUserID());
+
   return (
-    <SaveRidePageContextProvider
-      value={{
-        onSaveRide,
-        isRideCreating,
-        vehicles,
-        isVehiclesLoading,
-        user,
-        rideDetails,
-        isRidesDetailsFetching,
-        isRideUpdate,
-      }}
-    >
-      <SaveVehicleContextProvider>
-        <SaveRidePageComponent />
-      </SaveVehicleContextProvider>
-    </SaveRidePageContextProvider>
+    <>
+      {isNotRideNewOrMyRide && <Redirect to={`${APP_ROUTES.RIDE_VIEW}/${rideId}`} />}
+      <SaveRidePageContextProvider
+        value={{
+          onSaveRide,
+          isRideCreating,
+          vehicles,
+          isVehiclesLoading,
+          user,
+          rideDetails,
+          isRidesDetailsFetching,
+          isRideUpdate,
+        }}
+      >
+        <SaveVehicleContextProvider>
+          <SaveRidePageComponent />
+        </SaveVehicleContextProvider>
+      </SaveRidePageContextProvider>
+    </>
   );
 }
 

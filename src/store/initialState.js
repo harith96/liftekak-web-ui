@@ -50,11 +50,22 @@ const initialState = {
   rideFilters: {
     fetching: true,
     data: {
-      status: RideStatus.NEW,
+      startTown: '',
+      destinationTown: '',
+      departureFrom: null,
+      departureUntil: null,
+      availableSeatCount: 1,
+      vehicleType: null,
+      rideStatus: RideStatus.ACTIVE,
     },
     error: null,
   },
   rides: {
+    fetching: true,
+    data: [],
+    error: null,
+  },
+  myRides: {
     fetching: true,
     data: [],
     error: null,

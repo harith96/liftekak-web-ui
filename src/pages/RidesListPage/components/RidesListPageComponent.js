@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Button, Icon, Tabs } from 'antd';
 
 import { RidesTabs } from 'util/constants';
@@ -6,21 +6,24 @@ import CreateRideButton from './CreateRideButton';
 import RideSearchBar from './RideSearchBar';
 import RidesList from './RidesList';
 import './styles/index.scss';
+import RidesListPageContext from '../RidesListPageContext';
 
 const { TabPane } = Tabs;
 
+const RidesView = (
+  <>
+    <RideSearchBar />
+    <RidesList />
+  </>
+);
+
 function RidesListPageComponent() {
-  const [activeKey, setActiveKey] = useState(RidesTabs.ALL_RIDES);
-  const RidesView = (
-    <>
-      <RideSearchBar />
-      <RidesList activeTabKey={activeKey} />
-    </>
-  );
+  const { activeTabKey, setActiveTabKey } = useContext(RidesListPageContext);
+
   return (
     <>
       <CreateRideButton />
-      <Tabs defaultActiveKey={RidesTabs.ALL_RIDES} onChange={setActiveKey}>
+      <Tabs activeKey={activeTabKey} defaultActiveKey={RidesTabs.ALL_RIDES} onChange={setActiveTabKey}>
         <TabPane
           tab={
             <span>
