@@ -3,30 +3,10 @@ import { Table } from 'antd';
 
 import PaginationBar from 'components/PaginationBar';
 import { getFormattedDate, getFormattedTime } from 'util/dateUtil';
+import getFormattedRoute from 'util/getFormattedRoute';
 import RidesListPageContext from '../RidesListPageContext';
-import { DEFAULT_PAGE_SIZE, RidesTabs } from 'util/constants';
 
 const columns = [
-  {
-    title: 'Ride Id',
-    dataIndex: 'rideId',
-    key: 'rideId',
-    render: (text) => (
-      <div id={`rides-table-ride-${text}`} className="link-div" aria-hidden="true">
-        {text}
-      </div>
-    ),
-  },
-  {
-    title: 'Start Location',
-    dataIndex: 'details.start.location',
-    key: 'startLocation',
-  },
-  {
-    title: 'Destination',
-    dataIndex: 'details.destination.location',
-    key: 'destination',
-  },
   {
     title: 'Departure Date',
     dataIndex: 'departure',
@@ -38,6 +18,12 @@ const columns = [
     dataIndex: 'departure',
     key: 'departureTime',
     render: (departure) => getFormattedTime(departure),
+  },
+  {
+    title: 'Route',
+    dataIndex: 'details.route',
+    key: 'route',
+    render: (route) => getFormattedRoute(route),
   },
   {
     title: 'Available seat count',

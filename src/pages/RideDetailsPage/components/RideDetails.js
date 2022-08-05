@@ -5,6 +5,7 @@ import { getFormattedDateAndTime } from 'util/dateUtil';
 import getFullName from 'util/getFullName';
 import * as i18n from '_i18n';
 import { Spin } from 'antd';
+import getFormattedRoute from 'util/getFormattedRoute';
 import RideDetailsPageContext from '../RidesDetailsPageContext';
 
 const renderRideDetail = (title, value) => {
@@ -17,8 +18,6 @@ const renderRideDetail = (title, value) => {
     </div>
   );
 };
-
-const getFormattedRoute = (route) => _.join(route, ' > ');
 
 function RideDetails() {
   const {

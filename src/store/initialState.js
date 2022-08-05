@@ -56,7 +56,7 @@ const initialState = {
       departureUntil: null,
       availableSeatCount: 1,
       vehicleType: null,
-      rideStatus: RideStatus.ACTIVE,
+      rideStatus: RideStatus.NEW,
     },
     error: null,
   },
