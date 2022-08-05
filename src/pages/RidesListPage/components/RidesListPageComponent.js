@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Button, Icon, Tabs } from 'antd';
+import { Button, Icon, Row, Tabs } from 'antd';
 
 import { RidesTabs } from 'util/constants';
 import CreateRideButton from './CreateRideButton';
@@ -7,6 +7,7 @@ import RideSearchBar from './RideSearchBar';
 import RidesList from './RidesList';
 import './styles/index.scss';
 import RidesListPageContext from '../RidesListPageContext';
+import AddNewButton from 'components/AddNewButton';
 
 const { TabPane } = Tabs;
 
@@ -18,11 +19,14 @@ const RidesView = (
 );
 
 function RidesListPageComponent() {
-  const { activeTabKey, setActiveTabKey } = useContext(RidesListPageContext);
+  const { activeTabKey, setActiveTabKey, gotToSaveRideView } = useContext(RidesListPageContext);
 
   return (
     <>
-      <CreateRideButton />
+      <Row type="flex" justify="space-between" align="middle">
+        <h1>Rides</h1>
+        <AddNewButton onClick={gotToSaveRideView} entityName="Ride" />
+      </Row>
       <Tabs activeKey={activeTabKey} defaultActiveKey={RidesTabs.ALL_RIDES} onChange={setActiveTabKey}>
         <TabPane
           tab={

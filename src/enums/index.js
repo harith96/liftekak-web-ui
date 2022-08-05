@@ -58,3 +58,8 @@ export const FilterTypes = {
   NUMBER: 'NUMBER',
   TIME_RANGE: 'TIME_RANGE',
 };
+
+export const FuelType = {
+  DIESEL: 'DIESEL',
+  PETROL: 'PETROL',
+};
