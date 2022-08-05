@@ -51,9 +51,7 @@ function SaveRidePageContainer() {
 
   // End - Logic for ride update
 
-  useEffect(() => {
-    dispatch(loadUserVehicles());
-  }, []);
+  useEffect(() => dispatch(loadUserVehicles()), []);
 
   const onSaveRide = useCallback(
     (values) => dispatch(saveRide(formatRideValues(values), history)),
@@ -63,7 +61,7 @@ function SaveRidePageContainer() {
   const isNotRideNewOrMyRide =
     rideDetails &&
     rideDetails?.rideId &&
-    (rideDetails.status !== RideStatus.NEW || rideDetails.details?.driver?.uid !== getCurrentUserID());
+    (rideDetails.status !== RideStatus.NEW || rideDetails.driver?.uid !== getCurrentUserID());
 
   return (
     <>
