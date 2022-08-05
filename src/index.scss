@@ -89,3 +89,17 @@ code {
 .clickable {
   cursor: pointer;
 }
+
+.actions {
+  position: absolute;
+}
+
+.ant-table-row {
+  position: relative;
+}
+
+.ant-table-row:hover .actions {
+  display: block;
+  height: 54px;
+  right: 0;
+}

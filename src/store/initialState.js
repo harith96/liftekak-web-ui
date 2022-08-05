@@ -23,7 +23,7 @@ const initialState = {
   },
   userVehicles: {
     fetching: false,
-    data: null,
+    data: [],
     error: null,
   },
   saveVehicle: {

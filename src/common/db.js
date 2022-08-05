@@ -66,23 +66,66 @@ const getUserVehicles = async () => {
 
   const userVehiclesRef = collection(db, `users/${uid}/vehicles`);
 
-  const querySnap = await getDocs(userVehiclesRef);
+  const q = query(
+    userVehiclesRef,
+    where('isDeleted', '==', false),
+    orderBy('isDefaultVehicle', 'desc'),
+    limit(DEFAULT_PAGE_SIZE)
+  );
+
+  const querySnap = await getDocs(q);
 
   querySnap.forEach((snap) => vehicles.push(snap.data()));
 
   return vehicles;
 };
 
-const deleteVehicles = async (vehicles = []) => {
+const makeVehicleDefaultVehicle = async (vehicle, batch) => {
   const uid = getCurrentUserID();
+
+  const db = getFirestore();
+  const vehicleDocs = await getDocs(
+    query(collection(db, `users/${uid}/vehicles`), where('isDefaultVehicle', '==', true))
+  );
+
+  vehicleDocs.forEach((vehicleDoc) =>
+    batch.set(doc(db, `users/${uid}/vehicles`, vehicleDoc.id), { isDefaultVehicle: false }, { merge: true })
+  );
+
+  batch.set(doc(db, 'users', uid), { defaultVehicle: vehicle }, { merge: true });
+};
+
+const saveVehicle = async ({
+  type,
+  brand,
+  model,
+  color,
+  registrationNo,
+  passengerSeatCount,
+  isDefaultVehicle = false,
+  isDeleted = false,
+} = {}) => {
+  const uid = getCurrentUserID();
+
   const db = getFirestore();
 
-  const batch = writeBatch(db);
+  const vehicle = {
+    type,
+    brand,
+    model,
+    color,
+    registrationNo,
+    passengerSeatCount,
+    isDefaultVehicle,
+    isDeleted,
+  };
 
-  vehicles.forEach((vehicle) => {
-    const vehicleRef = doc(db, 'users', uid).collection('vehicles').doc(vehicle.registrationNo);
-    batch.delete(vehicleRef);
-  });
+  const batch = writeBatch(db);
+  if (isDefaultVehicle) await makeVehicleDefaultVehicle(vehicle, batch);
+
+  const vehicleId = registrationNo;
+
+  await batch.set(doc(db, `users/${uid}/vehicles`, vehicleId), vehicle);
 
   await batch.commit();
 };
@@ -227,34 +270,6 @@ const saveRide = async ({
   await setDoc(doc(db, 'rides', rideId), ride);
 };
 
-const saveVehicle = async ({
-  type,
-  brand,
-  model,
-  color,
-  registrationNo,
-  passengerSeatCount,
-  isDefaultVehicle,
-} = {}) => {
-  const uid = getCurrentUserID();
-
-  const db = getFirestore();
-  const vehicleId = registrationNo;
-  const vehicle = {
-    type,
-    brand,
-    model,
-    color,
-    registrationNo,
-    passengerSeatCount,
-    isDefaultVehicle,
-  };
-
-  await setDoc(doc(db, `users/${uid}/vehicles`, vehicleId), vehicle);
-
-  if (isDefaultVehicle) await setDoc(doc(db, 'users', uid), { defaultVehicle: vehicle }, { merge: true });
-};
-
 const createBooking = async ({ ride, pickupLocation, dropLocation, note, user }) => {
   const uid = getCurrentUserID();
 
@@ -287,7 +302,6 @@ export {
   saveUserDetails,
   getUserVehicles,
   saveVehicle,
-  deleteVehicles,
   getRides,
   getRide,
   saveRide,
