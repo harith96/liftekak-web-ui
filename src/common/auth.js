@@ -37,6 +37,7 @@ const loginWithEmailAndPassword = async (email, password, rememberMe) => {
 const loginWithGoogle = async () => {
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
+  provider.addScope('profile');
 
   const result = await signInWithPopup(auth, provider);
   return GoogleAuthProvider.credentialFromResult(result);

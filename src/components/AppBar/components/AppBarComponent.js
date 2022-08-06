@@ -4,8 +4,8 @@ import { signOut } from 'common/auth';
 import React from 'react';
 import { useHistory } from 'react-router';
 import { APP_ROUTES } from 'util/constants';
-import AppLogo from './AppLogo';
-import './styles/_appBar.scss';
+import AppLogo from '../../AppLogo';
+import '../styles/index.scss';
 
 const userMenu = [
   { icon: 'user', title: 'Profile', route: APP_ROUTES.USER },
@@ -14,7 +14,7 @@ const userMenu = [
   { icon: 'car', title: 'My Vehicles', route: APP_ROUTES.VEHICLES },
 ];
 
-function AppBar() {
+function AppBarComponent() {
   const history = useHistory();
 
   const menu = (
@@ -46,4 +46,4 @@ function AppBar() {
   );
 }
 
-export default AppBar;
+export default AppBarComponent;
