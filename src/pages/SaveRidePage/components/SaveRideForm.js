@@ -195,7 +195,7 @@ function SaveRideForm() {
                       <Form.Item name="departure.date">
                         <DatePicker
                           value={departureDate}
-                          disabledDate={(date) => date < moment()}
+                          disabledDate={(date) => date.isBefore(moment().subtract(1, 'day'))}
                           format="YYYY-MM-DD"
                           onChange={(value) => setFieldValue('departure.date', value)}
                         />
@@ -210,9 +210,9 @@ function SaveRideForm() {
                       <Form.Item name="departure.time">
                         <TimePicker
                           name="departure.time"
-                          disabledHours={() => _.range(0, moment().hour())}
+                          disabledHours={() => (departureDate?.isBefore() ? _.range(0, moment().hour()) : [])}
                           disabledMinutes={(selectedHour) =>
-                            selectedHour === moment().hour()
+                            selectedHour === moment().hour() && departureDate?.isBefore()
                               ? _.range(0, moment().minute(), DEPARTURE_TIME_MIN_STEP)
                               : []
                           }
