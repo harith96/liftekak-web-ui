@@ -49,7 +49,7 @@ function RideDetails() {
         {renderRideDetail(i18n.t('Driver Mobile No'), mobileNo)}
         {renderRideDetail(i18n.t('Available seat Count'), availableSeatCount)}
         {renderRideDetail(i18n.t('Vehicle'), vehicleType)}
-        {renderRideDetail(i18n.t('Driver Note'), driverNote)}
+        {renderRideDetail(i18n.t('Driver Notes'), driverNote)}
       </div>
     </Spin>
   );

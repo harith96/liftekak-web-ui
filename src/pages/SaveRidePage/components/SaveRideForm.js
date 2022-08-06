@@ -247,7 +247,7 @@ function SaveRideForm() {
                 </Row>
                 <Row className="form-elements">
                   <label id="user-nic-no-label" className="user-input">
-                    {i18n.t(`Note`)}
+                    {i18n.t(`Notes`)}
                   </label>
                   <Form.Item name="note">
                     <Input
