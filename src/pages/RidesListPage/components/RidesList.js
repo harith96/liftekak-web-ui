@@ -1,9 +1,11 @@
 import React, { useContext } from 'react';
 import { Table } from 'antd';
+import _ from 'lodash';
 
 import PaginationBar from 'components/PaginationBar';
 import { getFormattedDate, getFormattedTime } from 'util/dateUtil';
 import getFormattedRoute from 'util/getFormattedRoute';
+import getFullName from 'util/getFullName';
 import RidesListPageContext from '../RidesListPageContext';
 
 const columns = [
@@ -26,14 +28,21 @@ const columns = [
     render: (route) => getFormattedRoute(route),
   },
   {
-    title: 'Available seat count',
+    title: 'Vehicle type',
+    dataIndex: 'details.vehicle.type',
+    key: 'driverNotes',
+    render: (text) => _.startCase(text),
+  },
+  {
+    title: 'Seats Available',
     dataIndex: 'details.availableSeatCount',
     key: 'availableSeatCount',
   },
   {
-    title: 'Driver notes',
-    dataIndex: 'details.driverNote',
+    title: 'Driver name',
+    dataIndex: 'driver',
     key: 'driverNotes',
+    render: (driver) => getFullName(driver.firstName, driver.lastName),
   },
 ];
 
