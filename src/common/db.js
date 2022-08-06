@@ -239,9 +239,9 @@ const saveRide = async ({
   driver,
   vehicle,
   passengerPreference,
+  rideId,
 } = {}) => {
   const db = getFirestore();
-  const rideId = `${moment.now()}`;
   const ride = {
     rideId,
     departure,

@@ -47,6 +47,7 @@ function SaveRideForm() {
         driverNote,
         start: { location: currentStartLocation } = {},
         destination: { location: currentEndLocation } = {},
+        vehicle,
       } = {},
     },
     isRidesDetailsFetching,
@@ -68,10 +69,10 @@ function SaveRideForm() {
           startLocation: currentStartLocation || '',
           endLocation: currentEndLocation || '',
           departure: {
-            date: departure ? moment.unix(departure) : null,
-            time: departure ? moment.unix(departure) : null,
+            date: departure ? moment.unix(departure / 1000) : null,
+            time: departure ? moment.unix(departure / 1000) : null,
           },
-          vehicle: defaultVehicle,
+          vehicle: vehicle || defaultVehicle,
           passengerPreference: defaultPassengerPreference,
           availableSeatCount: availableSeatCount || 1,
           route: _.chain(route).slice(1, -1).join(', ').value() || '',
@@ -165,17 +166,13 @@ function SaveRideForm() {
                           onChange={(value) =>
                             setFieldValue(
                               'vehicle',
-                              _.find(vehicles, (vehicle) => value === vehicle.registrationNo)
+                              _.find(vehicles, (v) => value === v.registrationNo)
                             )
                           }
                         >
-                          {_.map(vehicles, (vehicle) => (
-                            <Option
-                              value={vehicle.registrationNo}
-                              key={vehicle.registrationNo}
-                              id={vehicle.registrationNo}
-                            >
-                              {vehicle.registrationNo}
+                          {_.map(vehicles, (v) => (
+                            <Option value={v.registrationNo} key={v.registrationNo} id={v.registrationNo}>
+                              {v.registrationNo}
                             </Option>
                           ))}
                         </Select>

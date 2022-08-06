@@ -12,7 +12,7 @@ import { APP_ROUTES } from 'util/constants';
 import SaveRidePageComponent from './components/SaveRidePageComponent';
 import { SaveRidePageContextProvider } from './SaveRidePageContext';
 
-const formatRideValues = (values) => ({
+const formatRideValues = (rideId, values) => ({
   ...values,
   route: _.chain(values.route)
     .split(',')
@@ -23,6 +23,7 @@ const formatRideValues = (values) => ({
   departure: moment(
     `${values.departure.date.format('YYYY-MM-DD')}T${values.departure.time.format('HH:mm')}:00.000Z`
   ).valueOf(),
+  rideId: rideId || `${moment.now()}`,
 });
 
 function SaveRidePageContainer() {
@@ -56,7 +57,7 @@ function SaveRidePageContainer() {
   useEffect(() => dispatch(loadUserVehicles()), []);
 
   const onSaveRide = useCallback(
-    (values) => dispatch(saveRide(formatRideValues(values), history)),
+    (values) => dispatch(saveRide(formatRideValues(rideId, values), history)),
     [dispatch, history]
   );
 
