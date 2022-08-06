@@ -129,7 +129,7 @@ const saveVehicle = async ({
 
 const getRides = async ({
   startTown,
-  endTown,
+  destinationTown,
   departureFrom,
   departureUntil,
   availableSeatCount,
@@ -144,9 +144,11 @@ const getRides = async ({
 
   const ridesRef = collection(db, 'rides');
   const queries = [
-    startTown && !endTown && where('details.route', 'array-contains', startTown),
-    !startTown && endTown && where('details.route', 'array-contains', endTown),
-    startTown && endTown && where('indices.route', 'array-contains', buildRouteIndexString([startTown, endTown])),
+    startTown && !destinationTown && where('details.route', 'array-contains', startTown),
+    !startTown && destinationTown && where('details.route', 'array-contains', destinationTown),
+    startTown &&
+      destinationTown &&
+      where('indices.route', 'array-contains', buildRouteIndexString([startTown, destinationTown])),
     departureFrom && where('departure', '>=', departureFrom.valueOf()),
     departureUntil && where('departure', '<=', departureUntil.valueOf()),
     vehicleType && where('details.vehicle.type', '==', vehicleType),
@@ -176,7 +178,7 @@ const getRides = async ({
 
 const getMyRides = async ({
   startTown,
-  endTown,
+  destinationTown,
   departureFrom,
   departureUntil,
   rideStatus = RideStatus.NEW,
@@ -191,9 +193,11 @@ const getMyRides = async ({
 
   const ridesRef = collection(db, 'rides');
   const queries = [
-    startTown && !endTown && where('details.route', 'array-contains', startTown),
-    !startTown && endTown && where('details.route', 'array-contains', endTown),
-    startTown && endTown && where('indices.route', 'array-contains', buildRouteIndexString([startTown, endTown])),
+    startTown && !destinationTown && where('details.route', 'array-contains', startTown),
+    !startTown && destinationTown && where('details.route', 'array-contains', destinationTown),
+    startTown &&
+      destinationTown &&
+      where('indices.route', 'array-contains', buildRouteIndexString([startTown, destinationTown])),
     departureFrom && where('departure', '>=', departureFrom.valueOf()),
     departureUntil && where('departure', '<=', departureUntil.valueOf()),
     vehicleType && where('details.vehicle.type', '==', vehicleType),
