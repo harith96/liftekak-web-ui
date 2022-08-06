@@ -1,6 +1,5 @@
 import { loadUserVehicles, saveVehicle } from 'actions';
 import _ from 'lodash';
-import { PageAction } from 'enums';
 import useModalToggle from 'hooks/useModalToggle';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,9 +21,6 @@ function VehiclesPageContainer() {
       setVehiclesFetchedCount((count) => count + 1);
     }
   }, [vehiclesFetchedCount, setVehiclesFetchedCount, vehicles, dispatch]);
-  const onNextPage = useCallback(() => dispatch(loadUserVehicles(PageAction.NEXT)), [dispatch]);
-
-  const onPreviousPage = useCallback(() => dispatch(loadUserVehicles(PageAction.BACK)), [dispatch]);
 
   const onDelete = useCallback((vehicle) => dispatch(saveVehicle({ ...vehicle, isDeleted: true })), [dispatch]);
 
@@ -40,8 +36,6 @@ function VehiclesPageContainer() {
         isVehiclesFetching,
         isEditVehicleModalVisible,
         toggleModal,
-        onNextPage,
-        onPreviousPage,
         onDelete,
         onMakeDefault,
       }}

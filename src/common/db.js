@@ -66,12 +66,7 @@ const getUserVehicles = async () => {
 
   const userVehiclesRef = collection(db, `users/${uid}/vehicles`);
 
-  const q = query(
-    userVehiclesRef,
-    where('isDeleted', '==', false),
-    orderBy('isDefaultVehicle', 'desc'),
-    limit(DEFAULT_PAGE_SIZE)
-  );
+  const q = query(userVehiclesRef, where('isDeleted', '==', false), orderBy('isDefaultVehicle', 'desc'));
 
   const querySnap = await getDocs(q);
 
@@ -104,6 +99,7 @@ const saveVehicle = async ({
   passengerSeatCount,
   isDefaultVehicle = false,
   isDeleted = false,
+  fuelType,
 } = {}) => {
   const uid = getCurrentUserID();
 
@@ -118,6 +114,7 @@ const saveVehicle = async ({
     passengerSeatCount,
     isDefaultVehicle,
     isDeleted,
+    fuelType,
   };
 
   const batch = writeBatch(db);

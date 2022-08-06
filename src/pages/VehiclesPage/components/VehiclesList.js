@@ -1,6 +1,6 @@
 import { Icon, Table, Tooltip } from 'antd';
-import PaginationBar from 'components/PaginationBar';
 import React, { useContext } from 'react';
+import { DEFAULT_PAGE_SIZE } from 'util/constants';
 import VehiclesPageContext from '../VehiclesPageContext';
 
 const getColumns = (onDelete, onMakeDefault) => [
@@ -89,8 +89,7 @@ const getColumns = (onDelete, onMakeDefault) => [
 ];
 
 function VehiclesList() {
-  const { vehicles, isVehiclesFetching, onNextPage, onPreviousPage, onDelete, onMakeDefault } =
-    useContext(VehiclesPageContext);
+  const { vehicles, isVehiclesFetching, onDelete, onMakeDefault } = useContext(VehiclesPageContext);
 
   return (
     <div id="rewards-batches-table-panel" className="grid-panel">
@@ -100,13 +99,7 @@ function VehiclesList() {
         loading={isVehiclesFetching}
         dataSource={vehicles}
         columns={getColumns(onDelete, onMakeDefault)}
-        pagination={false}
-      />
-      <PaginationBar
-        onNextPage={onNextPage}
-        onPreviousPage={onPreviousPage}
-        // This won't work as available seat count is checked only after fetching docs
-        // isNextButtonDisabled={ridesList.length < DEFAULT_PAGE_SIZE}
+        pagination={{ pageSize: DEFAULT_PAGE_SIZE, hideOnSinglePage: true }}
       />
     </div>
   );
