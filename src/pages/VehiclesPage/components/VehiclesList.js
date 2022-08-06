@@ -11,8 +11,10 @@ const getColumns = (onDelete, onMakeDefault) => [
     render: (text, record) =>
       record.isDefaultVehicle ? (
         <div id={`rides-table-ride-${text}`} className="link-div" aria-hidden="true">
-          <Icon type="star" theme="filled" />
-          {text}
+          <Tooltip title="Default vehicle for your rides.">
+            <Icon type="star" theme="filled" />
+            {text}
+          </Tooltip>
         </div>
       ) : (
         text
