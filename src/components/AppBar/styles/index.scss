@@ -1,0 +1,26 @@
+.logout {
+  color: red;
+}
+
+.user-name-badge {
+  margin-right: 0.5rem;
+}
+
+.user-name {
+  margin-bottom: 0.2rem;
+  font-weight: 700;
+}
+
+.user-badge {
+  font-weight: 600;
+  color: white;
+  background: #f1c40f;
+  padding: 0.2rem 0.8rem;
+  font-size: 0.8rem;
+  border-radius: 2rem;
+  margin-left: 0.5rem;
+  // position: absolute;
+  top: 0;
+  right: 0;
+  display: inline-block;
+}

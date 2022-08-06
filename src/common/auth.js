@@ -37,6 +37,7 @@ const loginWithEmailAndPassword = async (email, password, rememberMe) => {
 const loginWithGoogle = async () => {
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
+  provider.addScope('profile');
 
   const result = await signInWithPopup(auth, provider);
   return GoogleAuthProvider.credentialFromResult(result);
@@ -60,6 +61,24 @@ const getCurrentUserID = () => {
   const auth = getAuth();
 
   return auth.currentUser?.uid;
+};
+
+const getAuthFullName = () => {
+  const auth = getAuth();
+
+  return auth.currentUser?.displayName;
+};
+
+const getAuthProfilePictureURL = () => {
+  const auth = getAuth();
+
+  return auth.currentUser?.photoURL;
+};
+
+const getUserEmail = () => {
+  const auth = getAuth();
+
+  return auth.currentUser?.email;
 };
 
 const signOut = async () => {
@@ -89,4 +108,7 @@ export {
   getCurrentUserID,
   listenForAuthStateChanged,
   signOut,
+  getAuthProfilePictureURL,
+  getAuthFullName,
+  getUserEmail,
 };

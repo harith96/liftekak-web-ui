@@ -141,9 +141,31 @@ function* sendPasswordResetEmailAsync({ email }) {
   }
 }
 
+function* loadUserAsync() {
+  try {
+    const user = yield getUserDetails();
+
+    yield put({ type: USER.SUCCESS, payload: user });
+  } catch (error) {
+    yield put({ type: USER.FAILURE, payload: error.message });
+    const handled = yield handleUserSessionErrors(error);
+    if (!handled)
+      yield put(
+        action(SHOW_NOTIFICATION, {
+          description: i18n.t('liftEkak.user.error.description'),
+          className: NotificationType.ERROR,
+          message: i18n.t('liftEkak.user.error.message'),
+        })
+      );
+  }
+}
+
 function* saveUserDetailsAsync({ data: userDetails }) {
   try {
     yield saveUserDetails(userDetails);
+
+    yield loadUserAsync();
+
     yield put({ type: SAVE_USER_DETAILS.SUCCESS });
 
     yield put(
@@ -165,25 +187,6 @@ function* saveUserDetailsAsync({ data: userDetails }) {
       );
 
     yield put({ type: SAVE_USER_DETAILS.FAILURE, payload: error.code });
-  }
-}
-
-function* loadUserAsync() {
-  try {
-    const user = yield getUserDetails();
-
-    yield put({ type: USER.SUCCESS, payload: user });
-  } catch (error) {
-    yield put({ type: USER.FAILURE, payload: error.message });
-    const handled = yield handleUserSessionErrors(error);
-    if (!handled)
-      yield put(
-        action(SHOW_NOTIFICATION, {
-          description: i18n.t('liftEkak.user.error.description'),
-          className: NotificationType.ERROR,
-          message: i18n.t('liftEkak.user.error.message'),
-        })
-      );
   }
 }
 

@@ -9,7 +9,7 @@ import { NotificationType, UserRole } from 'enums';
 import { APP_ROUTES } from 'util/constants';
 import { getCurrentUserID, listenForAuthStateChanged } from 'common/auth';
 import AppLoader from './AppLoader';
-import AppBar from './AppBar';
+import AppBar from './AppBar/AppBarContainer';
 
 const PrivateRoute = ({ component: Component, roles, userFetching, currentUserRole, actions, ...rest }) => {
   const history = useHistory();
