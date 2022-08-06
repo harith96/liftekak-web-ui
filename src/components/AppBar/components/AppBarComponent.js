@@ -14,7 +14,7 @@ const userMenu = [
   { icon: 'car', title: 'My Vehicles', route: APP_ROUTES.VEHICLES },
 ];
 
-function AppBarComponent() {
+function AppBarComponent({ userDetails }) {
   const history = useHistory();
 
   const menu = (
@@ -37,9 +37,11 @@ function AppBarComponent() {
       <AppLogo />
       <Dropdown overlay={menu} placement="bottomRight" trigger="click">
         <div role="button" className="hover-brighten clickable">
-          <Avatar className="user-avatar" size="large">
-            <Icon type="user" />
-          </Avatar>
+          {userDetails?.userPhoto ? (
+            <Avatar className="user-avatar" size="large" src={userDetails?.userPhoto} />
+          ) : (
+            <Avatar className="user-avatar" size="large" icon={<Icon type="user" />} />
+          )}
         </div>
       </Dropdown>
     </Row>

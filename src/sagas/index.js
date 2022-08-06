@@ -164,9 +164,9 @@ function* saveUserDetailsAsync({ data: userDetails }) {
   try {
     yield saveUserDetails(userDetails);
 
-    yield put({ type: SAVE_USER_DETAILS.SUCCESS });
-
     yield loadUserAsync();
+
+    yield put({ type: SAVE_USER_DETAILS.SUCCESS });
 
     yield put(
       action(SHOW_NOTIFICATION, {

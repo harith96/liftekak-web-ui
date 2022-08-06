@@ -76,6 +76,7 @@ function UserDetailsForm() {
         values: {
           isSignUp,
           nic: { front: nicFront, back: nicBack },
+          userPhoto: userPhotoForm,
         },
         submitForm,
         setFieldValue,
@@ -122,7 +123,7 @@ function UserDetailsForm() {
                 </label>
                 <ImageUpload
                   handleImageUpload={(imageBase64) => setFieldValue('userPhoto', imageBase64)}
-                  imageURL={userPhoto}
+                  imageURL={userPhotoForm}
                 />
               </Col>
             </Row>
