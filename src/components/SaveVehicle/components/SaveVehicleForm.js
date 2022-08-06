@@ -6,7 +6,7 @@ import * as yup from 'yup';
 import * as _ from 'lodash';
 
 import * as i18n from '_i18n';
-import { VehicleType } from 'enums';
+import { FuelType, VehicleType } from 'enums';
 import { MAX_PASSENGER_SEAT_COUNTS_BY_VEHICLE_TYPE } from 'util/constants';
 import SaveVehicleFormContext from '../context/SaveVehicleContext';
 import InfoTooltip from 'components/InfoTooltip';
@@ -15,6 +15,7 @@ const { Option } = Select;
 
 const validVehicleTypes = _.keys(VehicleType);
 const vehicleTypesKeyValueList = _.map(VehicleType, (value, key) => ({ key, value }));
+const fuelTypesKeyValueList = _.map(FuelType, (value, key) => ({ key, value }));
 
 const validationSchema = yup.object().shape({
   type: yup.string().required('Vehicle type is required.').oneOf(validVehicleTypes),
@@ -39,7 +40,7 @@ const validationSchema = yup.object().shape({
 
 function SaveVehicleForm() {
   const {
-    vehicle: { type, brand, model, color, registrationNo, passengerSeatCount } = {},
+    vehicle: { type, brand, model, color, registrationNo, passengerSeatCount, fuelType } = {},
     saveVehicle,
     isSavingVehicle,
   } = useContext(SaveVehicleFormContext);
@@ -59,6 +60,7 @@ function SaveVehicleForm() {
         registrationNo,
         passengerSeatCount: passengerSeatCount || 1,
         isDefaultVehicle: false,
+        fuelType: fuelType || FuelType.PETROL,
       }}
       validationSchema={validationSchema}
       validateOnMount
@@ -75,6 +77,22 @@ function SaveVehicleForm() {
                 <Form.Item name="type">
                   <Select id="user-first-name-input" name="type" size="default">
                     {_.map(vehicleTypesKeyValueList, ({ key, value }) => (
+                      <Option key={key} value={value}>
+                        {_.startCase(key)}
+                      </Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </div>
+            </Row>
+            <Row className="form-elements">
+              <div className="left-column">
+                <label id="type-label" className="user-input">
+                  {i18n.t(`Fuel Type`)}
+                </label>
+                <Form.Item name="fuelType">
+                  <Select id="user-first-name-input" name="fuelType" size="default">
+                    {_.map(fuelTypesKeyValueList, ({ key, value }) => (
                       <Option key={key} value={value}>
                         {_.startCase(key)}
                       </Option>

@@ -2,6 +2,7 @@ import { saveRide, loadUserVehicles, loadRideDetails } from 'actions';
 import { getCurrentUserID } from 'common/auth';
 import { SaveVehicleContextProvider } from 'components/SaveVehicle/context/SaveVehicleContext';
 import { RideStatus } from 'enums';
+import useModalToggle from 'hooks/useModalToggle';
 import * as _ from 'lodash';
 import moment from 'moment';
 import React, { useCallback, useEffect } from 'react';
@@ -31,6 +32,7 @@ function SaveRidePageContainer() {
   const isRideCreating = useSelector((state) => state.saveRide.fetching);
   const isVehiclesLoading = useSelector((state) => state.userVehicles.fetching);
   const vehicles = useSelector((state) => state.userVehicles.data);
+  const [isNewVehicleModalVisible, toggleVehicleModal] = useModalToggle();
 
   // Start - Logic for ride update
   const { rideId } = useParams();
@@ -76,6 +78,8 @@ function SaveRidePageContainer() {
           rideDetails,
           isRidesDetailsFetching,
           isRideUpdate,
+          isNewVehicleModalVisible,
+          toggleVehicleModal,
         }}
       >
         <SaveVehicleContextProvider>

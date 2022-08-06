@@ -1,8 +1,8 @@
-import React, { useContext, useState } from 'react';
-import { Button, Icon, Tabs } from 'antd';
+import React, { useContext } from 'react';
+import { Icon, Row, Tabs } from 'antd';
 
 import { RidesTabs } from 'util/constants';
-import CreateRideButton from './CreateRideButton';
+import AddNewButton from 'components/AddNewButton';
 import RideSearchBar from './RideSearchBar';
 import RidesList from './RidesList';
 import './styles/index.scss';
@@ -17,33 +17,34 @@ const RidesView = (
   </>
 );
 
+const allRidesTab = (
+  <span>
+    <Icon type="unordered-list" />
+    All
+  </span>
+);
+
+const myRidesTab = (
+  <span>
+    <Icon type="idcard" />
+    My Rides
+  </span>
+);
+
 function RidesListPageComponent() {
-  const { activeTabKey, setActiveTabKey } = useContext(RidesListPageContext);
+  const { activeTabKey, setActiveTabKey, gotToSaveRideView } = useContext(RidesListPageContext);
 
   return (
     <>
-      <CreateRideButton />
+      <Row type="flex" justify="space-between" align="middle">
+        <h1>Rides</h1>
+        <AddNewButton onClick={gotToSaveRideView} entityName="Ride" />
+      </Row>
       <Tabs activeKey={activeTabKey} defaultActiveKey={RidesTabs.ALL_RIDES} onChange={setActiveTabKey}>
-        <TabPane
-          tab={
-            <span>
-              <Icon type="unordered-list" />
-              All
-            </span>
-          }
-          key={RidesTabs.ALL_RIDES}
-        >
+        <TabPane tab={allRidesTab} key={RidesTabs.ALL_RIDES}>
           {RidesView}
         </TabPane>
-        <TabPane
-          tab={
-            <span>
-              <Icon type="idcard" />
-              My Rides
-            </span>
-          }
-          key={RidesTabs.MY_RIDES}
-        >
+        <TabPane tab={myRidesTab} key={RidesTabs.MY_RIDES}>
           {RidesView}
         </TabPane>
       </Tabs>

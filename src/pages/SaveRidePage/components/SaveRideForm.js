@@ -51,6 +51,8 @@ function SaveRideForm() {
     },
     isRidesDetailsFetching,
     isRideUpdate,
+    isNewVehicleModalVisible,
+    toggleVehicleModal,
   } = useContext(SaveRidePageContext);
 
   return (
@@ -148,7 +150,10 @@ function SaveRideForm() {
                         <label id="user-gender-label" className="user-input">
                           {i18n.t(`Vehicle`)}
                         </label>
-                        <SaveVehicleContainer />
+                        <Button type="link" onClick={toggleVehicleModal}>
+                          Add new vehicle
+                        </Button>
+                        <SaveVehicleContainer visible={isNewVehicleModalVisible} toggleModal={toggleVehicleModal} />
                       </div>
                       <Form.Item name="vehicle">
                         <Select

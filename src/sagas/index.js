@@ -211,6 +211,8 @@ function* saveVehicleAsync({ vehicle, callback }) {
 
     yield loadUserVehiclesAsync();
 
+    console.log(callback);
+
     if (callback) callback();
 
     yield put({ type: SAVE_VEHICLE.SUCCESS });
