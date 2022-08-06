@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select } from 'formik-antd';
+import { Form, Select } from 'formik-antd';
 import * as _ from 'lodash';
 
 import { Gender } from 'enums';
@@ -14,11 +14,14 @@ const renderGenders = _.map(genders, ({ key, value }) => (
   </Option>
 ));
 
-function GenderSelect({ isMultiSelect, id, name }) {
+function GenderSelect({ isMultiSelect, id, name, touched, error }) {
   return (
-    <Select id={id} name={name} size="default" mode={isMultiSelect ? 'multiple' : 'default'} allowClear>
-      {renderGenders}
-    </Select>
+    <>
+      <Select id={id} name={name} size="default" mode={isMultiSelect ? 'multiple' : 'default'} allowClear>
+        {renderGenders}
+      </Select>
+      <p style={{ color: 'red' }}>{touched && (error || '')}</p>
+    </>
   );
 }
 

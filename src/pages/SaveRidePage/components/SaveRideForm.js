@@ -29,7 +29,8 @@ const validationSchema = yup.object().shape({
   passengerPreference: yup
     .array()
     .of(yup.string().oneOf(_.keys(Gender)))
-    .required('Passenger preference is required.'),
+    .required('Passenger preference is required.')
+    .min(1, 'At least one value should be selected for passenger preference.'),
 });
 
 function SaveRideForm() {
@@ -92,6 +93,8 @@ function SaveRideForm() {
           submitForm,
           // values,
           setFieldValue,
+          touched,
+          errors,
         }) => {
           return (
             <div className="user-details-form-container">
@@ -182,7 +185,10 @@ function SaveRideForm() {
 
                   <Col span={12}>
                     <div className="right-column">
-                      <PassengerPreferenceFormikInput />
+                      <PassengerPreferenceFormikInput
+                        touched={touched.passengerPreference}
+                        error={errors.passengerPreference}
+                      />
                     </div>
                   </Col>
                 </Row>

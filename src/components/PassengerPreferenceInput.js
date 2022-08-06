@@ -1,11 +1,10 @@
 import { Icon, Tooltip } from 'antd';
-import { Form } from 'formik-antd';
 import React from 'react';
 
 import * as i18n from '_i18n';
 import GenderSelect from './GenderSelect';
 
-function PassengerPreferenceFormikInput() {
+function PassengerPreferenceFormikInput({ touched, error }) {
   return (
     <>
       <label id="user-passenger-preference-label" className="user-input">
@@ -14,9 +13,13 @@ function PassengerPreferenceFormikInput() {
           <Icon type="info-circle" />
         </Tooltip>
       </label>
-      <Form.Item name="passengerPreference">
-        <GenderSelect id="passenger-preference-input" name="passengerPreference" isMultiSelect />
-      </Form.Item>
+      <GenderSelect
+        id="passenger-preference-input"
+        name="passengerPreference"
+        touched={touched}
+        error={error}
+        isMultiSelect
+      />
     </>
   );
 }

@@ -80,6 +80,8 @@ function UserDetailsForm() {
         },
         submitForm,
         setFieldValue,
+        touched,
+        errors,
       }) => (
         <div className="user-details-form-container">
           <Form className="user-details-form">
@@ -154,7 +156,10 @@ function UserDetailsForm() {
               </Col>
               <Col span={12}>
                 <div className="right-column">
-                  <PassengerPreferenceFormikInput />
+                  <PassengerPreferenceFormikInput
+                    touched={touched.passengerPreference}
+                    error={errors.passengerPreference}
+                  />
                 </div>
               </Col>
             </Row>
