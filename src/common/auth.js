@@ -63,6 +63,24 @@ const getCurrentUserID = () => {
   return auth.currentUser?.uid;
 };
 
+const getAuthFullName = () => {
+  const auth = getAuth();
+
+  return auth.currentUser?.displayName;
+};
+
+const getAuthProfilePictureURL = () => {
+  const auth = getAuth();
+
+  return auth.currentUser?.photoURL;
+};
+
+const getUserEmail = () => {
+  const auth = getAuth();
+
+  return auth.currentUser?.email;
+};
+
 const signOut = async () => {
   const auth = getAuth();
   await signOutFirebase(auth);
@@ -90,4 +108,7 @@ export {
   getCurrentUserID,
   listenForAuthStateChanged,
   signOut,
+  getAuthProfilePictureURL,
+  getAuthFullName,
+  getUserEmail,
 };

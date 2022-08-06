@@ -41,7 +41,15 @@ function UserDetailsForm() {
   const {
     onSubmit,
     isSaving,
-    user: { firstName, lastName, mobileNo, gender, passengerPreference, nic: { idNo, front, back } = {} } = {},
+    user: {
+      firstName,
+      lastName,
+      mobileNo,
+      gender,
+      passengerPreference,
+      nic: { idNo, front, back } = {},
+      userPhoto,
+    } = {},
   } = useContext(UserDetailsPageContext);
   return (
     <Formik
@@ -58,40 +66,64 @@ function UserDetailsForm() {
         gender,
         passengerPreference: _.isEmpty(passengerPreference) ? validGenders : passengerPreference,
         nic: { idNo, front, back },
+        userPhoto,
       }}
       validationSchema={validationSchema}
       validateOnMount
       enableReinitialize
     >
-      {({ values: { isSignUp }, submitForm, setFieldValue }) => (
+      {({
+        values: {
+          isSignUp,
+          nic: { front: nicFront, back: nicBack },
+        },
+        submitForm,
+        setFieldValue,
+      }) => (
         <div className="user-details-form-container">
           <Form className="user-details-form">
-            <Row className="form-elements">
+            <Row className="form-elements" type="flex" align="middle">
               <Col span={12} className="left-column">
-                <div className="left-column">
-                  <label id="user-first-name-label" className="user-input">
-                    {i18n.t(`First Name`)}
-                  </label>
+                <Row>
+                  <div className="left-column">
+                    <label id="user-first-name-label" className="user-input">
+                      {i18n.t(`First Name`)}
+                    </label>
 
-                  <Form.Item name="firstName">
-                    <Input
-                      id="user-first-name-input"
-                      name="firstName"
-                      size="default"
-                      placeholder={i18n.t('e.g. John')}
-                    />
-                  </Form.Item>
-                </div>
+                    <Form.Item name="firstName">
+                      <Input
+                        id="user-first-name-input"
+                        name="firstName"
+                        size="default"
+                        placeholder={i18n.t('e.g. John')}
+                      />
+                    </Form.Item>
+                  </div>
+                </Row>
+                <Row>
+                  <div className="left-column">
+                    <label id="user-last-name-label" className="user-input">
+                      {i18n.t(`Last Name`)}
+                    </label>
+                    <Form.Item name="lastName">
+                      <Input
+                        id="user-last-name-input"
+                        name="lastName"
+                        size="default"
+                        placeholder={i18n.t('e.g. Doe')}
+                      />
+                    </Form.Item>
+                  </div>
+                </Row>
               </Col>
-              <Col span={12}>
-                <div className="right-column">
-                  <label id="user-last-name-label" className="user-input">
-                    {i18n.t(`Last Name`)}
-                  </label>
-                  <Form.Item name="lastName">
-                    <Input id="user-last-name-input" name="lastName" size="default" placeholder={i18n.t('e.g. Doe')} />
-                  </Form.Item>
-                </div>
+              <Col span={4} offset={4}>
+                <label id="user-last-name-label" className="user-input profile-picture">
+                  {i18n.t(`User Photo`)}
+                </label>
+                <ImageUpload
+                  handleImageUpload={(imageBase64) => setFieldValue('userPhoto', imageBase64)}
+                  imageURL={userPhoto}
+                />
               </Col>
             </Row>
             <Row className="form-elements">
@@ -147,6 +179,7 @@ function UserDetailsForm() {
                   <ImageUpload
                     id="user-nic-front-input"
                     handleImageUpload={(imageBase64) => setFieldValue('nic.front', imageBase64)}
+                    imageURL={nicFront}
                   />
                 </Form.Item>
               </Col>
@@ -158,6 +191,7 @@ function UserDetailsForm() {
                   <ImageUpload
                     id="user-nic-back-input"
                     handleImageUpload={(imageBase64) => setFieldValue('nic.back', imageBase64)}
+                    imageURL={nicBack}
                   />
                 </Form.Item>
               </Col>

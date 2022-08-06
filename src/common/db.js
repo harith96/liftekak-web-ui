@@ -22,7 +22,7 @@ import moment from 'moment';
 import { DEFAULT_PAGE_SIZE } from 'util/constants';
 import buildRouteIndex, { buildRouteIndexString } from 'util/buildRouteIndex';
 import buildPassengerPreferenceDB from 'util/buildPassengerPreferenceDB';
-import { getCurrentUserID } from './auth';
+import { getCurrentUserID, getUserEmail } from './auth';
 import DocPagination from './util/DocPagination';
 
 const allRidesPagination = new DocPagination();
@@ -44,7 +44,7 @@ const saveUserDetails = async (userDetails) => {
 
   const db = getFirestore();
 
-  await setDoc(doc(db, 'users', uid), userDetails, { merge: true });
+  await setDoc(doc(db, 'users', uid), { ...userDetails, email: getUserEmail() }, { merge: true });
 };
 
 const getUserDetails = async () => {

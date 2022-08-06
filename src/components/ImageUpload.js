@@ -7,9 +7,8 @@ function getBase64(img, callback) {
   reader.readAsDataURL(img);
 }
 
-export default function ImageUpload({ handleImageUpload }) {
+export default function ImageUpload({ imageURL, handleImageUpload }) {
   const [loading, setLoading] = useState(false);
-  const [imageURL, setImageURL] = useState(null);
 
   function beforeUpload(file) {
     const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
@@ -21,7 +20,6 @@ export default function ImageUpload({ handleImageUpload }) {
       message.error('Image must smaller than 2MB!');
     }
     getBase64(file, (imageUrl) => {
-      setImageURL(imageUrl);
       setLoading(false);
       if (handleImageUpload) handleImageUpload(imageUrl);
     });
