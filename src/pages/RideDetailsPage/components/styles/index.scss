@@ -1,3 +1,20 @@
+.ride-details-card {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  width: 60vw;
+  max-width: 900px;
+  border-top-left-radius: 19px;
+  border-top-right-radius: 19px;
+  background: #fff;
+  border: 1px solid #b1c8d8;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+  margin: auto;
+  position: relative;
+}
+
 .ride-details-container {
   display: flex;
   flex-direction: column;
@@ -10,4 +27,9 @@
 
 .ride-field-container {
   display: flex;
+}
+
+.action-bar {
+  justify-content: space-between;
+  align-items: center;
 }

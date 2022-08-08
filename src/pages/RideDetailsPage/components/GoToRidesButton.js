@@ -1,4 +1,3 @@
-import { Button } from 'antd';
 import React, { useCallback } from 'react';
 import { useHistory } from 'react-router';
 import { APP_ROUTES } from 'util/constants';
@@ -9,9 +8,15 @@ function GoToRidesButton() {
   const goToRides = useCallback(() => history.push(APP_ROUTES.RIDES_LIST), [history]);
 
   return (
-    <Button type="link" onClick={goToRides}>
-      Go back
-    </Button>
+    <button
+      id="batch-back-to-batch-list"
+      type="button"
+      className="ant-btn btn back-btn ant-btn-link"
+      onClick={goToRides}
+    >
+      <i id="batch-back-to-batch-list-icon" className="fi flaticon-arrow"></i>
+      <span id="batch-back-to-batch-list-label">Go to rides</span>
+    </button>
   );
 }
 
