@@ -50,10 +50,17 @@ function RidesListPageContainer() {
       departure: [departureFrom, departureUntil],
       rideStatus,
     }) => {
-      const filters = _.pickBy(
-        { startTown, destinationTown, availableSeatCount, vehicleType, departureFrom, departureUntil, rideStatus },
-        (v) => v
-      );
+      const filters = {
+        startTown,
+        destinationTown,
+        availableSeatCount,
+        vehicleType,
+        departureFrom,
+        departureUntil,
+        rideStatus,
+      };
+
+      console.log('BAC', filters);
 
       dispatch(updateRideFilters(filters));
     },
