@@ -60,8 +60,6 @@ function RidesListPageContainer() {
         rideStatus,
       };
 
-      console.log('BAC', filters);
-
       dispatch(updateRideFilters(filters));
     },
     [history, dispatch]
