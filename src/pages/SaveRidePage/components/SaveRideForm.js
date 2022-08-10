@@ -29,7 +29,8 @@ const validationSchema = yup.object().shape({
   passengerPreference: yup
     .array()
     .of(yup.string().oneOf(_.keys(Gender)))
-    .required('Passenger preference is required.'),
+    .required('Passenger preference is required.')
+    .min(1, 'At least one value should be selected for passenger preference.'),
 });
 
 function SaveRideForm() {
@@ -47,6 +48,7 @@ function SaveRideForm() {
         driverNote,
         start: { location: currentStartLocation } = {},
         destination: { location: currentEndLocation } = {},
+        vehicle,
       } = {},
     },
     isRidesDetailsFetching,
@@ -68,10 +70,10 @@ function SaveRideForm() {
           startLocation: currentStartLocation || '',
           endLocation: currentEndLocation || '',
           departure: {
-            date: departure ? moment.unix(departure) : null,
-            time: departure ? moment.unix(departure) : null,
+            date: departure ? moment.unix(departure / 1000) : null,
+            time: departure ? moment.unix(departure / 1000) : null,
           },
-          vehicle: defaultVehicle,
+          vehicle: vehicle || defaultVehicle,
           passengerPreference: defaultPassengerPreference,
           availableSeatCount: availableSeatCount || 1,
           route: _.chain(route).slice(1, -1).join(', ').value() || '',
@@ -91,6 +93,8 @@ function SaveRideForm() {
           submitForm,
           // values,
           setFieldValue,
+          touched,
+          errors,
         }) => {
           return (
             <div className="user-details-form-container">
@@ -165,17 +169,13 @@ function SaveRideForm() {
                           onChange={(value) =>
                             setFieldValue(
                               'vehicle',
-                              _.find(vehicles, (vehicle) => value === vehicle.registrationNo)
+                              _.find(vehicles, (v) => value === v.registrationNo)
                             )
                           }
                         >
-                          {_.map(vehicles, (vehicle) => (
-                            <Option
-                              value={vehicle.registrationNo}
-                              key={vehicle.registrationNo}
-                              id={vehicle.registrationNo}
-                            >
-                              {vehicle.registrationNo}
+                          {_.map(vehicles, (v) => (
+                            <Option value={v.registrationNo} key={v.registrationNo} id={v.registrationNo}>
+                              {v.registrationNo}
                             </Option>
                           ))}
                         </Select>
@@ -185,7 +185,10 @@ function SaveRideForm() {
 
                   <Col span={12}>
                     <div className="right-column">
-                      <PassengerPreferenceFormikInput />
+                      <PassengerPreferenceFormikInput
+                        touched={touched.passengerPreference}
+                        error={errors.passengerPreference}
+                      />
                     </div>
                   </Col>
                 </Row>
@@ -198,7 +201,7 @@ function SaveRideForm() {
                       <Form.Item name="departure.date">
                         <DatePicker
                           value={departureDate}
-                          disabledDate={(date) => date < moment()}
+                          disabledDate={(date) => date.isBefore(moment().subtract(1, 'day'))}
                           format="YYYY-MM-DD"
                           onChange={(value) => setFieldValue('departure.date', value)}
                         />
@@ -213,9 +216,9 @@ function SaveRideForm() {
                       <Form.Item name="departure.time">
                         <TimePicker
                           name="departure.time"
-                          disabledHours={() => _.range(0, moment().hour())}
+                          disabledHours={() => (departureDate?.isBefore() ? _.range(0, moment().hour()) : [])}
                           disabledMinutes={(selectedHour) =>
-                            selectedHour === moment().hour()
+                            selectedHour === moment().hour() && departureDate?.isBefore()
                               ? _.range(0, moment().minute(), DEPARTURE_TIME_MIN_STEP)
                               : []
                           }
@@ -244,7 +247,7 @@ function SaveRideForm() {
                 </Row>
                 <Row className="form-elements">
                   <label id="user-nic-no-label" className="user-input">
-                    {i18n.t(`Note`)}
+                    {i18n.t(`Notes`)}
                   </label>
                   <Form.Item name="note">
                     <Input

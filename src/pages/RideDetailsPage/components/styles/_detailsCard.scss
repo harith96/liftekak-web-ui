@@ -1,0 +1,37 @@
+.details-card {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  //   width: 98vw;
+  background: #fff;
+  border: 1px solid #b1c8d8;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+  margin: auto;
+  position: relative;
+  padding: 2rem;
+
+  &:hover {
+    background-color: #91c0e5;
+    color: white;
+  }
+}
+.clickable {
+  &:hover {
+    background-color: #a4c783;
+  }
+}
+
+.card-title {
+  display: flex;
+  justify-content: space-between;
+  font-size: large;
+  margin-bottom: 1rem;
+}
+
+.card-content {
+  display: flex;
+  font-size: larger;
+  font-weight: 700;
+}

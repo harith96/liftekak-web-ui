@@ -32,9 +32,10 @@ const validationSchema = yup.object().shape({
       .string()
       .matches(/^([0-9]{9}[x|X|v|V]|[0-9]{12})$/, { excludeEmptyString: true, message: 'Enter a valid NIC number' })
       .required('NIC number is required'),
-    front: yup.string().required('NIC front image is required.'),
-    back: yup.string().required('NIC back image is required.'),
+    // front: yup.string().required('NIC front image is required.'),
+    // back: yup.string().required('NIC back image is required.'),
   }),
+  bio: yup.string().required('Add a few sentences about yourself.'),
 });
 
 function UserDetailsForm() {
@@ -49,6 +50,7 @@ function UserDetailsForm() {
       passengerPreference,
       nic: { idNo, front, back } = {},
       userPhoto,
+      bio,
     } = {},
   } = useContext(UserDetailsPageContext);
   return (
@@ -67,6 +69,7 @@ function UserDetailsForm() {
         passengerPreference: _.isEmpty(passengerPreference) ? validGenders : passengerPreference,
         nic: { idNo, front, back },
         userPhoto,
+        bio,
       }}
       validationSchema={validationSchema}
       validateOnMount
@@ -80,6 +83,8 @@ function UserDetailsForm() {
         },
         submitForm,
         setFieldValue,
+        touched,
+        errors,
       }) => (
         <div className="user-details-form-container">
           <Form className="user-details-form">
@@ -154,7 +159,10 @@ function UserDetailsForm() {
               </Col>
               <Col span={12}>
                 <div className="right-column">
-                  <PassengerPreferenceFormikInput />
+                  <PassengerPreferenceFormikInput
+                    touched={touched.passengerPreference}
+                    error={errors.passengerPreference}
+                  />
                 </div>
               </Col>
             </Row>
@@ -196,6 +204,19 @@ function UserDetailsForm() {
                   />
                 </Form.Item>
               </Col>
+            </Row>
+            <Row className="form-elements">
+              <label id="user-nic-no-label" className="user-input">
+                {i18n.t(`Your Bio`)}
+              </label>
+              <Form.Item name="bio">
+                <Input.TextArea
+                  id="user-bio-input"
+                  name="bio"
+                  size="default"
+                  placeholder={i18n.t('Tell us something interesting about yourself.')}
+                />
+              </Form.Item>
             </Row>
             <AntdForm.Item>
               <AntdForm.Item>
