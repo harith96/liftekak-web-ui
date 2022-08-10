@@ -14,7 +14,7 @@ import { SaveRidePageContextProvider } from './SaveRidePageContext';
 
 const formatRideValues = (rideId, values) => ({
   ...values,
-  route: _.filter(values.route, (town) => !_.isEmpty(town)),
+  route: [values.startLocation, ..._.filter(values.route, (town) => !_.isEmpty(town)), values.endLocation],
   departure: moment(
     `${values.departure.date.format('YYYY-MM-DD')}T${values.departure.time.format('HH:mm')}:00.000Z`
   ).valueOf(),

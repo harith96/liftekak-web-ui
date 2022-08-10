@@ -6,7 +6,7 @@ import './styles/_detailsCard.scss';
 function RideDetailsCard({ title, icon, value, onClick }) {
   return (
     <div
-      className={`details-card ${onClick ? 'clickable' : ''}`}
+      className={`details-card ${onClick ? 'clickable-card clickable' : ''}`}
       onClick={onClick}
       role="button"
       onKeyDown={() => {}}
