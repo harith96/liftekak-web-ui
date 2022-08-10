@@ -12,6 +12,7 @@ import * as yup from 'yup';
 
 import * as i18n from '_i18n';
 import CitySelect from 'components/CitySelect/CitySelectContainer';
+import { ROUTE_MAX_TOWN_COUNT } from 'util/constants';
 import SaveRidePageContext from '../SaveRidePageContext';
 
 const { Option } = Select;
@@ -25,7 +26,10 @@ const validationSchema = yup.object().shape({
     time: yup.object().nullable().required(i18n.t('Start location is required.')),
   }),
   availableSeatCount: yup.number().min(1).required('Available seat count is required.'),
-  route: yup.array().optional(),
+  route: yup
+    .array()
+    .optional()
+    .max(ROUTE_MAX_TOWN_COUNT, `Maximum city count for the route is ${ROUTE_MAX_TOWN_COUNT}.`),
   note: yup.string().optional(),
   vehicle: yup.object().nullable().required('A vehicle is required'),
   passengerPreference: yup
@@ -87,8 +91,6 @@ function SaveRideForm() {
       >
         {({
           values: {
-            startLocation,
-            endLocation,
             departure: { date: departureDate, time: departureTime },
             vehicle: selectedVehicle,
             route,
@@ -99,7 +101,6 @@ function SaveRideForm() {
           touched,
           errors,
         }) => {
-          console.log(route);
           return (
             <div className="user-details-form-container">
               <Form className="user-details-form">
@@ -129,23 +130,26 @@ function SaveRideForm() {
                 <Row className="form-elements">
                   <label id="user-mobile-no-label" className="user-input">
                     {i18n.t(`Route`)}
+                    <InfoTooltip title="Adding more towns will help passengers to find your ride more easily." />
                   </label>
                   <Form.Item name="route">
                     <Col span={4} className="route-input">
-                      <CitySelect name="startLocation" disabled placeholder="Start location" />
+                      <CitySelect name="startLocation" disabled placeholder="Start location" showNextCityIcon />
                     </Col>
                     {_.map(
                       route,
                       (c, index) =>
                         !_.isEmpty(c) && (
                           <Col span={4} className="route-input">
-                            <CitySelect name={`route[${index}]`} />
+                            <CitySelect name={`route[${index}]`} showNextCityIcon />
                           </Col>
                         )
                     )}
-                    <Col span={4} className="route-input">
-                      <CitySelect name={`route[${route.length}]`} placeholder="Enter new town" />
-                    </Col>
+                    {route.length < ROUTE_MAX_TOWN_COUNT && (
+                      <Col span={4} className="route-input">
+                        <CitySelect name={`route[${route.length}]`} placeholder="Enter new town" showNextCityIcon />
+                      </Col>
+                    )}
                     <Col span={4}>
                       <CitySelect name="endLocation" disabled placeholder="End location" />
                     </Col>
