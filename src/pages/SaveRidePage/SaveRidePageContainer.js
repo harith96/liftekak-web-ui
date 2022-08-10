@@ -1,4 +1,4 @@
-import { saveRide, loadUserVehicles, loadRideDetails } from 'actions';
+import { saveRide, loadUserVehicles, loadRideDetails, loadCities } from 'actions';
 import { getCurrentUserID } from 'common/auth';
 import { SaveVehicleContextProvider } from 'components/SaveVehicle/context/SaveVehicleContext';
 import { RideStatus } from 'enums';
@@ -14,12 +14,7 @@ import { SaveRidePageContextProvider } from './SaveRidePageContext';
 
 const formatRideValues = (rideId, values) => ({
   ...values,
-  route: _.chain(values.route)
-    .split(',')
-    .push(values.endLocation)
-    .unshift(values.startLocation)
-    .map((town) => _.trim(town))
-    .value(),
+  route: _.filter(values.route, (town) => !_.isEmpty(town)),
   departure: moment(
     `${values.departure.date.format('YYYY-MM-DD')}T${values.departure.time.format('HH:mm')}:00.000Z`
   ).valueOf(),
@@ -54,7 +49,10 @@ function SaveRidePageContainer() {
 
   // End - Logic for ride update
 
-  useEffect(() => dispatch(loadUserVehicles()), []);
+  useEffect(() => {
+    dispatch(loadUserVehicles());
+    dispatch(loadCities());
+  }, []);
 
   const onSaveRide = useCallback(
     (values) => dispatch(saveRide(formatRideValues(rideId, values), history)),

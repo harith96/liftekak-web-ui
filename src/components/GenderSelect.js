@@ -16,12 +16,12 @@ const renderGenders = _.map(genders, ({ key, value }) => (
 
 function GenderSelect({ isMultiSelect, id, name, touched, error }) {
   return (
-    <>
+    <div style={{ margin: '1rem 0' }}>
       <Select id={id} name={name} size="default" mode={isMultiSelect ? 'multiple' : 'default'} allowClear>
         {renderGenders}
       </Select>
       <p style={{ color: 'red' }}>{touched && (error || '')}</p>
-    </>
+    </div>
   );
 }
 

@@ -107,5 +107,10 @@ const initialState = {
     data: null,
     error: null,
   },
+  cities: {
+    fetching: false,
+    data: [],
+    error: null,
+  },
 };
 export default initialState;

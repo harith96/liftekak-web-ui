@@ -1,9 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import * as _ from 'lodash';
 
-import { loadMyRides, loadRidesList, updateRideFilters } from 'actions';
+import { loadCities, loadMyRides, loadRidesList, updateRideFilters } from 'actions';
 import { PageAction } from 'enums';
 import { APP_ROUTES, RidesTabs } from 'util/constants';
 import RidesListPageComponent from './components/RidesListPageComponent';
@@ -26,6 +25,10 @@ function RidesListPageContainer() {
     dispatch(loadRidesList());
     dispatch(loadMyRides());
   }, [dispatch, rideFilters]);
+
+  useEffect(() => {
+    dispatch(loadCities());
+  }, [dispatch]);
 
   const onNextPage = useCallback(() => dispatch(loadRidesList(PageAction.NEXT)), [dispatch]);
 
