@@ -26,7 +26,7 @@ const app = initializeApp(firebaseConfig);
 
 export default app;
 
-const loginWithEmailAndPassword = async (email, password, rememberMe) => {
+export const loginWithEmailAndPassword = async (email, password, rememberMe) => {
   const auth = getAuth();
 
   auth.setPersistence(rememberMe ? browserLocalPersistence : browserSessionPersistence);
@@ -34,7 +34,7 @@ const loginWithEmailAndPassword = async (email, password, rememberMe) => {
   return signInWithEmailAndPassword(auth, email, password);
 };
 
-const loginWithGoogle = async () => {
+export const loginWithGoogle = async () => {
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
   provider.addScope('profile');
@@ -43,13 +43,13 @@ const loginWithGoogle = async () => {
   return GoogleAuthProvider.credentialFromResult(result);
 };
 
-const signUpWithEmailAndPassword = async (email, password) => {
+export const signUpWithEmailAndPassword = async (email, password) => {
   const auth = getAuth();
 
   return createUserWithEmailAndPassword(auth, email, password);
 };
 
-const sendPasswordRestEmail = async (email) => {
+export const sendPasswordRestEmail = async (email) => {
   const auth = getAuth();
 
   console.log('reset password: ', auth);
@@ -57,36 +57,36 @@ const sendPasswordRestEmail = async (email) => {
   await sendPasswordResetEmail(auth, email);
 };
 
-const getCurrentUserID = () => {
+export const getCurrentUserID = () => {
   const auth = getAuth();
 
   return auth.currentUser?.uid;
 };
 
-const getAuthFullName = () => {
+export const getAuthFullName = () => {
   const auth = getAuth();
 
   return auth.currentUser?.displayName;
 };
 
-const getAuthProfilePictureURL = () => {
+export const getAuthProfilePictureURL = () => {
   const auth = getAuth();
 
   return auth.currentUser?.photoURL;
 };
 
-const getUserEmail = () => {
+export const getUserEmail = () => {
   const auth = getAuth();
 
   return auth.currentUser?.email;
 };
 
-const signOut = async () => {
+export const signOut = async () => {
   const auth = getAuth();
   await signOutFirebase(auth);
 };
 
-const listenForAuthStateChanged = async (signedInCallback, signedOutCallback) => {
+export const listenForAuthStateChanged = async (signedInCallback, signedOutCallback) => {
   const auth = getAuth();
 
   return onAuthStateChanged(auth, (user) => {
@@ -98,17 +98,4 @@ const listenForAuthStateChanged = async (signedInCallback, signedOutCallback) =>
       if (signedOutCallback) signedOutCallback();
     }
   });
-};
-
-export {
-  loginWithEmailAndPassword,
-  loginWithGoogle,
-  signUpWithEmailAndPassword,
-  sendPasswordRestEmail,
-  getCurrentUserID,
-  listenForAuthStateChanged,
-  signOut,
-  getAuthProfilePictureURL,
-  getAuthFullName,
-  getUserEmail,
 };

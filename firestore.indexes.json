@@ -223,6 +223,84 @@
         }
       ]
     },
+    {
+      "collectionGroup": "rides",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "indices.route",
+          "arrayConfig": "CONTAINS"
+        },
+        {
+          "fieldPath": "details.passengerPreference.OTHER",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "seatsAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "departure",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "rides",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "indices.route",
+          "arrayConfig": "CONTAINS"
+        },
+        {
+          "fieldPath": "details.passengerPreference.FEMALE",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "departure",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "seatsAvailable",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "rides",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "indices.route",
+          "arrayConfig": "CONTAINS"
+        },
+        {
+          "fieldPath": "details.passengerPreference.MALE",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "seatsAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "departure",
+          "order": "ASCENDING"
+        }
+      ]
+    },
 
     {
       "collectionGroup": "rides",
@@ -331,6 +409,20 @@
         {
           "fieldPath": "departure",
           "order": "ASCENDING"
+        },
+        {
+          "collectionGroup": "vehicles",
+          "queryScope": "COLLECTION_GROUP",
+          "fields": [
+            {
+              "fieldPath": "isDeleted",
+              "order": "ASCENDING"
+            },
+            {
+              "fieldPath": "isDefaultVehicle",
+              "order": "DESCENDING"
+            }
+          ]
         }
       ]
     }

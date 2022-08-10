@@ -1,15 +1,18 @@
-import { Button, Col, Row, Form as AntdForm, Tooltip, Icon, TimePicker, DatePicker, Spin, Empty, Select } from 'antd';
+import { Button, Col, Row, Form as AntdForm, Tooltip, Icon, TimePicker, DatePicker, Spin, Empty } from 'antd';
+import InfoTooltip from 'components/InfoTooltip';
 import PassengerPreferenceFormikInput from 'components/PassengerPreferenceInput';
 import SaveVehicleContainer from 'components/SaveVehicle/SaveVehicleContainer';
 import { Gender } from 'enums';
 import { Formik } from 'formik';
-import { Form, Input, InputNumber } from 'formik-antd';
+import { Form, Input, InputNumber, Select } from 'formik-antd';
 import _ from 'lodash';
 import moment from 'moment';
 import React, { useContext } from 'react';
 import * as yup from 'yup';
 
 import * as i18n from '_i18n';
+import CitySelect from 'components/CitySelect/CitySelectContainer';
+import { ROUTE_MAX_TOWN_COUNT } from 'util/constants';
 import SaveRidePageContext from '../SaveRidePageContext';
 
 const { Option } = Select;
@@ -23,7 +26,10 @@ const validationSchema = yup.object().shape({
     time: yup.object().nullable().required(i18n.t('Start location is required.')),
   }),
   availableSeatCount: yup.number().min(1).required('Available seat count is required.'),
-  route: yup.string().optional(),
+  route: yup
+    .array()
+    .optional()
+    .max(ROUTE_MAX_TOWN_COUNT, `Maximum city count for the route is ${ROUTE_MAX_TOWN_COUNT}.`),
   note: yup.string().optional(),
   vehicle: yup.object().nullable().required('A vehicle is required'),
   passengerPreference: yup
@@ -44,7 +50,7 @@ function SaveRideForm() {
       departure,
       details: {
         availableSeatCount,
-        route,
+        // route,
         driverNote,
         start: { location: currentStartLocation } = {},
         destination: { location: currentEndLocation } = {},
@@ -76,7 +82,7 @@ function SaveRideForm() {
           vehicle: vehicle || defaultVehicle,
           passengerPreference: defaultPassengerPreference,
           availableSeatCount: availableSeatCount || 1,
-          route: _.chain(route).slice(1, -1).join(', ').value() || '',
+          route: [],
           note: driverNote || '',
         }}
         validationSchema={validationSchema}
@@ -85,10 +91,9 @@ function SaveRideForm() {
       >
         {({
           values: {
-            startLocation,
-            endLocation,
             departure: { date: departureDate, time: departureTime },
             vehicle: selectedVehicle,
+            route,
           },
           submitForm,
           // values,
@@ -100,19 +105,14 @@ function SaveRideForm() {
             <div className="user-details-form-container">
               <Form className="user-details-form">
                 <Row className="form-elements">
-                  <Col span={12} className="left-column">
+                  <Col span={12}>
                     <div className="left-column">
                       <label id="user-first-name-label" className="user-input">
                         {i18n.t(`Start location`)}
                       </label>
 
                       <Form.Item name="startLocation">
-                        <Input
-                          id="user-first-name-input"
-                          name="startLocation"
-                          size="default"
-                          placeholder={i18n.t('e.g. Malabe')}
-                        />
+                        <CitySelect name="startLocation" placeholder="e.g. Malabe" />
                       </Form.Item>
                     </div>
                   </Col>
@@ -122,12 +122,7 @@ function SaveRideForm() {
                         {i18n.t(`End Location`)}
                       </label>
                       <Form.Item name="endLocation">
-                        <Input
-                          id="user-last-name-input"
-                          name="endLocation"
-                          size="default"
-                          placeholder={i18n.t('e.g. Kollupitiya')}
-                        />
+                        <CitySelect name="endLocation" placeholder="e.g. Colombo 3" />
                       </Form.Item>
                     </div>
                   </Col>
@@ -135,16 +130,29 @@ function SaveRideForm() {
                 <Row className="form-elements">
                   <label id="user-mobile-no-label" className="user-input">
                     {i18n.t(`Route`)}
+                    <InfoTooltip title="Adding more towns will help passengers to find your ride more easily." />
                   </label>
                   <Form.Item name="route">
-                    <Input
-                      id="user-first-name-input"
-                      name="route"
-                      addonBefore={startLocation}
-                      addonAfter={endLocation}
-                      size="default"
-                      placeholder={i18n.t('e.g. Thalahena, Battaramulla, Rajagiriya')}
-                    />
+                    <Col span={4} className="route-input">
+                      <CitySelect name="startLocation" disabled placeholder="Start location" showNextCityIcon />
+                    </Col>
+                    {_.map(
+                      route,
+                      (c, index) =>
+                        !_.isEmpty(c) && (
+                          <Col span={4} className="route-input">
+                            <CitySelect name={`route[${index}]`} showNextCityIcon />
+                          </Col>
+                        )
+                    )}
+                    {route.length < ROUTE_MAX_TOWN_COUNT && (
+                      <Col span={4} className="route-input">
+                        <CitySelect name={`route[${route.length}]`} placeholder="Enter new town" showNextCityIcon />
+                      </Col>
+                    )}
+                    <Col span={4}>
+                      <CitySelect name="endLocation" disabled placeholder="End location" />
+                    </Col>
                   </Form.Item>
                 </Row>
                 <Row className="form-elements">
@@ -235,9 +243,7 @@ function SaveRideForm() {
                     <div className="right-column">
                       <label id="user-passenger-preference-label" className="user-input">
                         {i18n.t(`Available seat count`)}
-                        <Tooltip title={i18n.t('Available seat count should be between 1 and you vehicle seat count.')}>
-                          <Icon type="info-circle" />
-                        </Tooltip>
+                        <InfoTooltip title="Available seat count should be between 1 and you vehicle seat count." />
                       </label>
                       <Form.Item name="availableSeatCount">
                         <InputNumber name="availableSeatCount" min={1} />

@@ -1,4 +1,5 @@
 import { Col, Icon, Row, Button } from 'antd';
+import CitySelectContainer from 'components/CitySelect/CitySelectContainer';
 import { FilterTypes, RideStatus, VehicleType } from 'enums';
 import { Formik } from 'formik';
 import { DatePicker, Form, Input, Select } from 'formik-antd';
@@ -16,14 +17,14 @@ const searchIndexes = [
     dataIndex: 'startLocation.location',
     title: 'Start location (Town)',
     placeholder: 'Search starting town',
-    props: { type: FilterTypes.TEXT },
+    props: { type: FilterTypes.CUSTOM, component: CitySelectContainer },
   },
   {
     name: 'destinationTown',
     dataIndex: 'endLocation.location',
     title: 'End location (Town)',
     placeholder: 'Search destination town',
-    props: { type: FilterTypes.TEXT },
+    props: { type: FilterTypes.CUSTOM, component: CitySelectContainer },
   },
   {
     name: 'departure',
@@ -125,12 +126,13 @@ function RideSearchBar() {
             <div className="search-container">
               <Row type="flex" align="bottom" justify="space-around">
                 {searchIndexes.map(
-                  ({ name, title, placeholder, props: { type, data }, tab }) =>
+                  ({ name, title, placeholder, props: { type, data, component: Component }, tab }) =>
                     (!tab || activeTabKey === tab) && (
                       <Col span={getFilterSpan(type)} key={name}>
                         <label id="user-last-name-label" className="user-input">
                           {title}
                         </label>
+                        <br />
                         <>
                           {(type === FilterTypes.TEXT || type === FilterTypes.NUMBER) && (
                             <Input
@@ -161,6 +163,7 @@ function RideSearchBar() {
                           )}
                         </>
                         <>{type === FilterTypes.TIME_RANGE && <RangePicker name={name} showTime />}</>
+                        <>{type === FilterTypes.CUSTOM && <Component name={name} placeholder={placeholder} />}</>
                       </Col>
                     )
                 )}

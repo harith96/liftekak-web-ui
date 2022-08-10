@@ -57,6 +57,7 @@ export const FilterTypes = {
   SELECT: 'SELECT',
   NUMBER: 'NUMBER',
   TIME_RANGE: 'TIME_RANGE',
+  CUSTOM: 'CUSTOM',
 };
 
 export const FuelType = {

@@ -19,6 +19,7 @@ import {
   BOOKINGS,
   SAVE_BOOKING,
   MY_RIDES,
+  CITIES,
 } from 'actions/actionTypes';
 import { APP_ROUTES, BAD_REQUEST_STATUS, NOT_FOUND_STATUS, USER_NOT_AUTHORIZED_STATUS } from 'util/constants';
 import * as i18n from '_i18n';
@@ -43,6 +44,7 @@ import {
   saveUserDetails,
   saveVehicle,
   getMyRides,
+  getCities,
 } from 'common/db';
 
 export const getRole = (state) => state.user.data.userRole;
@@ -445,6 +447,25 @@ function* saveBooking(booking) {
   }
 }
 
+function* loadCitiesAsync({ engNameQuery }) {
+  try {
+    const cities = yield getCities({ engNameQuery });
+
+    yield put({ type: CITIES.SUCCESS, payload: cities });
+  } catch (error) {
+    yield put({ type: CITIES.FAILURE, payload: error.message });
+    const handled = yield handleUserSessionErrors(error);
+    if (!handled)
+      yield put(
+        action(SHOW_NOTIFICATION, {
+          description: i18n.t('liftEkak.cities.error.description'),
+          className: NotificationType.ERROR,
+          message: i18n.t('liftEkak.cities.error.message'),
+        })
+      );
+  }
+}
+
 function* updateRideFiltersAsync({ filters: updatedFilters }) {
   const filters = yield select((state) => state.rideFilters.data);
 
@@ -522,6 +543,10 @@ function* watchSaveBooking() {
   yield takeLatest(SAVE_BOOKING.REQUEST, saveBooking);
 }
 
+function* watchLoadCities() {
+  yield takeLatest(CITIES.REQUEST, loadCitiesAsync);
+}
+
 export default function* rootSaga() {
   yield all([
     watchSignIn(),
@@ -541,5 +566,6 @@ export default function* rootSaga() {
     loadAllRides(),
     watchLoadBookings(),
     watchSaveBooking(),
+    watchLoadCities(),
   ]);
 }

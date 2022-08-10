@@ -54,3 +54,5 @@ export const RidesTabs = {
   ALL_RIDES: 'all-rides',
   MY_RIDES: 'my-rides',
 };
+
+export const ROUTE_MAX_TOWN_COUNT = 10;

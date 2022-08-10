@@ -298,6 +298,27 @@ const createBooking = async ({ ride, pickupLocation, dropLocation, note, user })
 
 const getBookings = async () => {};
 
+const getCities = async ({ engNameQuery }) => {
+  const db = getFirestore();
+
+  const citiesRef = collection(db, 'cities');
+
+  const q = _.isEmpty(engNameQuery)
+    ? query(citiesRef, limit(DEFAULT_PAGE_SIZE), orderBy('name_en'))
+    : query(
+        citiesRef,
+        where('name_en', '>=', _.startCase(engNameQuery)),
+
+        where('name_en', '<=', `${_.startCase(engNameQuery)}\uf8ff`),
+        limit(DEFAULT_PAGE_SIZE),
+        orderBy('name_en')
+      );
+
+  const querySnap = await getDocs(q);
+
+  return querySnap.docs.map((city) => city.data());
+};
+
 export {
   getUserDetails,
   saveUserDetails,
@@ -309,4 +330,5 @@ export {
   createBooking,
   getBookings,
   getMyRides,
+  getCities,
 };
