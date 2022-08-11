@@ -105,7 +105,7 @@ function SaveRideForm() {
             <div className="user-details-form-container">
               <Form className="user-details-form">
                 <Row className="form-elements">
-                  <Col span={12}>
+                  <Col lg={{ span: 12 }} xs={{ span: 24 }}>
                     <div className="left-column">
                       <label id="user-first-name-label" className="user-input">
                         {i18n.t(`Start location`)}
@@ -116,7 +116,7 @@ function SaveRideForm() {
                       </Form.Item>
                     </div>
                   </Col>
-                  <Col span={12}>
+                  <Col lg={{ span: 12 }} xs={{ span: 24 }}>
                     <div className="right-column">
                       <label id="user-last-name-label" className="user-input">
                         {i18n.t(`End Location`)}
@@ -133,30 +133,30 @@ function SaveRideForm() {
                     <InfoTooltip title="Adding more towns will help passengers to find your ride more easily." />
                   </label>
                   <Form.Item name="route">
-                    <Col span={4} className="route-input">
+                    <Col lg={{ span: 4 }} xs={{ span: 24 }} className="route-input">
                       <CitySelect name="startLocation" disabled placeholder="Start location" showNextCityIcon />
                     </Col>
                     {_.map(
                       route,
                       (c, index) =>
                         !_.isEmpty(c) && (
-                          <Col span={4} className="route-input">
+                          <Col lg={{ span: 4 }} xs={{ span: 24 }} className="route-input">
                             <CitySelect name={`route[${index}]`} showNextCityIcon />
                           </Col>
                         )
                     )}
                     {route.length < ROUTE_MAX_TOWN_COUNT && (
-                      <Col span={4} className="route-input">
+                      <Col lg={{ span: 4 }} xs={{ span: 24 }} className="route-input">
                         <CitySelect name={`route[${route.length}]`} placeholder="Enter new town" showNextCityIcon />
                       </Col>
                     )}
-                    <Col span={4}>
+                    <Col lg={{ span: 4 }} xs={{ span: 24 }}>
                       <CitySelect name="endLocation" disabled placeholder="End location" />
                     </Col>
                   </Form.Item>
                 </Row>
                 <Row className="form-elements">
-                  <Col span={12}>
+                  <Col lg={{ span: 12 }} xs={{ span: 24 }}>
                     <div className="left-column">
                       <div className="vehicle-title">
                         <label id="user-gender-label" className="user-input">
@@ -191,7 +191,7 @@ function SaveRideForm() {
                     </div>
                   </Col>
 
-                  <Col span={12}>
+                  <Col lg={{ span: 12 }} xs={{ span: 24 }}>
                     <div className="right-column">
                       <PassengerPreferenceFormikInput
                         touched={touched.passengerPreference}
@@ -201,7 +201,7 @@ function SaveRideForm() {
                   </Col>
                 </Row>
                 <Row className="form-elements">
-                  <Col span={8}>
+                  <Col lg={{ span: 8 }} xs={{ span: 24 }}>
                     <div className="left-column">
                       <label id="user-gender-label" className="user-input">
                         {i18n.t(`Departure date`)}
@@ -216,7 +216,7 @@ function SaveRideForm() {
                       </Form.Item>
                     </div>
                   </Col>
-                  <Col span={8}>
+                  <Col lg={{ span: 8 }} xs={{ span: 24 }}>
                     <div className="left-column">
                       <label id="departure-time-label" className="user-input">
                         {i18n.t(`Departure time`)}
@@ -239,7 +239,7 @@ function SaveRideForm() {
                       </Form.Item>
                     </div>
                   </Col>
-                  <Col span={8}>
+                  <Col lg={{ span: 8 }} xs={{ span: 24 }}>
                     <div className="right-column">
                       <label id="user-passenger-preference-label" className="user-input">
                         {i18n.t(`Available seat count`)}

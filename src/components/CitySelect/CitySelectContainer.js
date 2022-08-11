@@ -4,6 +4,7 @@ import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CitySelectContextProvider } from './CitySelectContext';
 import CitySelect from './components/CitySelect';
+import 'components/styles/index.scss';
 
 function CitySelectContainer({ name, disabled, placeholder, showNextCityIcon }) {
   const dispatch = useDispatch();
