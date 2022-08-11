@@ -40,11 +40,11 @@ function RidesListPageComponent() {
         <h1>Rides</h1>
         <AddNewButton onClick={gotToSaveRideView} entityName="Ride" />
       </Row>
-      <Tabs activeKey={activeTabKey} defaultActiveKey={RidesTabs.ALL_RIDES} onChange={setActiveTabKey}>
-        <TabPane tab={allRidesTab} key={RidesTabs.ALL_RIDES}>
+      <Tabs activeKey={activeTabKey} defaultActiveKey={RidesTabs.ALL_RIDES} onChange={setActiveTabKey} className="tab">
+        <TabPane tab={allRidesTab} key={RidesTabs.ALL_RIDES} className="tab-pane">
           {RidesView}
         </TabPane>
-        <TabPane tab={myRidesTab} key={RidesTabs.MY_RIDES}>
+        <TabPane tab={myRidesTab} key={RidesTabs.MY_RIDES} className="tab-pane">
           {RidesView}
         </TabPane>
       </Tabs>

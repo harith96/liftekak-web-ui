@@ -1,6 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import { Table } from 'antd';
 import _ from 'lodash';
+import ReactResizeDetector from 'react-resize-detector';
 
 import PaginationBar from 'components/PaginationBar';
 import { getFormattedDate, getFormattedTime } from 'util/dateUtil';
@@ -47,31 +48,42 @@ const columns = [
 ];
 
 function RidesList() {
+  const [gridScrollHeight, setGridScrollHeight] = useState('70vh');
   const { ridesList, isRidesFetching, onRideSelected, onNextPage, onPreviousPage } = useContext(RidesListPageContext);
 
   const onRow = (record) => ({
     onClick: () => onRideSelected(record),
   });
 
+  const onResize = useCallback(
+    (_0, height) => {
+      setGridScrollHeight(height - 150);
+    },
+    [setGridScrollHeight]
+  );
+
   return (
-    <div id="rewards-batches-table-panel" className="grid-panel">
-      <Table
-        id="rides-list-table"
-        className="costing-batches-table"
-        loading={isRidesFetching}
-        dataSource={ridesList}
-        columns={columns}
-        onRow={onRow}
-        rowClassName="antd-clickable-row"
-        pagination={false}
-      />
-      <PaginationBar
-        onNextPage={onNextPage}
-        onPreviousPage={onPreviousPage}
-        // This won't work as available seat count is checked only after fetching docs
-        // isNextButtonDisabled={ridesList.length < DEFAULT_PAGE_SIZE}
-      />
-    </div>
+    <ReactResizeDetector handleHeight onResize={onResize}>
+      <div id="rewards-batches-table-panel" className="grid-panel">
+        <Table
+          id="rides-list-table"
+          className="rides-table"
+          loading={isRidesFetching}
+          dataSource={ridesList}
+          columns={columns}
+          onRow={onRow}
+          rowClassName="antd-clickable-row"
+          pagination={false}
+          scroll={{ x: '100%', y: gridScrollHeight }}
+        />
+        <PaginationBar
+          onNextPage={onNextPage}
+          onPreviousPage={onPreviousPage}
+          // This won't work as available seat count is checked only after fetching docs
+          // isNextButtonDisabled={ridesList.length < DEFAULT_PAGE_SIZE}
+        />
+      </div>
+    </ReactResizeDetector>
   );
 }
 

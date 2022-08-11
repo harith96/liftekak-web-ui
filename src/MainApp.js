@@ -41,7 +41,7 @@ function MainApp() {
   }, [dispatch]);
 
   return (
-    <div className="wrapper reward-wrapper">
+    <>
       <Router>
         <Switch>
           <Route path={APP_ROUTES.LOGIN} component={SignInPageContainer} />
@@ -80,7 +80,7 @@ function MainApp() {
         </Switch>
       </Router>
       {userFetching && <AppLoader />}
-    </div>
+    </>
   );
 }
 
