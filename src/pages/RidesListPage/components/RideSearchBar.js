@@ -124,7 +124,7 @@ function RideSearchBar() {
             }}
           >
             <div className="search-container">
-              <Row type="flex" align="bottom" justify="space-around">
+              <Row type="flex" align="bottom" justify="space-around" gutter={[16, 16]}>
                 {searchIndexes.map(
                   ({ name, title, placeholder, props: { type, data, component: Component }, tab }) =>
                     (!tab || activeTabKey === tab) && (
