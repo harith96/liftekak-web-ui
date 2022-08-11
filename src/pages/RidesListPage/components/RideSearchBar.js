@@ -128,7 +128,7 @@ function RideSearchBar() {
                 {searchIndexes.map(
                   ({ name, title, placeholder, props: { type, data, component: Component }, tab }) =>
                     (!tab || activeTabKey === tab) && (
-                      <Col span={getFilterSpan(type)} key={name}>
+                      <Col lg={{ span: getFilterSpan(type) }} xs={{ span: 24 }} key={name} className="filter-container">
                         <label id="user-last-name-label" className="user-input">
                           {title}
                         </label>
@@ -167,10 +167,12 @@ function RideSearchBar() {
                       </Col>
                     )
                 )}
-                <Button type="primary" onClick={submitForm}>
-                  <Icon type="search" />
-                  Search
-                </Button>
+                <Col xs={{ span: 24 }} lg={{ span: 4 }} className="search-btn-container">
+                  <Button type="primary" onClick={submitForm}>
+                    <Icon type="search" />
+                    Search
+                  </Button>
+                </Col>
               </Row>
             </div>
           </Form>

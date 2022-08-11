@@ -25,7 +25,7 @@ function RidesList() {
                 item.details.availableSeatCount
               } seat(s) available | ${item.details.vehicle.type}`}
             />
-            <div className="route-container">{getFormattedRoute(item.details?.route)}</div>
+            <div className="ride-route-container ">{getFormattedRoute(item.details?.route)}</div>
           </List.Item>
         )}
         className="rides-list"
