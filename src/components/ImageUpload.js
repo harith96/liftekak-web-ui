@@ -35,13 +35,7 @@ export default function ImageUpload({ imageURL, handleImageUpload }) {
   );
 
   return (
-    <Upload
-      name="avatar"
-      listType="picture-card"
-      className="avatar-uploader"
-      showUploadList={false}
-      beforeUpload={beforeUpload}
-    >
+    <Upload name="avatar" listType="picture-card" showUploadList={false} beforeUpload={beforeUpload}>
       {imageURL ? <img src={imageURL} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
     </Upload>
   );
