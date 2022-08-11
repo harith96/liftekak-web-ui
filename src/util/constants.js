@@ -1,5 +1,6 @@
 export const DOWNLOAD_DATE_PATTERN = 'DD_MMM_YYYY_hh_mm_ss';
-export const DEFAULT_PAGE_SIZE = 5;
+export const DEFAULT_PAGE_SIZE = 20;
+export const DEFAULT_DROPDOWN_SIZE = 6;
 export const DATE_PATTERN = 'YYYY-MM-DD';
 export const DATE_PATTERN_DISPLAY = 'DD MMMM YYYY';
 export const COMMENT_TIME_PATTERN = 'DD MMMM YYYY hh:mm:ss';
