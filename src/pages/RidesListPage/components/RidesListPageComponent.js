@@ -4,15 +4,17 @@ import { Icon, Row, Tabs } from 'antd';
 import { RidesTabs } from 'util/constants';
 import AddNewButton from 'components/AddNewButton';
 import RideSearchBar from './RideSearchBar';
-import RidesList from './RidesList';
+import RidesTable from './RidesTable';
 import './styles/index.scss';
 import RidesListPageContext from '../RidesListPageContext';
+import RidesList from './RidesList';
 
 const { TabPane } = Tabs;
 
 const RidesView = (
   <>
     <RideSearchBar />
+    <RidesTable />
     <RidesList />
   </>
 );
