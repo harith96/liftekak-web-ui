@@ -15,14 +15,14 @@ const searchIndexes = [
   {
     name: 'startTown',
     dataIndex: 'startLocation.location',
-    title: 'Start location (Town)',
+    title: 'Start Location (Town)',
     placeholder: 'Search starting town',
     props: { type: FilterTypes.CUSTOM, component: CitySelectContainer },
   },
   {
     name: 'destinationTown',
     dataIndex: 'endLocation.location',
-    title: 'End location (Town)',
+    title: 'End Location (Town)',
     placeholder: 'Search destination town',
     props: { type: FilterTypes.CUSTOM, component: CitySelectContainer },
   },
@@ -36,7 +36,7 @@ const searchIndexes = [
   {
     name: 'availableSeatCount',
     dataIndex: 'availableSeatCount',
-    title: 'Seat count',
+    title: 'Seat Count',
     placeholder: 'Search minimum seat count',
     props: { type: FilterTypes.NUMBER },
     tab: RidesTabs.ALL_RIDES,

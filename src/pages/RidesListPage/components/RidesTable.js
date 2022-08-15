@@ -29,7 +29,7 @@ const columns = [
     render: (route) => getFormattedRoute(route),
   },
   {
-    title: 'Vehicle type',
+    title: 'Vehicle Type',
     dataIndex: 'details.vehicle.type',
     key: 'driverNotes',
     render: (text) => _.startCase(text),
@@ -40,7 +40,7 @@ const columns = [
     key: 'availableSeatCount',
   },
   {
-    title: 'Driver name',
+    title: 'Driver Name',
     dataIndex: 'driver',
     key: 'driverNotes',
     render: (driver) => getFullName(driver.firstName, driver.lastName),

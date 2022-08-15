@@ -6,7 +6,7 @@ function AddNewButton({ onClick, entityName }) {
     <button
       id="batch-merchandiser-approve"
       type="button"
-      className="ant-btn btn green-action-btn ant-btn-primary"
+      className="ant-btn btn blue-action-btn ant-btn-primary"
       onClick={onClick}
     >
       <div className="horizontal-container">
