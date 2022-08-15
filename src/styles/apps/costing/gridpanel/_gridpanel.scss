@@ -1,10 +1,7 @@
 .grid-panel {
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: stretch;
-  width: 98vw;
+  @include flexbox(1 1 auto, column, flex-start);
+  width: 97vw;
   border-top-left-radius: 19px;
   border-top-right-radius: 19px;
   background: #fff;

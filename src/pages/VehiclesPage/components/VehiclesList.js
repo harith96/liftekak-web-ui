@@ -1,5 +1,7 @@
 import { Icon, Table, Tooltip } from 'antd';
-import React, { useContext } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
+import ReactResizeDetector from 'react-resize-detector';
+
 import { DEFAULT_PAGE_SIZE } from 'util/constants';
 import VehiclesPageContext from '../VehiclesPageContext';
 
@@ -89,19 +91,30 @@ const getColumns = (onDelete, onMakeDefault) => [
 ];
 
 function VehiclesList() {
+  const [gridScrollHeight, setGridScrollHeight] = useState('70vh');
   const { vehicles, isVehiclesFetching, onDelete, onMakeDefault } = useContext(VehiclesPageContext);
 
+  const onResize = useCallback(
+    (_0, height) => {
+      setGridScrollHeight(height - 150);
+    },
+    [setGridScrollHeight]
+  );
+
   return (
-    <div id="rewards-batches-table-panel" className="grid-panel">
-      <Table
-        id="rides-list-table"
-        className="costing-batches-table"
-        loading={isVehiclesFetching}
-        dataSource={vehicles}
-        columns={getColumns(onDelete, onMakeDefault)}
-        pagination={{ pageSize: DEFAULT_PAGE_SIZE, hideOnSinglePage: true }}
-      />
-    </div>
+    <ReactResizeDetector handleHeight onResize={onResize}>
+      <div id="rewards-batches-table-panel" className="grid-panel">
+        <Table
+          id="rides-list-table"
+          className="costing-batches-table"
+          loading={isVehiclesFetching}
+          dataSource={vehicles}
+          columns={getColumns(onDelete, onMakeDefault)}
+          pagination={{ pageSize: DEFAULT_PAGE_SIZE, hideOnSinglePage: true }}
+          scroll={{ x: '100%', y: gridScrollHeight }}
+        />
+      </div>
+    </ReactResizeDetector>
   );
 }
 

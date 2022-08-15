@@ -4,15 +4,17 @@ import { Icon, Row, Tabs } from 'antd';
 import { RidesTabs } from 'util/constants';
 import AddNewButton from 'components/AddNewButton';
 import RideSearchBar from './RideSearchBar';
-import RidesList from './RidesList';
+import RidesTable from './RidesTable';
 import './styles/index.scss';
 import RidesListPageContext from '../RidesListPageContext';
+import RidesList from './RidesList';
 
 const { TabPane } = Tabs;
 
 const RidesView = (
   <>
     <RideSearchBar />
+    <RidesTable />
     <RidesList />
   </>
 );
@@ -40,11 +42,11 @@ function RidesListPageComponent() {
         <h1>Rides</h1>
         <AddNewButton onClick={gotToSaveRideView} entityName="Ride" />
       </Row>
-      <Tabs activeKey={activeTabKey} defaultActiveKey={RidesTabs.ALL_RIDES} onChange={setActiveTabKey}>
-        <TabPane tab={allRidesTab} key={RidesTabs.ALL_RIDES}>
+      <Tabs activeKey={activeTabKey} defaultActiveKey={RidesTabs.ALL_RIDES} onChange={setActiveTabKey} className="tab">
+        <TabPane tab={allRidesTab} key={RidesTabs.ALL_RIDES} className="tab-pane">
           {RidesView}
         </TabPane>
-        <TabPane tab={myRidesTab} key={RidesTabs.MY_RIDES}>
+        <TabPane tab={myRidesTab} key={RidesTabs.MY_RIDES} className="tab-pane">
           {RidesView}
         </TabPane>
       </Tabs>

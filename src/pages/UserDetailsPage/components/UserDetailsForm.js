@@ -1,4 +1,4 @@
-import { Button, Col, Form as AntdForm, Icon, Row, Tooltip } from 'antd';
+import { Button, Col, Form as AntdForm, Row } from 'antd';
 import { Formik } from 'formik';
 import { Form, Input } from 'formik-antd';
 import React, { useContext } from 'react';
@@ -89,7 +89,7 @@ function UserDetailsForm() {
         <div className="user-details-form-container">
           <Form className="user-details-form">
             <Row className="form-elements" type="flex" align="middle">
-              <Col span={12} className="left-column">
+              <Col lg={{ span: 12 }} xs={{ span: 24 }} className="left-column">
                 <Row>
                   <div className="left-column">
                     <label id="user-first-name-label" className="user-input">
@@ -122,7 +122,7 @@ function UserDetailsForm() {
                   </div>
                 </Row>
               </Col>
-              <Col span={4} offset={4}>
+              <Col lg={{ span: 4, offset: 4 }} xs={{ span: 24 }}>
                 <label id="user-last-name-label" className="user-input profile-picture">
                   {i18n.t(`User Photo`)}
                 </label>
@@ -147,7 +147,7 @@ function UserDetailsForm() {
               </Form.Item>
             </Row>
             <Row className="form-elements">
-              <Col span={12}>
+              <Col lg={{ span: 12 }} xs={{ span: 24 }}>
                 <div className="left-column">
                   <label id="user-gender-label" className="user-input">
                     {i18n.t(`Gender`)}
@@ -157,7 +157,7 @@ function UserDetailsForm() {
                   </Form.Item>
                 </div>
               </Col>
-              <Col span={12}>
+              <Col lg={{ span: 12 }} xs={{ span: 24 }}>
                 <div className="right-column">
                   <PassengerPreferenceFormikInput
                     touched={touched.passengerPreference}
@@ -180,7 +180,7 @@ function UserDetailsForm() {
               </Form.Item>
             </Row>
             <Row className="form-elements">
-              <Col span={12}>
+              <Col lg={{ span: 12 }} xs={{ span: 24 }}>
                 <label id="user-nic-front-img-label" className="user-input">
                   {i18n.t(`NIC Front Image`)}
                 </label>
@@ -192,7 +192,7 @@ function UserDetailsForm() {
                   />
                 </Form.Item>
               </Col>
-              <Col span={12}>
+              <Col lg={{ span: 12 }} xs={{ span: 24 }}>
                 <label id="user-nic-back-img-label" className="user-input">
                   {i18n.t(`NIC Back Image`)}
                 </label>

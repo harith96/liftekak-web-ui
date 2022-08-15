@@ -1,69 +1,34 @@
-import React, { useContext } from 'react';
-import { Table } from 'antd';
-import _ from 'lodash';
-
+import { Avatar, Icon, List } from 'antd';
 import PaginationBar from 'components/PaginationBar';
-import { getFormattedDate, getFormattedTime } from 'util/dateUtil';
+import React, { useContext } from 'react';
+import { getFormattedDateAndTime } from 'util/dateUtil';
 import getFormattedRoute from 'util/getFormattedRoute';
 import getFullName from 'util/getFullName';
 import RidesListPageContext from '../RidesListPageContext';
 
-const columns = [
-  {
-    title: 'Departure Date',
-    dataIndex: 'departure',
-    key: 'departureDate',
-    render: (departure) => getFormattedDate(departure),
-  },
-  {
-    title: 'Departure Time',
-    dataIndex: 'departure',
-    key: 'departureTime',
-    render: (departure) => getFormattedTime(departure),
-  },
-  {
-    title: 'Route',
-    dataIndex: 'details.route',
-    key: 'route',
-    render: (route) => getFormattedRoute(route),
-  },
-  {
-    title: 'Vehicle type',
-    dataIndex: 'details.vehicle.type',
-    key: 'driverNotes',
-    render: (text) => _.startCase(text),
-  },
-  {
-    title: 'Seats Available',
-    dataIndex: 'details.availableSeatCount',
-    key: 'availableSeatCount',
-  },
-  {
-    title: 'Driver name',
-    dataIndex: 'driver',
-    key: 'driverNotes',
-    render: (driver) => getFullName(driver.firstName, driver.lastName),
-  },
-];
-
 function RidesList() {
   const { ridesList, isRidesFetching, onRideSelected, onNextPage, onPreviousPage } = useContext(RidesListPageContext);
-
-  const onRow = (record) => ({
-    onClick: () => onRideSelected(record),
-  });
-
   return (
-    <div id="rewards-batches-table-panel" className="grid-panel">
-      <Table
-        id="rides-list-table"
-        className="costing-batches-table"
-        loading={isRidesFetching}
+    <div className="rides-list-container">
+      <List
+        itemLayout="vertical"
+        size="large"
+        pagination={null}
         dataSource={ridesList}
-        columns={columns}
-        onRow={onRow}
-        rowClassName="antd-clickable-row"
-        pagination={false}
+        loading={isRidesFetching}
+        renderItem={(item) => (
+          <List.Item onClick={() => onRideSelected(item)}>
+            <List.Item.Meta
+              avatar={<Avatar icon={<Icon type="car" />} />}
+              title={`${getFormattedDateAndTime(item.departure)}`}
+              description={`${getFullName(item.driver.firstName, item.driver.lastName)} | ${
+                item.details.availableSeatCount
+              } seat(s) available | ${item.details.vehicle.type}`}
+            />
+            <div className="ride-route-container ">{getFormattedRoute(item.details?.route)}</div>
+          </List.Item>
+        )}
+        className="rides-list"
       />
       <PaginationBar
         onNextPage={onNextPage}

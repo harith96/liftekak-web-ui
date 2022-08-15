@@ -19,7 +19,7 @@ import { PageAction, RideStatus } from 'enums';
 
 import * as _ from 'lodash';
 import moment from 'moment';
-import { DEFAULT_PAGE_SIZE } from 'util/constants';
+import { DEFAULT_DROPDOWN_SIZE, DEFAULT_PAGE_SIZE } from 'util/constants';
 import buildRouteIndex, { buildRouteIndexString } from 'util/buildRouteIndex';
 import buildPassengerPreferenceDB from 'util/buildPassengerPreferenceDB';
 import { getCurrentUserID, getUserEmail } from './auth';
@@ -304,13 +304,13 @@ const getCities = async ({ engNameQuery }) => {
   const citiesRef = collection(db, 'cities');
 
   const q = _.isEmpty(engNameQuery)
-    ? query(citiesRef, limit(DEFAULT_PAGE_SIZE), orderBy('name_en'))
+    ? query(citiesRef, limit(DEFAULT_DROPDOWN_SIZE), orderBy('name_en'))
     : query(
         citiesRef,
         where('name_en', '>=', _.startCase(engNameQuery)),
 
         where('name_en', '<=', `${_.startCase(engNameQuery)}\uf8ff`),
-        limit(DEFAULT_PAGE_SIZE),
+        limit(DEFAULT_DROPDOWN_SIZE),
         orderBy('name_en')
       );
 

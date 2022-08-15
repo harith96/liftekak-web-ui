@@ -10,6 +10,7 @@ import { APP_ROUTES } from 'util/constants';
 import { getCurrentUserID, listenForAuthStateChanged } from 'common/auth';
 import AppLoader from './AppLoader';
 import AppBar from './AppBar/AppBarContainer';
+import './styles/_privateRoute.scss';
 
 const PrivateRoute = ({ component: Component, roles, userFetching, currentUserRole, actions, ...rest }) => {
   const history = useHistory();
@@ -51,10 +52,10 @@ const PrivateRoute = ({ component: Component, roles, userFetching, currentUserRo
 
         // authorised so return component
         return (
-          <>
+          <div className="route-container">
             <AppBar />
             <Component {...props} />
-          </>
+          </div>
         );
       }}
     />
