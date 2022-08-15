@@ -1,7 +1,9 @@
 import { Checkbox, Form, Input, InputNumber, Select } from 'formik-antd';
 import React, { useContext } from 'react';
 import { Formik } from 'formik';
-import { Row, Form as AntdForm, Button, Tooltip, Icon } from 'antd';
+import { Form as AntdForm } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Row, Button, Tooltip } from 'antd';
 import * as yup from 'yup';
 import * as _ from 'lodash';
 

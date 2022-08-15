@@ -1,5 +1,5 @@
 import { loadCities } from 'actions';
-import { Icon } from 'antd';
+import { RightOutlined } from '@ant-design/icons';
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CitySelectContextProvider } from './CitySelectContext';
@@ -16,7 +16,7 @@ function CitySelectContainer({ name, disabled, placeholder, showNextCityIcon }) 
     <CitySelectContextProvider value={{ cities, citiesFetching, getCitiesList }}>
       <div className="horizontal-container">
         <CitySelect name={name} disabled={disabled} placeholder={placeholder} />
-        {showNextCityIcon && <Icon type="right" />}
+        {showNextCityIcon && <RightOutlined />}
       </div>
     </CitySelectContextProvider>
   );

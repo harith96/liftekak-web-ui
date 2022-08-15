@@ -1,4 +1,5 @@
-import { Icon, Table, Tooltip } from 'antd';
+import { StarFilled } from '@ant-design/icons';
+import { Table, Tooltip } from 'antd';
 import React, { useCallback, useContext, useState } from 'react';
 import ReactResizeDetector from 'react-resize-detector';
 
@@ -14,7 +15,7 @@ const getColumns = (onDelete, onMakeDefault) => [
       record.isDefaultVehicle ? (
         <div id={`rides-table-ride-${text}`} className="link-div" aria-hidden="true">
           <Tooltip title="Default vehicle for your rides.">
-            <Icon type="star" theme="filled" />
+            <StarFilled />
             {text}
           </Tooltip>
         </div>

@@ -72,7 +72,7 @@ function RidesTable() {
             dataSource={ridesList}
             columns={columns}
             onRow={onRow}
-            rowClassName="antd-clickable-row"
+            rowClassName="clickable"
             pagination={false}
             className="rides-table"
             scroll={{ x: '100%', y: gridScrollHeight }}

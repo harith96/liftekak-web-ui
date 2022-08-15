@@ -1,6 +1,6 @@
 import { Col } from 'antd';
 import React from 'react';
-import RideDetailsCard from './components/RideDetailsCard';
+import RideDetailsCard from './RideDetailsCard';
 
 function RideDetailsColumn({ title, icon, value, onClick, lgColSpan = 6 }) {
   return (

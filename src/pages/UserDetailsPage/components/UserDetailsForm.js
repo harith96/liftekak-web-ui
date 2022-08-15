@@ -1,4 +1,6 @@
-import { Button, Col, Form as AntdForm, Row } from 'antd';
+import { Form as AntdForm } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Button, Col, Row } from 'antd';
 import { Formik } from 'formik';
 import { Form, Input } from 'formik-antd';
 import React, { useContext } from 'react';

@@ -1,4 +1,7 @@
-import { Button, Form as AntdForm, Icon, Row } from 'antd';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { Form as AntdForm } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Button, Row } from 'antd';
 import SignInPageContext from 'pages/SignInPage/SignInPageContext';
 import { Formik } from 'formik';
 import { Checkbox, Form, Input, Switch } from 'formik-antd';
@@ -56,17 +59,13 @@ function SignInForm({ togglePasswordRestModal }) {
             />
           </AntdForm.Item>
           <AntdForm.Item>
-            <Input
-              name="email"
-              prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-              placeholder="Email"
-            />
+            <Input name="email" prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Email" />
             {getFieldError(errors, touched, 'email')}
           </AntdForm.Item>
           <AntdForm.Item>
             <Input
               name="password"
-              prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+              prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
               type="password"
               placeholder="Password"
             />
@@ -76,7 +75,7 @@ function SignInForm({ togglePasswordRestModal }) {
             <AntdForm.Item>
               <Input
                 name="rePassword"
-                prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
                 type="password"
                 placeholder={i18n.t('Re-enter password')}
               />

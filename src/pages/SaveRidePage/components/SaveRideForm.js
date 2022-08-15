@@ -1,4 +1,6 @@
-import { Button, Col, Row, Form as AntdForm, Tooltip, Icon, TimePicker, DatePicker, Spin, Empty } from 'antd';
+import { Form as AntdForm } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Button, Col, Row, Tooltip, TimePicker, DatePicker, Spin, Empty } from 'antd';
 import InfoTooltip from 'components/InfoTooltip';
 import PassengerPreferenceFormikInput from 'components/PassengerPreferenceInput';
 import SaveVehicleContainer from 'components/SaveVehicle/SaveVehicleContainer';

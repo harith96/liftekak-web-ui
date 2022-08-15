@@ -1,4 +1,4 @@
-import { Icon } from 'antd';
+import { Icon as LegacyIcon } from '@ant-design/compatible';
 import React from 'react';
 
 import './styles/_detailsCard.scss';
@@ -14,7 +14,7 @@ function RideDetailsCard({ title, icon, value, onClick }) {
     >
       <div className="card-title">{title}</div>
       <div className="card-content">
-        <Icon type={icon} style={{ marginRight: '0.5rem' }} />
+        <LegacyIcon type={icon} style={{ marginRight: '0.5rem' }} />
         <p>{value}</p>
       </div>
     </div>
