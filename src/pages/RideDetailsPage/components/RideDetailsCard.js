@@ -14,7 +14,7 @@ function RideDetailsCard({ title, icon, value, onClick }) {
     >
       <div className="card-title">{title}</div>
       <div className="card-content">
-        <LegacyIcon type={icon} style={{ marginRight: '0.5rem' }} />
+        {React.isValidElement(icon) ? icon : <LegacyIcon type={icon} style={{ marginRight: '0.5rem' }} />}
         <p>{value}</p>
       </div>
     </div>
