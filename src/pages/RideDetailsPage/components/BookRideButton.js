@@ -5,7 +5,7 @@ import RideDetailsPageContext from '../RidesDetailsPageContext';
 function BookRideButton() {
   const { bookRide } = useContext(RideDetailsPageContext);
   return (
-    <Button type="link" onClick={bookRide} style={{ color: 'red' }}>
+    <Button type="primary" style={{ backgroundColor: '#008ace' }} onClick={bookRide}>
       Book ride
     </Button>
   );

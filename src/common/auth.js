@@ -83,8 +83,10 @@ export const getUserEmail = () => {
 
 export const signOut = async () => {
   const auth = getAuth();
-  await signOutFirebase(auth);
+  return !!auth.currentUser;
 };
+
+export const isUserSignedIn = async () => {};
 
 export const listenForAuthStateChanged = async (signedInCallback, signedOutCallback) => {
   const auth = getAuth();

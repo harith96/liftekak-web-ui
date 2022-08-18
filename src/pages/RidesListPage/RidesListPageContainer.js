@@ -5,6 +5,7 @@ import { useHistory } from 'react-router';
 import { loadCities, loadMyRides, loadRidesList, updateRideFilters } from 'actions';
 import { PageAction } from 'enums';
 import { APP_ROUTES, RidesTabs } from 'util/constants';
+import { isUserSignedIn } from 'common/auth';
 import RidesListPageComponent from './components/RidesListPageComponent';
 import { RidesListPageContextProvider } from './RidesListPageContext';
 
@@ -27,7 +28,9 @@ function RidesListPageContainer() {
   }, [dispatch, rideFilters]);
 
   useEffect(() => {
-    dispatch(loadCities());
+    if (isUserSignedIn()) {
+      dispatch(loadCities());
+    }
   }, [dispatch]);
 
   const onNextPage = useCallback(() => dispatch(loadRidesList(PageAction.NEXT)), [dispatch]);

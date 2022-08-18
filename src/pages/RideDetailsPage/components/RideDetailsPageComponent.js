@@ -1,3 +1,4 @@
+import { Col, Row } from 'antd';
 import React, { useContext } from 'react';
 import RideDetailsPageContext from '../RidesDetailsPageContext';
 import BookRideButton from './BookRideButton';
@@ -10,23 +11,27 @@ import './styles/index.scss';
 function RideDetailsPageComponent() {
   const { rideDetails: { rideId } = {} } = useContext(RideDetailsPageContext);
   return (
-    <div>
-      <div className="horizontal-container action-bar">
-        <div className="horizontal-container ">
-          <h1>
-            <span>Ride </span>
-            <span>#</span>
-            <span>{rideId}</span>
-          </h1>
-        </div>
-        <div className="horizontal-container">
-          <GoToRidesButton />
-          <RefreshRideButton />
-          <BookRideButton />
-        </div>
-      </div>
+    <>
+      <Row align="middle">
+        <Col lg={{ span: 12 }} xs={{ span: 24 }}>
+          <div className="horizontal-container ride-id-container">
+            <h1>
+              <span>Ride </span>
+              <span>#</span>
+              <span>{rideId}</span>
+            </h1>
+          </div>
+        </Col>
+        <Col lg={{ span: 12 }} xs={{ span: 24 }}>
+          <div className="horizontal-container ride-details-button-bar">
+            <GoToRidesButton />
+            <RefreshRideButton />
+            <BookRideButton />
+          </div>
+        </Col>
+      </Row>
       <RideDetails />
-    </div>
+    </>
   );
 }
 
