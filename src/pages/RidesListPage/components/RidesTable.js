@@ -24,19 +24,19 @@ const columns = [
   },
   {
     title: 'Route',
-    dataIndex: 'details.route',
+    dataIndex: ['details', 'route'],
     key: 'route',
     render: (route) => getFormattedRoute(route),
   },
   {
     title: 'Vehicle Type',
-    dataIndex: 'details.vehicle.type',
+    dataIndex: ['details', 'vehicle', 'type'],
     key: 'driverNotes',
     render: (text) => _.startCase(text),
   },
   {
     title: 'Seats Available',
-    dataIndex: 'details.availableSeatCount',
+    dataIndex: ['details', 'availableSeatCount'],
     key: 'availableSeatCount',
   },
   {
