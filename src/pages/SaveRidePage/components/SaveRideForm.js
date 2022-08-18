@@ -52,7 +52,7 @@ function SaveRideForm() {
       departure,
       details: {
         availableSeatCount,
-        // route,
+        route: currentRoute,
         driverNote,
         start: { location: currentStartLocation } = {},
         destination: { location: currentEndLocation } = {},
@@ -84,7 +84,7 @@ function SaveRideForm() {
           vehicle: vehicle || defaultVehicle,
           passengerPreference: defaultPassengerPreference,
           availableSeatCount: availableSeatCount || 1,
-          route: [],
+          route: _.isArray() ? _.slice(currentRoute, 1, -1) : [],
           note: driverNote || '',
         }}
         validationSchema={validationSchema}
@@ -130,32 +130,41 @@ function SaveRideForm() {
                   </Col>
                 </Row>
                 <Row className="form-elements">
-                  <label id="user-mobile-no-label" className="user-input">
-                    {i18n.t(`Route`)}
-                    <InfoTooltip title="Adding more towns will help passengers to find your ride more easily." />
-                  </label>
-                  <Form.Item name="route">
-                    <Col lg={{ span: 4 }} xs={{ span: 24 }} className="route-input">
-                      <CitySelect name="startLocation" disabled placeholder="Start location" showNextCityIcon />
-                    </Col>
-                    {_.map(
-                      route,
-                      (c, index) =>
-                        !_.isEmpty(c) && (
-                          <Col lg={{ span: 4 }} xs={{ span: 24 }} className="route-input">
-                            <CitySelect name={`route[${index}]`} showNextCityIcon />
+                  <Col span={24}>
+                    <label id="user-mobile-no-label" className="user-input">
+                      {i18n.t(`Route`)}
+                      <InfoTooltip title="Adding more towns will help passengers to find your ride more easily." />
+                    </label>
+                    <Form.Item name="route">
+                      <Row gutter={[16, 16]}>
+                        <Col lg={{ span: 6 }} xs={{ span: 24 }} className="route-input">
+                          <CitySelect name="startLocation" disabled placeholder="Start location" showNextCityIcon />
+                        </Col>
+                        {_.map(
+                          route,
+                          (c, index) =>
+                            !_.isEmpty(c) && (
+                              <Col lg={{ span: 6 }} xs={{ span: 24 }}>
+                                <CitySelect name={`route[${index}]`} showNextCityIcon />
+                              </Col>
+                            )
+                        )}
+                        {route.length < ROUTE_MAX_TOWN_COUNT && (
+                          <Col lg={{ span: 4 }} xs={{ span: 24 }}>
+                            <CitySelect
+                              name={`route[${route.length}]`}
+                              placeholder="Enter new town"
+                              showNextCityIcon
+                              setFieldValue={setFieldValue}
+                            />
                           </Col>
-                        )
-                    )}
-                    {route.length < ROUTE_MAX_TOWN_COUNT && (
-                      <Col lg={{ span: 4 }} xs={{ span: 24 }} className="route-input">
-                        <CitySelect name={`route[${route.length}]`} placeholder="Enter new town" showNextCityIcon />
-                      </Col>
-                    )}
-                    <Col lg={{ span: 4 }} xs={{ span: 24 }}>
-                      <CitySelect name="endLocation" disabled placeholder="End location" />
-                    </Col>
-                  </Form.Item>
+                        )}
+                        <Col lg={{ span: 6 }} xs={{ span: 24 }}>
+                          <CitySelect name="endLocation" disabled placeholder="End location" />
+                        </Col>
+                      </Row>
+                    </Form.Item>
+                  </Col>
                 </Row>
                 <Row className="form-elements">
                   <Col lg={{ span: 12 }} xs={{ span: 24 }}>
