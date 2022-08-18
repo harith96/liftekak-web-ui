@@ -150,7 +150,7 @@ function SaveRideForm() {
                             )
                         )}
                         {route.length < ROUTE_MAX_TOWN_COUNT && (
-                          <Col lg={{ span: 4 }} xs={{ span: 24 }}>
+                          <Col lg={{ span: 6 }} xs={{ span: 24 }}>
                             <CitySelect
                               name={`route[${route.length}]`}
                               placeholder="Enter new town"
@@ -166,7 +166,7 @@ function SaveRideForm() {
                     </Form.Item>
                   </Col>
                 </Row>
-                <Row className="form-elements">
+                <Row className="form-elements" align="middle">
                   <Col lg={{ span: 12 }} xs={{ span: 24 }}>
                     <div className="left-column">
                       <div className="vehicle-title">
@@ -263,17 +263,19 @@ function SaveRideForm() {
                   </Col>
                 </Row>
                 <Row className="form-elements">
-                  <label id="user-nic-no-label" className="user-input">
-                    {i18n.t(`Notes`)}
-                  </label>
-                  <Form.Item name="note">
-                    <Input
-                      id="user-first-name-input"
-                      name="note"
-                      size="default"
-                      placeholder={i18n.t('e.g. Please call after booking the ride.')}
-                    />
-                  </Form.Item>
+                  <Col span={24}>
+                    <label id="user-nic-no-label" className="user-input">
+                      {i18n.t(`Notes`)}
+                    </label>
+                    <Form.Item name="note">
+                      <Input
+                        id="user-first-name-input"
+                        name="note"
+                        size="default"
+                        placeholder={i18n.t('e.g. Please call after booking the ride.')}
+                      />
+                    </Form.Item>
+                  </Col>
                 </Row>
                 <AntdForm.Item>
                   <AntdForm.Item>
