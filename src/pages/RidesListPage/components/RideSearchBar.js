@@ -179,7 +179,7 @@ function RideSearchBar() {
                                 </Select>
                               )}
                             </>
-                            <>{type === FilterTypes.TIME_RANGE && <RangePicker name={name} showTime />}</>
+                            <>{type === FilterTypes.TIME_RANGE && <RangePicker name={name} />}</>
                             <>{type === FilterTypes.CUSTOM && <Component name={name} placeholder={placeholder} />}</>
                           </Col>
                         )
