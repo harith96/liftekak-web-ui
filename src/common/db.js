@@ -242,6 +242,7 @@ const saveRide = async ({
   rideId,
 } = {}) => {
   const db = getFirestore();
+
   const ride = {
     rideId,
     departure,
@@ -260,6 +261,8 @@ const saveRide = async ({
       firstName: driver.firstName,
       lastName: driver.lastName,
       uid: getCurrentUserID(),
+      bio: driver.bio,
+      userPhoto: driver.userPhoto,
     },
     status: RideStatus.NEW,
     seatsAvailable: true,
