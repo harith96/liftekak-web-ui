@@ -25,7 +25,7 @@ function SignInPageContainer() {
     return () => {
       if (unsubscribe) unsubscribe();
     };
-  }, []);
+  }, [history]);
 
   const onSignInWithEmailCustom = useCallback(
     ({ email, password, rememberMe }) =>

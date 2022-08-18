@@ -27,11 +27,11 @@ const PrivateRoute = ({ component: Component, roles, userFetching, currentUserRo
     return () => {
       if (unsubscribe) unsubscribe();
     };
-  }, []);
+  }, [history]);
 
   useEffect(() => {
     if (!user && getCurrentUserID()) history.push(APP_ROUTES.USER);
-  }, [user]);
+  }, [user, history]);
 
   return userFetching ? (
     <AppLoader />

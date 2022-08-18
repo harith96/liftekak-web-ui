@@ -45,18 +45,18 @@ function SaveRidePageContainer() {
     if (rideId && isRideUpdate) {
       if ((!rideDetails?.rideId || rideDetails?.rideId !== rideId) && !rideError) dispatch(loadRideDetails(rideId));
     }
-  }, [dispatch, rideDetails, rideError]);
+  }, [dispatch, rideDetails, rideError, rideId, isRideUpdate]);
 
   // End - Logic for ride update
 
   useEffect(() => {
     dispatch(loadUserVehicles());
     dispatch(loadCities());
-  }, []);
+  }, [dispatch]);
 
   const onSaveRide = useCallback(
     (values) => dispatch(saveRide(formatRideValues(rideId, values), history)),
-    [dispatch, history]
+    [dispatch, history, rideId]
   );
 
   const isNotRideNewOrMyRide =
