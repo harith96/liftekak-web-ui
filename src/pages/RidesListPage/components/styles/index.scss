@@ -50,11 +50,3 @@
 .ride-route-container {
   margin-left: 3rem;
 }
-
-.ride-search-button {
-  height: 4rem;
-
-  @include breakpoint(lg) {
-    max-width: 15rem;
-  }
-}
