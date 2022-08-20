@@ -40,7 +40,7 @@ function AppBarComponent({ userDetails }) {
           <AppLogo />
           <div className="horizontal-container">
             <div className="user-name-badge">
-              <div className="user-name">{getFullName(userDetails?.firstName, userDetails.lastName)}</div>
+              <div className="user-name">{getFullName(userDetails?.firstName, userDetails?.lastName)}</div>
               <div className="user-badge">Verified</div>
             </div>
             <Dropdown overlay={menu} placement="bottomRight" trigger="click">
