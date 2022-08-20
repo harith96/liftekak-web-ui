@@ -235,7 +235,7 @@ function* saveVehicleAsync({ vehicle, callback }) {
 
 function* loadRidesAsync({ pageAction } = {}) {
   try {
-    const { gender: userGender } = yield select((state) => state.user.data);
+    const { gender: userGender } = yield select((state) => state.user.data || {});
     const ridesFilters = yield select((state) => state.rideFilters.data);
     const rides = yield select((state) => state.rides.data);
     const ridesList = yield getRides({ ...ridesFilters, pageAction, userGender });
