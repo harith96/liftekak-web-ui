@@ -10,8 +10,8 @@ import * as _ from 'lodash';
 import * as i18n from '_i18n';
 import { FuelType, VehicleType } from 'enums';
 import { MAX_PASSENGER_SEAT_COUNTS_BY_VEHICLE_TYPE } from 'util/constants';
-import SaveVehicleFormContext from '../context/SaveVehicleContext';
 import InfoTooltip from 'components/InfoTooltip';
+import SaveVehicleFormContext from '../context/SaveVehicleContext';
 
 const { Option } = Select;
 
