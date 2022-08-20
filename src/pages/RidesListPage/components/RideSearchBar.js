@@ -1,5 +1,5 @@
 import { SearchOutlined } from '@ant-design/icons';
-import { Col, Row, Button, Collapse, Grid } from 'antd';
+import { Col, Row, Button, Collapse, Grid, Typography } from 'antd';
 import CollapsePanel from 'antd/lib/collapse/CollapsePanel';
 import CitySelectContainer from 'components/CitySelect/CitySelectContainer';
 import TextWithIcon from 'components/TextWithIcon';
@@ -13,8 +13,8 @@ import RidesListPageContext from '../RidesListPageContext';
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
-
 const { useBreakpoint } = Grid;
+const { Text } = Typography;
 
 const searchIndexes = [
   {
@@ -136,7 +136,7 @@ function RideSearchBar() {
                 }}
               >
                 <div className="search-container">
-                  <Row type="flex" align="bottom" justify="space-around" gutter={[16, 16]}>
+                  <Row type="flex" align="bottom" justify="space-around" gutter={16}>
                     {searchIndexes.map(
                       ({ name, title, placeholder, props: { type, data, component: Component }, tab }) =>
                         (!tab || activeTabKey === tab) && (
@@ -147,7 +147,7 @@ function RideSearchBar() {
                             className="filter-container"
                           >
                             <label id="user-last-name-label" className="user-input">
-                              {title}
+                              <Text ellipsis={{ tooltip: title }}>{title}</Text>
                             </label>
                             <br />
                             <>
