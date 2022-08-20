@@ -48,14 +48,8 @@ function RidesListPageContainer() {
   const saveRide = useCallback(() => history.push(APP_ROUTES.CREATE_RIDE), [history]);
 
   const onSearch = useCallback(
-    ({
-      startTown,
-      destinationTown,
-      availableSeatCount,
-      vehicleType,
-      departure: [departureFrom, departureUntil],
-      rideStatus,
-    }) => {
+    ({ startTown, destinationTown, availableSeatCount, vehicleType, departure, rideStatus }) => {
+      const [departureFrom, departureUntil] = departure || [];
       const filters = {
         startTown,
         destinationTown,
@@ -65,6 +59,8 @@ function RidesListPageContainer() {
         departureUntil,
         rideStatus,
       };
+
+      console.log(filters);
 
       dispatch(updateRideFilters(filters));
     },
