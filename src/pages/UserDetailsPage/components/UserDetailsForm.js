@@ -12,6 +12,7 @@ import { Gender } from 'enums';
 import ImageUpload from 'components/ImageUpload';
 import GenderSelect from 'components/GenderSelect';
 import PassengerPreferenceFormikInput from 'components/PassengerPreferenceInput';
+import CountryDialCodeDropdown from 'components/CountryDialCodeDropdown';
 import UserDetailsPageContext from '../UserDetailsPageContext';
 
 const validGenders = _.keys(Gender);
@@ -53,6 +54,7 @@ function UserDetailsForm() {
       nic: { idNo, front, back } = {},
       userPhoto,
       bio,
+      countryCode,
     } = {},
   } = useContext(UserDetailsPageContext);
   return (
@@ -72,6 +74,7 @@ function UserDetailsForm() {
         nic: { idNo, front, back },
         userPhoto,
         bio,
+        countryCode: countryCode || '+94',
       }}
       validationSchema={validationSchema}
       validateOnMount
@@ -82,166 +85,170 @@ function UserDetailsForm() {
           isSignUp,
           nic: { front: nicFront, back: nicBack },
           userPhoto: userPhotoForm,
+          countryCode: countryCodeForm,
         },
         submitForm,
         setFieldValue,
         touched,
         errors,
-      }) => (
-        <div className="user-details-form-container">
-          <Form className="user-details-form">
-            <Row className="form-elements" type="flex" align="middle">
-              <Col lg={{ span: 12 }} xs={{ span: 24 }} className="left-column">
-                <Row>
-                  <Col span={24}>
-                    <div className="left-column">
-                      <label id="user-first-name-label" className="user-input">
-                        {i18n.t(`First Name`)}
-                      </label>
+      }) => {
+        console.log(countryCodeForm);
+        return (
+          <div className="user-details-form-container">
+            <Form className="user-details-form">
+              <Row className="form-elements" type="flex" align="middle">
+                <Col lg={{ span: 12 }} xs={{ span: 24 }} className="left-column">
+                  <Row>
+                    <Col span={24}>
+                      <div className="left-column">
+                        <label id="user-first-name-label" className="user-input">
+                          {i18n.t(`First Name`)}
+                        </label>
 
-                      <Form.Item name="firstName">
-                        <Input
-                          id="user-first-name-input"
-                          name="firstName"
-                          size="default"
-                          placeholder={i18n.t('e.g. John')}
-                        />
-                      </Form.Item>
-                    </div>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col span={24}>
-                    <div className="left-column">
-                      <label id="user-last-name-label" className="user-input">
-                        {i18n.t(`Last Name`)}
-                      </label>
-                      <Form.Item name="lastName">
-                        <Input
-                          id="user-last-name-input"
-                          name="lastName"
-                          size="default"
-                          placeholder={i18n.t('e.g. Doe')}
-                        />
-                      </Form.Item>
-                    </div>
-                  </Col>
-                </Row>
-              </Col>
-              <Col lg={{ span: 4, offset: 4 }} xs={{ span: 24 }}>
-                <label id="user-last-name-label" className="user-input profile-picture">
-                  {i18n.t(`User Photo`)}
-                </label>
-                <ImageUpload
-                  handleImageUpload={(imageBase64) => setFieldValue('userPhoto', imageBase64)}
-                  imageURL={userPhotoForm}
-                />
-              </Col>
-            </Row>
-            <Row className="form-elements">
-              <Col span={24}>
-                <label id="user-mobile-no-label" className="user-input">
-                  {i18n.t(`Mobile Number`)}
-                </label>
-                <Form.Item name="mobileNo">
-                  <Input
-                    id="user-first-name-input"
-                    name="mobileNo"
-                    addonBefore="+94"
-                    size="default"
-                    placeholder={i18n.t('e.g. 711234567')}
-                  />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row className="form-elements">
-              <Col lg={{ span: 12 }} xs={{ span: 24 }}>
-                <div className="left-column">
-                  <label id="user-gender-label" className="user-input">
-                    {i18n.t(`Gender`)}
+                        <Form.Item name="firstName">
+                          <Input
+                            id="user-first-name-input"
+                            name="firstName"
+                            size="default"
+                            placeholder={i18n.t('e.g. John')}
+                          />
+                        </Form.Item>
+                      </div>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col span={24}>
+                      <div className="left-column">
+                        <label id="user-last-name-label" className="user-input">
+                          {i18n.t(`Last Name`)}
+                        </label>
+                        <Form.Item name="lastName">
+                          <Input
+                            id="user-last-name-input"
+                            name="lastName"
+                            size="default"
+                            placeholder={i18n.t('e.g. Doe')}
+                          />
+                        </Form.Item>
+                      </div>
+                    </Col>
+                  </Row>
+                </Col>
+                <Col lg={{ span: 4, offset: 4 }} xs={{ span: 24 }}>
+                  <label id="user-last-name-label" className="user-input profile-picture">
+                    {i18n.t(`User Photo`)}
                   </label>
-                  <Form.Item name="gender">
-                    <GenderSelect id="user-gender-input" name="gender" />
+                  <ImageUpload
+                    handleImageUpload={(imageBase64) => setFieldValue('userPhoto', imageBase64)}
+                    imageURL={userPhotoForm}
+                  />
+                </Col>
+              </Row>
+              <Row className="form-elements">
+                <Col span={24}>
+                  <label id="user-mobile-no-label" className="user-input">
+                    {i18n.t(`Mobile Number`)}
+                  </label>
+                  <Form.Item name="mobileNo">
+                    <Input
+                      id="user-first-name-input"
+                      name="mobileNo"
+                      addonBefore={<CountryDialCodeDropdown name="countryCode" dropdownMatchSelectWidth={false} />}
+                      size="default"
+                      placeholder={i18n.t('e.g. 711234567')}
+                    />
                   </Form.Item>
-                </div>
-              </Col>
-              <Col lg={{ span: 12 }} xs={{ span: 24 }}>
-                <div className="right-column">
-                  <PassengerPreferenceFormikInput
-                    touched={touched.passengerPreference}
-                    error={errors.passengerPreference}
-                  />
-                </div>
-              </Col>
-            </Row>
-            <Row className="form-elements">
-              <Col span={24}>
-                <label id="user-nic-no-label" className="user-input">
-                  {i18n.t(`NIC Number`)}
-                </label>
-                <Form.Item name="nic.idNo">
-                  <Input
-                    id="user-first-name-input"
-                    name="nic.idNo"
-                    size="default"
-                    placeholder={i18n.t('e.g. 123456789V')}
-                  />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row className="form-elements">
-              <Col lg={{ span: 12 }} xs={{ span: 24 }}>
-                <label id="user-nic-front-img-label" className="user-input">
-                  {i18n.t(`NIC Front Image`)}
-                </label>
-                <Form.Item name="nic.front">
-                  <ImageUpload
-                    id="user-nic-front-input"
-                    handleImageUpload={(imageBase64) => setFieldValue('nic.front', imageBase64)}
-                    imageURL={nicFront}
-                  />
-                </Form.Item>
-              </Col>
-              <Col lg={{ span: 12 }} xs={{ span: 24 }}>
-                <label id="user-nic-back-img-label" className="user-input">
-                  {i18n.t(`NIC Back Image`)}
-                </label>
-                <Form.Item name="nic.back">
-                  <ImageUpload
-                    id="user-nic-back-input"
-                    handleImageUpload={(imageBase64) => setFieldValue('nic.back', imageBase64)}
-                    imageURL={nicBack}
-                  />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row className="form-elements">
-              <Col span={24}>
-                <label id="user-nic-no-label" className="user-input">
-                  {i18n.t(`Your Bio`)}
-                </label>
-              </Col>
-              <Col span={24}>
-                <Form.Item name="bio">
-                  <Input.TextArea
-                    id="user-bio-input"
-                    name="bio"
-                    size="default"
-                    placeholder={i18n.t('Tell us something interesting about yourself.')}
-                  />
-                </Form.Item>
-              </Col>
-            </Row>
-            <AntdForm.Item>
+                </Col>
+              </Row>
+              <Row className="form-elements">
+                <Col lg={{ span: 12 }} xs={{ span: 24 }}>
+                  <div className="left-column">
+                    <label id="user-gender-label" className="user-input">
+                      {i18n.t(`Gender`)}
+                    </label>
+                    <Form.Item name="gender">
+                      <GenderSelect id="user-gender-input" name="gender" />
+                    </Form.Item>
+                  </div>
+                </Col>
+                <Col lg={{ span: 12 }} xs={{ span: 24 }}>
+                  <div className="right-column">
+                    <PassengerPreferenceFormikInput
+                      touched={touched.passengerPreference}
+                      error={errors.passengerPreference}
+                    />
+                  </div>
+                </Col>
+              </Row>
+              <Row className="form-elements">
+                <Col span={24}>
+                  <label id="user-nic-no-label" className="user-input">
+                    {i18n.t(`NIC Number`)}
+                  </label>
+                  <Form.Item name="nic.idNo">
+                    <Input
+                      id="user-first-name-input"
+                      name="nic.idNo"
+                      size="default"
+                      placeholder={i18n.t('e.g. 123456789V')}
+                    />
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Row className="form-elements">
+                <Col lg={{ span: 12 }} xs={{ span: 24 }}>
+                  <label id="user-nic-front-img-label" className="user-input">
+                    {i18n.t(`NIC Front Image`)}
+                  </label>
+                  <Form.Item name="nic.front">
+                    <ImageUpload
+                      id="user-nic-front-input"
+                      handleImageUpload={(imageBase64) => setFieldValue('nic.front', imageBase64)}
+                      imageURL={nicFront}
+                    />
+                  </Form.Item>
+                </Col>
+                <Col lg={{ span: 12 }} xs={{ span: 24 }}>
+                  <label id="user-nic-back-img-label" className="user-input">
+                    {i18n.t(`NIC Back Image`)}
+                  </label>
+                  <Form.Item name="nic.back">
+                    <ImageUpload
+                      id="user-nic-back-input"
+                      handleImageUpload={(imageBase64) => setFieldValue('nic.back', imageBase64)}
+                      imageURL={nicBack}
+                    />
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Row className="form-elements">
+                <Col span={24}>
+                  <label id="user-nic-no-label" className="user-input">
+                    {i18n.t(`Your Bio`)}
+                  </label>
+                </Col>
+                <Col span={24}>
+                  <Form.Item name="bio">
+                    <Input.TextArea
+                      id="user-bio-input"
+                      name="bio"
+                      size="default"
+                      placeholder={i18n.t('Tell us something interesting about yourself.')}
+                    />
+                  </Form.Item>
+                </Col>
+              </Row>
               <AntdForm.Item>
-                <Button loading={isSaving} onClick={submitForm} type="primary" className="submit-button">
-                  {isSignUp ? i18n.t('Sign Up') : i18n.t('Save Details')}
-                </Button>
+                <AntdForm.Item>
+                  <Button loading={isSaving} onClick={submitForm} type="primary" className="submit-button">
+                    {isSignUp ? i18n.t('Sign Up') : i18n.t('Save Details')}
+                  </Button>
+                </AntdForm.Item>
               </AntdForm.Item>
-            </AntdForm.Item>
-          </Form>
-        </div>
-      )}
+            </Form>
+          </div>
+        );
+      }}
     </Formik>
   );
 }

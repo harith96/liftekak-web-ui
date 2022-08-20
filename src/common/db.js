@@ -263,6 +263,7 @@ const saveRide = async ({
       uid: getCurrentUserID(),
       bio: driver.bio,
       userPhoto: driver.userPhoto,
+      countryCode: driver.countryCode,
     },
     status: RideStatus.NEW,
     seatsAvailable: true,

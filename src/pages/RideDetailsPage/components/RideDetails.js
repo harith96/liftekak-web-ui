@@ -5,7 +5,7 @@ import { getFormattedDate, getFormattedTime } from 'util/dateUtil';
 import getFullName from 'util/getFullName';
 import { Avatar, Col, Divider, Row, Spin } from 'antd';
 import getFormattedRoute from 'util/getFormattedRoute';
-import simulateCall from 'util/simulateCall';
+import { getFullPhoneNumber, simulateCall } from 'util/phoneUtil';
 import RideDetailsPageContext from '../RidesDetailsPageContext';
 import RideDetailsCard from './RideDetailsCard';
 
@@ -13,7 +13,7 @@ function RideDetails() {
   const {
     isRidesDetailsFetching,
     rideDetails: {
-      driver: { firstName, lastName, mobileNo, bio, userPhoto: driverPhoto } = {},
+      driver: { firstName, lastName, mobileNo, bio, userPhoto: driverPhoto, countryCode } = {},
       departure: { seconds: departure } = {},
       details: {
         availableSeatCount,
@@ -52,7 +52,7 @@ function RideDetails() {
         <RideDetailsCard
           title="Driver mobile no"
           icon="phone"
-          value={mobileNo}
+          value={getFullPhoneNumber(countryCode, mobileNo)}
           onClick={() => simulateCall(mobileNo)}
           lgColSpan={8}
         />
