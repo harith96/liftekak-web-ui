@@ -1,9 +1,17 @@
+.app-bar-container {
+  padding-top: 1rem;
+  background-color: white;
+}
+
 .logout {
   color: red;
 }
 
 .user-name-badge {
   margin-right: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 .user-name {

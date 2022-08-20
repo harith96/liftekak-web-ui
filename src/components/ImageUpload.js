@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Upload, Icon, message } from 'antd';
+import { Icon as LegacyIcon } from '@ant-design/compatible';
+import { Upload, message } from 'antd';
 
 function getBase64(img, callback) {
   const reader = new FileReader();
@@ -29,7 +30,7 @@ export default function ImageUpload({ imageURL, handleImageUpload }) {
 
   const uploadButton = (
     <div>
-      <Icon type={loading ? 'loading' : 'plus'} />
+      <LegacyIcon type={loading ? 'loading' : 'plus'} />
       <div className="ant-upload-text">Upload</div>
     </div>
   );

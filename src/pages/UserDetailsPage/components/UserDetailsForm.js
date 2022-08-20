@@ -1,4 +1,6 @@
-import { Button, Col, Form as AntdForm, Row } from 'antd';
+import { Form as AntdForm } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Button, Col, Row } from 'antd';
 import { Formik } from 'formik';
 import { Form, Input } from 'formik-antd';
 import React, { useContext } from 'react';
@@ -91,35 +93,39 @@ function UserDetailsForm() {
             <Row className="form-elements" type="flex" align="middle">
               <Col lg={{ span: 12 }} xs={{ span: 24 }} className="left-column">
                 <Row>
-                  <div className="left-column">
-                    <label id="user-first-name-label" className="user-input">
-                      {i18n.t(`First Name`)}
-                    </label>
+                  <Col span={24}>
+                    <div className="left-column">
+                      <label id="user-first-name-label" className="user-input">
+                        {i18n.t(`First Name`)}
+                      </label>
 
-                    <Form.Item name="firstName">
-                      <Input
-                        id="user-first-name-input"
-                        name="firstName"
-                        size="default"
-                        placeholder={i18n.t('e.g. John')}
-                      />
-                    </Form.Item>
-                  </div>
+                      <Form.Item name="firstName">
+                        <Input
+                          id="user-first-name-input"
+                          name="firstName"
+                          size="default"
+                          placeholder={i18n.t('e.g. John')}
+                        />
+                      </Form.Item>
+                    </div>
+                  </Col>
                 </Row>
                 <Row>
-                  <div className="left-column">
-                    <label id="user-last-name-label" className="user-input">
-                      {i18n.t(`Last Name`)}
-                    </label>
-                    <Form.Item name="lastName">
-                      <Input
-                        id="user-last-name-input"
-                        name="lastName"
-                        size="default"
-                        placeholder={i18n.t('e.g. Doe')}
-                      />
-                    </Form.Item>
-                  </div>
+                  <Col span={24}>
+                    <div className="left-column">
+                      <label id="user-last-name-label" className="user-input">
+                        {i18n.t(`Last Name`)}
+                      </label>
+                      <Form.Item name="lastName">
+                        <Input
+                          id="user-last-name-input"
+                          name="lastName"
+                          size="default"
+                          placeholder={i18n.t('e.g. Doe')}
+                        />
+                      </Form.Item>
+                    </div>
+                  </Col>
                 </Row>
               </Col>
               <Col lg={{ span: 4, offset: 4 }} xs={{ span: 24 }}>
@@ -133,18 +139,20 @@ function UserDetailsForm() {
               </Col>
             </Row>
             <Row className="form-elements">
-              <label id="user-mobile-no-label" className="user-input">
-                {i18n.t(`Mobile Number`)}
-              </label>
-              <Form.Item name="mobileNo">
-                <Input
-                  id="user-first-name-input"
-                  name="mobileNo"
-                  addonBefore="+94"
-                  size="default"
-                  placeholder={i18n.t('e.g. 711234567')}
-                />
-              </Form.Item>
+              <Col span={24}>
+                <label id="user-mobile-no-label" className="user-input">
+                  {i18n.t(`Mobile Number`)}
+                </label>
+                <Form.Item name="mobileNo">
+                  <Input
+                    id="user-first-name-input"
+                    name="mobileNo"
+                    addonBefore="+94"
+                    size="default"
+                    placeholder={i18n.t('e.g. 711234567')}
+                  />
+                </Form.Item>
+              </Col>
             </Row>
             <Row className="form-elements">
               <Col lg={{ span: 12 }} xs={{ span: 24 }}>
@@ -167,17 +175,19 @@ function UserDetailsForm() {
               </Col>
             </Row>
             <Row className="form-elements">
-              <label id="user-nic-no-label" className="user-input">
-                {i18n.t(`NIC Number`)}
-              </label>
-              <Form.Item name="nic.idNo">
-                <Input
-                  id="user-first-name-input"
-                  name="nic.idNo"
-                  size="default"
-                  placeholder={i18n.t('e.g. 123456789V')}
-                />
-              </Form.Item>
+              <Col span={24}>
+                <label id="user-nic-no-label" className="user-input">
+                  {i18n.t(`NIC Number`)}
+                </label>
+                <Form.Item name="nic.idNo">
+                  <Input
+                    id="user-first-name-input"
+                    name="nic.idNo"
+                    size="default"
+                    placeholder={i18n.t('e.g. 123456789V')}
+                  />
+                </Form.Item>
+              </Col>
             </Row>
             <Row className="form-elements">
               <Col lg={{ span: 12 }} xs={{ span: 24 }}>
@@ -206,17 +216,21 @@ function UserDetailsForm() {
               </Col>
             </Row>
             <Row className="form-elements">
-              <label id="user-nic-no-label" className="user-input">
-                {i18n.t(`Your Bio`)}
-              </label>
-              <Form.Item name="bio">
-                <Input.TextArea
-                  id="user-bio-input"
-                  name="bio"
-                  size="default"
-                  placeholder={i18n.t('Tell us something interesting about yourself.')}
-                />
-              </Form.Item>
+              <Col span={24}>
+                <label id="user-nic-no-label" className="user-input">
+                  {i18n.t(`Your Bio`)}
+                </label>
+              </Col>
+              <Col span={24}>
+                <Form.Item name="bio">
+                  <Input.TextArea
+                    id="user-bio-input"
+                    name="bio"
+                    size="default"
+                    placeholder={i18n.t('Tell us something interesting about yourself.')}
+                  />
+                </Form.Item>
+              </Col>
             </Row>
             <AntdForm.Item>
               <AntdForm.Item>

@@ -1,4 +1,5 @@
-import { Avatar, Icon, List } from 'antd';
+import { CarOutlined } from '@ant-design/icons';
+import { Avatar, List } from 'antd';
 import PaginationBar from 'components/PaginationBar';
 import React, { useContext } from 'react';
 import { getFormattedDateAndTime } from 'util/dateUtil';
@@ -17,9 +18,9 @@ function RidesList() {
         dataSource={ridesList}
         loading={isRidesFetching}
         renderItem={(item) => (
-          <List.Item onClick={() => onRideSelected(item)}>
+          <List.Item onClick={() => onRideSelected(item)} className="clickable clickable-row">
             <List.Item.Meta
-              avatar={<Avatar icon={<Icon type="car" />} />}
+              avatar={<Avatar icon={<CarOutlined />} />}
               title={`${getFormattedDateAndTime(item.departure)}`}
               description={`${getFullName(item.driver.firstName, item.driver.lastName)} | ${
                 item.details.availableSeatCount

@@ -24,19 +24,19 @@ const columns = [
   },
   {
     title: 'Route',
-    dataIndex: 'details.route',
+    dataIndex: ['details', 'route'],
     key: 'route',
     render: (route) => getFormattedRoute(route),
   },
   {
     title: 'Vehicle Type',
-    dataIndex: 'details.vehicle.type',
+    dataIndex: ['details', 'vehicle', 'type'],
     key: 'driverNotes',
     render: (text) => _.startCase(text),
   },
   {
     title: 'Seats Available',
-    dataIndex: 'details.availableSeatCount',
+    dataIndex: ['details', 'availableSeatCount'],
     key: 'availableSeatCount',
   },
   {
@@ -72,7 +72,7 @@ function RidesTable() {
             dataSource={ridesList}
             columns={columns}
             onRow={onRow}
-            rowClassName="antd-clickable-row"
+            rowClassName="clickable"
             pagination={false}
             className="rides-table"
             scroll={{ x: '100%', y: gridScrollHeight }}

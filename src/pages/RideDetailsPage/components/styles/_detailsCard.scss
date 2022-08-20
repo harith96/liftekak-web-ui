@@ -1,5 +1,5 @@
 .details-card {
-  overflow: hidden;
+  overflow: auto;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -11,6 +11,7 @@
   margin: auto;
   position: relative;
   padding: 2rem;
+  height: 8rem;
 
   &:hover {
     background-color: #91c0e5;
@@ -33,6 +34,7 @@
 
 .card-content {
   display: flex;
+  align-items: center;
   font-size: larger;
   font-weight: 700;
 }

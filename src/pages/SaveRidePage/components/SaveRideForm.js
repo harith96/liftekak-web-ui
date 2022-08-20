@@ -1,4 +1,6 @@
-import { Button, Col, Row, Form as AntdForm, Tooltip, Icon, TimePicker, DatePicker, Spin, Empty } from 'antd';
+import { Form as AntdForm } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Button, Col, Row, Tooltip, TimePicker, DatePicker, Spin, Empty } from 'antd';
 import InfoTooltip from 'components/InfoTooltip';
 import PassengerPreferenceFormikInput from 'components/PassengerPreferenceInput';
 import SaveVehicleContainer from 'components/SaveVehicle/SaveVehicleContainer';
@@ -50,7 +52,7 @@ function SaveRideForm() {
       departure,
       details: {
         availableSeatCount,
-        // route,
+        route: currentRoute,
         driverNote,
         start: { location: currentStartLocation } = {},
         destination: { location: currentEndLocation } = {},
@@ -82,7 +84,7 @@ function SaveRideForm() {
           vehicle: vehicle || defaultVehicle,
           passengerPreference: defaultPassengerPreference,
           availableSeatCount: availableSeatCount || 1,
-          route: [],
+          route: _.isArray() ? _.slice(currentRoute, 1, -1) : [],
           note: driverNote || '',
         }}
         validationSchema={validationSchema}
@@ -128,34 +130,43 @@ function SaveRideForm() {
                   </Col>
                 </Row>
                 <Row className="form-elements">
-                  <label id="user-mobile-no-label" className="user-input">
-                    {i18n.t(`Route`)}
-                    <InfoTooltip title="Adding more towns will help passengers to find your ride more easily." />
-                  </label>
-                  <Form.Item name="route">
-                    <Col lg={{ span: 4 }} xs={{ span: 24 }} className="route-input">
-                      <CitySelect name="startLocation" disabled placeholder="Start location" showNextCityIcon />
-                    </Col>
-                    {_.map(
-                      route,
-                      (c, index) =>
-                        !_.isEmpty(c) && (
-                          <Col lg={{ span: 4 }} xs={{ span: 24 }} className="route-input">
-                            <CitySelect name={`route[${index}]`} showNextCityIcon />
+                  <Col span={24}>
+                    <label id="user-mobile-no-label" className="user-input">
+                      {i18n.t(`Route`)}
+                      <InfoTooltip title="Adding more towns will help passengers to find your ride more easily." />
+                    </label>
+                    <Form.Item name="route">
+                      <Row gutter={[16, 16]}>
+                        <Col lg={{ span: 6 }} xs={{ span: 24 }} className="route-input">
+                          <CitySelect name="startLocation" disabled placeholder="Start location" showNextCityIcon />
+                        </Col>
+                        {_.map(
+                          route,
+                          (c, index) =>
+                            !_.isEmpty(c) && (
+                              <Col lg={{ span: 6 }} xs={{ span: 24 }}>
+                                <CitySelect name={`route[${index}]`} showNextCityIcon />
+                              </Col>
+                            )
+                        )}
+                        {route.length < ROUTE_MAX_TOWN_COUNT && (
+                          <Col lg={{ span: 6 }} xs={{ span: 24 }}>
+                            <CitySelect
+                              name={`route[${route.length}]`}
+                              placeholder="Enter new town"
+                              showNextCityIcon
+                              setFieldValue={setFieldValue}
+                            />
                           </Col>
-                        )
-                    )}
-                    {route.length < ROUTE_MAX_TOWN_COUNT && (
-                      <Col lg={{ span: 4 }} xs={{ span: 24 }} className="route-input">
-                        <CitySelect name={`route[${route.length}]`} placeholder="Enter new town" showNextCityIcon />
-                      </Col>
-                    )}
-                    <Col lg={{ span: 4 }} xs={{ span: 24 }}>
-                      <CitySelect name="endLocation" disabled placeholder="End location" />
-                    </Col>
-                  </Form.Item>
+                        )}
+                        <Col lg={{ span: 6 }} xs={{ span: 24 }}>
+                          <CitySelect name="endLocation" disabled placeholder="End location" />
+                        </Col>
+                      </Row>
+                    </Form.Item>
+                  </Col>
                 </Row>
-                <Row className="form-elements">
+                <Row className="form-elements" align="middle">
                   <Col lg={{ span: 12 }} xs={{ span: 24 }}>
                     <div className="left-column">
                       <div className="vehicle-title">
@@ -252,17 +263,19 @@ function SaveRideForm() {
                   </Col>
                 </Row>
                 <Row className="form-elements">
-                  <label id="user-nic-no-label" className="user-input">
-                    {i18n.t(`Notes`)}
-                  </label>
-                  <Form.Item name="note">
-                    <Input
-                      id="user-first-name-input"
-                      name="note"
-                      size="default"
-                      placeholder={i18n.t('e.g. Please call after booking the ride.')}
-                    />
-                  </Form.Item>
+                  <Col span={24}>
+                    <label id="user-nic-no-label" className="user-input">
+                      {i18n.t(`Notes`)}
+                    </label>
+                    <Form.Item name="note">
+                      <Input
+                        id="user-first-name-input"
+                        name="note"
+                        size="default"
+                        placeholder={i18n.t('e.g. Please call after booking the ride.')}
+                      />
+                    </Form.Item>
+                  </Col>
                 </Row>
                 <AntdForm.Item>
                   <AntdForm.Item>

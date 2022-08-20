@@ -28,11 +28,11 @@ function RidesDetailsPageContainer() {
         })
       );
     }
-  }, [dispatch, rideDetails, rideError]);
+  }, [dispatch, rideDetails, rideError, rideId]);
 
   const fetchRideDetails = useCallback(() => {
     dispatch(loadRideDetails(rideId));
-  }, [rideId]);
+  }, [rideId, dispatch]);
 
   const bookRide = useCallback(() => {
     dispatch(
@@ -42,7 +42,7 @@ function RidesDetailsPageContainer() {
         NotificationType.INFO
       )
     );
-  });
+  }, [dispatch]);
 
   return (
     <RideDetailsPageContextProvider value={{ rideDetails, isRidesDetailsFetching, fetchRideDetails, bookRide }}>

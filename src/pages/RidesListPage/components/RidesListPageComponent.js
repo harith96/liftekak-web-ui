@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import { Icon, Row, Tabs } from 'antd';
+import { IdcardOutlined, UnorderedListOutlined } from '@ant-design/icons';
+import { Row, Tabs } from 'antd';
 
 import { RidesTabs } from 'util/constants';
 import AddNewButton from 'components/AddNewButton';
@@ -21,14 +22,14 @@ const RidesView = (
 
 const allRidesTab = (
   <span>
-    <Icon type="unordered-list" />
+    <UnorderedListOutlined />
     All
   </span>
 );
 
 const myRidesTab = (
   <span>
-    <Icon type="idcard" />
+    <IdcardOutlined />
     My Rides
   </span>
 );

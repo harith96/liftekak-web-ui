@@ -23,7 +23,8 @@ function PasswordResetModal({ visible, toggleVisibility }) {
       <div>
         <h2>Forgot Your Password!</h2>
         <p>
-          No need to worry. Enter you email below and confirm. We will send a link to reset your password in no time.
+          No need to worry. Enter your email below and confirm. We will send a link to reset your password in no time.
+          Please check spam folder if the email in not in the regular inbox.
         </p>
         <Input
           type="email"

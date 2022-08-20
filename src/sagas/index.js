@@ -133,9 +133,9 @@ function* sendPasswordResetEmailAsync({ email }) {
     if (!handled)
       yield put(
         action(SHOW_NOTIFICATION, {
-          description: i18n.t('Seems like entered email is not registered with us.'),
+          description: i18n.t('liftEkak.forgotPassword.error.emailDoNotExists.description'),
           className: NotificationType.ERROR,
-          message: i18n.t('Email Error'),
+          message: i18n.t('liftEkak.forgotPassword.error.message'),
         })
       );
 
@@ -154,7 +154,7 @@ function* loadUserAsync() {
     if (!handled)
       yield put(
         action(SHOW_NOTIFICATION, {
-          description: i18n.t('liftEkak.user.error.description'),
+          description: i18n.t('liftEkak.user.fetch.error.description'),
           className: NotificationType.ERROR,
           message: i18n.t('liftEkak.user.error.message'),
         })
@@ -172,9 +172,9 @@ function* saveUserDetailsAsync({ data: userDetails }) {
 
     yield put(
       action(SHOW_NOTIFICATION, {
-        description: i18n.t('User details are updated successfully.'),
+        description: i18n.t('liftEkak.user.save.success.description'),
         className: NotificationType.SUCCESS,
-        message: i18n.t('User Success'),
+        message: i18n.t('liftEkak.user.success.message'),
       })
     );
   } catch (error) {
@@ -182,9 +182,9 @@ function* saveUserDetailsAsync({ data: userDetails }) {
     if (!handled)
       yield put(
         action(SHOW_NOTIFICATION, {
-          description: i18n.t('Seems like entered email is not registered with us.'),
+          description: i18n.t('liftEkak.user.save.error.description'),
           className: NotificationType.ERROR,
-          message: i18n.t('Email Error'),
+          message: i18n.t('liftEkak.user.error.message'),
         })
       );
 
@@ -202,9 +202,9 @@ function* loadUserVehiclesAsync() {
     if (!handled)
       yield put(
         action(SHOW_NOTIFICATION, {
-          description: i18n.t('liftEkak.vehicles.error.description'),
+          description: i18n.t('liftEkak.vehicle.fetch.error.description'),
           className: NotificationType.ERROR,
-          message: i18n.t('liftEkak.vehicles.error.message'),
+          message: i18n.t('liftEkak.vehicle.error.message'),
         })
       );
   }
@@ -216,8 +216,6 @@ function* saveVehicleAsync({ vehicle, callback }) {
 
     yield loadUserVehiclesAsync();
 
-    console.log(callback);
-
     if (callback) callback();
 
     yield put({ type: SAVE_VEHICLE.SUCCESS });
@@ -227,9 +225,9 @@ function* saveVehicleAsync({ vehicle, callback }) {
     if (!handled)
       yield put(
         action(SHOW_NOTIFICATION, {
-          description: i18n.t('liftEkak.user.error.description'),
+          description: i18n.t('liftEkak.vehicle.save.error.description'),
           className: NotificationType.ERROR,
-          message: i18n.t('liftEkak.user.error.message'),
+          message: i18n.t('liftEkak.vehicle.error.message'),
         })
       );
   }
@@ -250,7 +248,7 @@ function* loadRidesAsync({ pageAction } = {}) {
     if (!handled)
       yield put(
         action(SHOW_NOTIFICATION, {
-          description: i18n.t('liftEkak.rides.error.description'),
+          description: i18n.t('liftEkak.rides.fetch.error.description'),
           className: NotificationType.ERROR,
           message: i18n.t('liftEkak.rides.error.message'),
         })
@@ -271,7 +269,7 @@ function* loadMyRidesAsync({ pageAction } = {}) {
     if (!handled)
       yield put(
         action(SHOW_NOTIFICATION, {
-          description: i18n.t('liftEkak.rides.error.description'),
+          description: i18n.t('liftEkak.myRides.fetch.error.description'),
           className: NotificationType.ERROR,
           message: i18n.t('liftEkak.rides.error.message'),
         })
@@ -281,15 +279,15 @@ function* loadMyRidesAsync({ pageAction } = {}) {
 
 function* loadAllNonExpiredRidesAsync() {
   try {
-    const filtersApplied = {
-      sort: null,
-      opco: 'All',
-      status: 'NONEXPIRED',
-      startDate: null,
-      rideId: null,
-      endDate: null,
-      rewardType: 'All',
-    };
+    // const filtersApplied = {
+    //   sort: null,
+    //   opco: 'All',
+    //   status: 'NONEXPIRED',
+    //   startDate: null,
+    //   rideId: null,
+    //   endDate: null,
+    //   rewardType: 'All',
+    // };
 
     // const response = yield call(postRequest, `/offer-code/header/user?page=0&size=0`, filtersApplied);
 
@@ -318,7 +316,7 @@ function* loadRideAsync({ selectedRideId }) {
       yield put(
         action(SHOW_NOTIFICATION, {
           message: i18n.t('liftEkak.ride.error.message'),
-          description: 'Invalid Ride Id',
+          description: i18n.t('liftEkak.ride.fetch.notFound.error.description'),
           className: NotificationType.ERROR,
         })
       );
@@ -328,47 +326,14 @@ function* loadRideAsync({ selectedRideId }) {
 
     const handled = yield handleUserSessionErrors(error);
     if (!handled) {
-      let description = i18n.t('liftEkak.ride.error.description');
-
-      if (error.response?.status === NOT_FOUND_STATUS) description = i18n.t('liftEkak.ride.notFound.error.description');
       yield put(
         action(SHOW_NOTIFICATION, {
           message: i18n.t('liftEkak.ride.error.message'),
-          description,
+          description: i18n.t('liftEkak.ride.error.description'),
           className: NotificationType.ERROR,
         })
       );
     }
-  }
-}
-function* updateRideAsync({ data: { rideId, endDate, comment } = {}, history }) {
-  try {
-    // yield call(patchRequest, `/offer-code/${rideId}/update`, {
-    //   rideId,
-    //   endDate,
-    //   comment,
-    // });
-    yield put({ type: UPDATE_RIDE.SUCCESS });
-    yield put(
-      action(SHOW_NOTIFICATION, {
-        className: NotificationType.SUCCESS,
-        message: i18n.t('liftEkak.ride.success.message'),
-        description: i18n.t('liftEkak.ride.updated.success.description'),
-      })
-    );
-
-    history.push('/suite/rewards/rides');
-  } catch (error) {
-    yield put({ type: UPDATE_RIDE.FAILURE, error: error.message });
-    const handled = yield handleUserSessionErrors(error);
-    if (!handled)
-      yield put(
-        action(SHOW_NOTIFICATION, {
-          message: i18n.t('liftEkak.ride.error.message'),
-          description: i18n.t('liftEkak.ride.updated.error.description'),
-          className: NotificationType.ERROR,
-        })
-      );
   }
 }
 
@@ -394,14 +359,10 @@ function* saveRideAsync({ data, history }) {
 
     const handled = yield handleUserSessionErrors(error);
     if (!handled) {
-      let description = i18n.t('liftEkak.ride.save.error.description');
-
-      if (error.response?.status === BAD_REQUEST_STATUS)
-        description = i18n.t('liftEkak.ride.alreadyExists.error.description');
       yield put(
         action(SHOW_NOTIFICATION, {
           message: i18n.t('liftEkak.ride.error.message'),
-          description,
+          description: i18n.t('liftEkak.ride.save.error.description'),
           className: NotificationType.ERROR,
         })
       );
@@ -420,9 +381,9 @@ function* loadBookingsAsync({ filters }) {
     if (!handled)
       yield put(
         action(SHOW_NOTIFICATION, {
-          description: i18n.t('liftEkak.user.error.description'),
+          description: i18n.t('liftEkak.bookings.fetch.error.description'),
           className: NotificationType.ERROR,
-          message: i18n.t('liftEkak.user.error.message'),
+          message: i18n.t('liftEkak.bookings.error.message'),
         })
       );
   }
@@ -439,9 +400,9 @@ function* saveBooking(booking) {
     if (!handled)
       yield put(
         action(SHOW_NOTIFICATION, {
-          description: i18n.t('liftEkak.user.error.description'),
+          description: i18n.t('liftEkak.booking.save.error.description'),
           className: NotificationType.ERROR,
-          message: i18n.t('liftEkak.user.error.message'),
+          message: i18n.t('liftEkak.booking.error.message'),
         })
       );
   }
@@ -458,7 +419,7 @@ function* loadCitiesAsync({ engNameQuery }) {
     if (!handled)
       yield put(
         action(SHOW_NOTIFICATION, {
-          description: i18n.t('liftEkak.cities.error.description'),
+          description: i18n.t('liftEkak.cities.fetch.error.description'),
           className: NotificationType.ERROR,
           message: i18n.t('liftEkak.cities.error.message'),
         })
@@ -524,9 +485,6 @@ function* watchLoadRide() {
   yield takeLatest(RIDE.REQUEST, loadRideAsync);
 }
 
-function* watchUpdateRide() {
-  yield takeLatest(UPDATE_RIDE.REQUEST, updateRideAsync);
-}
 function* watchSaveRide() {
   yield takeLatest(SAVE_RIDE.REQUEST, saveRideAsync);
 }
@@ -560,7 +518,6 @@ export default function* rootSaga() {
     watchLoadRides(),
     watchMyLoadRides(),
     watchLoadRide(),
-    watchUpdateRide(),
     watchUpdateRideFilters(),
     watchSaveRide(),
     loadAllRides(),

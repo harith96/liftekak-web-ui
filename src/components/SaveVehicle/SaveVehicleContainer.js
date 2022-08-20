@@ -8,7 +8,7 @@ function SaveVehicleContainer({ vehicle, visible, toggleModal }) {
   const dispatch = useDispatch();
   const isSavingVehicle = useSelector((state) => state.saveVehicle.fetching);
 
-  const onSaveVehicle = useCallback((values) => dispatch(saveVehicle(values, toggleModal)), [dispatch]);
+  const onSaveVehicle = useCallback((values) => dispatch(saveVehicle(values, toggleModal)), [dispatch, toggleModal]);
 
   return (
     <SaveVehicleContextProvider

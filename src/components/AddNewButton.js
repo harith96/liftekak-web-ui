@@ -1,5 +1,6 @@
-import { Icon } from 'antd';
+import { PlusCircleOutlined } from '@ant-design/icons';
 import React from 'react';
+import TextWithIcon from './TextWithIcon';
 
 function AddNewButton({ onClick, entityName }) {
   return (
@@ -9,10 +10,7 @@ function AddNewButton({ onClick, entityName }) {
       className="ant-btn btn blue-action-btn ant-btn-primary"
       onClick={onClick}
     >
-      <div className="horizontal-container">
-        <Icon type="plus-circle" />
-        {`Add New ${entityName || ''}`}
-      </div>
+      <TextWithIcon icon={<PlusCircleOutlined />} text={`Add New ${entityName || ''}`} />
     </button>
   );
 }
