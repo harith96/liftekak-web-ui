@@ -26,7 +26,13 @@ function SignInPageComponent() {
         }}
       >
         <Row className="login-screen">
-          <Col lg={12} md={24} sm={24} style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
+          <Col
+            lg={12}
+            md={24}
+            sm={24}
+            xs={24}
+            style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column' }}
+          >
             <div id="login-container" className="login-container">
               <SignInForm togglePasswordRestModal={togglePasswordRestModal} />
               <PasswordResetModal visible={visible} toggleVisibility={togglePasswordRestModal} />
