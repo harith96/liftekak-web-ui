@@ -13,6 +13,7 @@ function SignInPageContainer() {
   const dispatch = useDispatch();
   const history = useHistory();
   const isSigningIn = useSelector((state) => state.signIn.fetching);
+  const isSigningUp = useSelector((state) => state.signUp.fetching);
 
   useEffect(() => {
     let unsubscribe;
@@ -45,6 +46,7 @@ function SignInPageContainer() {
         onForgotPassword,
         onSignInWithGoogle,
         isSigningIn,
+        isSigningUp,
         onSignUpWithEmailCustom,
       }}
     >
