@@ -93,6 +93,13 @@ body,
   height: 100%;
 }
 
+.center-items {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
 div.ant-tabs-content.ant-tabs-content-top {
   height: 100%;
 }

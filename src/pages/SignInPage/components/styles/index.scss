@@ -1,16 +1,49 @@
-.login-container {
-  max-width: 300px;
-  margin: auto;
+@import 'src/styles/bt-ux-framework/helpers/_responsive.scss';
+
+.login-screen {
+  border: 1px solid #b1c8d8;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 1280px;
+  min-width: 350px;
+
+  @include max-breakpoint(md) {
+    width: 70%;
+  }
 }
+
+.login-container {
+  max-width: 450px;
+  background: white;
+  border-radius: 1rem;
+  padding: 2rem;
+  margin: auto;
+  width: 90%;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
 .login-form-forgot {
   float: right;
 }
 .login-form-button {
-  width: 100%;
+  margin-top: 1rem;
+  width: 50%;
+  align-self: center;
+  height: 35px;
 }
 .is-sign-up-switch {
-  float: right;
-  width: 5rem;
+  width: 6rem;
+  height: 1.5rem;
+  border: 1px solid #b1c8d8;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+
+  @include max-breakpoint(sm) {
+    font-size: 0.1rem;
+  }
 }
 .sign-in-form-forgot {
   float: right;
@@ -18,6 +51,8 @@
 
 .google-logo {
   margin-right: 8px;
+  width: 1.2rem;
+  height: 1.2rem;
 }
 
 .or-container {
@@ -29,4 +64,16 @@
 .or-text {
   margin: 0 8px;
   align-self: center;
+}
+
+.form-heading {
+  align-self: center;
+  margin-top: 0;
+}
+
+.login-right-image {
+  height: 100%;
+  background-image: url('../../../../styles/images/loginbg-v2.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
 }
