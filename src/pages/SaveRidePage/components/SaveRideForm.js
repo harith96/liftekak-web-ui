@@ -96,6 +96,8 @@ function SaveRideForm() {
             departure: { date: departureDate, time: departureTime },
             vehicle: selectedVehicle,
             route,
+            endLocation,
+            startLocation,
           },
           submitForm,
           // values,
@@ -103,33 +105,32 @@ function SaveRideForm() {
           touched,
           errors,
         }) => {
+          console.log(route);
           return (
             <div className="user-details-form-container">
               <Form className="user-details-form">
-                <Row className="form-elements">
+                <Row className="form-elements" gutter={[16, 16]} align="middle">
                   <Col lg={{ span: 12 }} xs={{ span: 24 }}>
-                    <div className="left-column">
+                    <div>
                       <label id="user-first-name-label" className="user-input">
                         {i18n.t(`Start location`)}
                       </label>
 
                       <Form.Item name="startLocation">
-                        <CitySelect name="startLocation" placeholder="e.g. Malabe" />
+                        <CitySelect name="startLocation" placeholder="e.g. Malabe" setFieldValue={setFieldValue} />
                       </Form.Item>
                     </div>
                   </Col>
                   <Col lg={{ span: 12 }} xs={{ span: 24 }}>
-                    <div className="right-column">
+                    <div>
                       <label id="user-last-name-label" className="user-input">
                         {i18n.t(`End Location`)}
                       </label>
                       <Form.Item name="endLocation">
-                        <CitySelect name="endLocation" placeholder="e.g. Colombo 3" />
+                        <CitySelect name="endLocation" placeholder="e.g. Colombo 3" setFieldValue={setFieldValue} />
                       </Form.Item>
                     </div>
                   </Col>
-                </Row>
-                <Row className="form-elements">
                   <Col span={24}>
                     <label id="user-mobile-no-label" className="user-input">
                       {i18n.t(`Route`)}
@@ -138,37 +139,56 @@ function SaveRideForm() {
                     <Form.Item name="route">
                       <Row gutter={[16, 16]}>
                         <Col lg={{ span: 6 }} xs={{ span: 24 }} className="route-input">
-                          <CitySelect name="startLocation" disabled placeholder="Start location" showNextCityIcon />
+                          <CitySelect
+                            name="startLocation"
+                            disabled
+                            placeholder="Start location"
+                            showNextCityIcon
+                            setFieldValue={setFieldValue}
+                            value={startLocation}
+                          />
                         </Col>
                         {_.map(
                           route,
                           (c, index) =>
                             !_.isEmpty(c) && (
                               <Col lg={{ span: 6 }} xs={{ span: 24 }}>
-                                <CitySelect name={`route[${index}]`} showNextCityIcon />
+                                <CitySelect
+                                  key={route[index]}
+                                  name={`route[${index}]`}
+                                  showNextCityIcon
+                                  setFieldValue={setFieldValue}
+                                  value={route[index]}
+                                />
                               </Col>
                             )
                         )}
-                        {route.length < ROUTE_MAX_TOWN_COUNT && (
+                        {route.length <= ROUTE_MAX_TOWN_COUNT && (
                           <Col lg={{ span: 6 }} xs={{ span: 24 }}>
                             <CitySelect
+                              key={`route[${route.length}]`}
                               name={`route[${route.length}]`}
                               placeholder="Enter new town"
                               showNextCityIcon
                               setFieldValue={setFieldValue}
+                              clearFieldOnSelect
                             />
                           </Col>
                         )}
                         <Col lg={{ span: 6 }} xs={{ span: 24 }}>
-                          <CitySelect name="endLocation" disabled placeholder="End location" />
+                          <CitySelect
+                            name="endLocation"
+                            disabled
+                            placeholder="End location"
+                            setFieldValue={setFieldValue}
+                            value={endLocation}
+                          />
                         </Col>
                       </Row>
                     </Form.Item>
                   </Col>
-                </Row>
-                <Row className="form-elements" align="middle">
                   <Col lg={{ span: 12 }} xs={{ span: 24 }}>
-                    <div className="left-column">
+                    <div>
                       <div className="vehicle-title">
                         <label id="user-gender-label" className="user-input">
                           {i18n.t(`Vehicle`)}
@@ -203,17 +223,13 @@ function SaveRideForm() {
                   </Col>
 
                   <Col lg={{ span: 12 }} xs={{ span: 24 }}>
-                    <div className="right-column">
-                      <PassengerPreferenceFormikInput
-                        touched={touched.passengerPreference}
-                        error={errors.passengerPreference}
-                      />
-                    </div>
+                    <PassengerPreferenceFormikInput
+                      touched={touched.passengerPreference}
+                      error={errors.passengerPreference}
+                    />
                   </Col>
-                </Row>
-                <Row className="form-elements">
                   <Col lg={{ span: 8 }} xs={{ span: 24 }}>
-                    <div className="left-column">
+                    <div>
                       <label id="user-gender-label" className="user-input">
                         {i18n.t(`Departure date`)}
                       </label>
@@ -228,7 +244,7 @@ function SaveRideForm() {
                     </div>
                   </Col>
                   <Col lg={{ span: 8 }} xs={{ span: 24 }}>
-                    <div className="left-column">
+                    <div>
                       <label id="departure-time-label" className="user-input">
                         {i18n.t(`Departure time`)}
                       </label>
@@ -251,7 +267,7 @@ function SaveRideForm() {
                     </div>
                   </Col>
                   <Col lg={{ span: 8 }} xs={{ span: 24 }}>
-                    <div className="right-column">
+                    <div>
                       <label id="user-passenger-preference-label" className="user-input">
                         {i18n.t(`Available seat count`)}
                         <InfoTooltip title="Available seat count should be between 1 and you vehicle seat count." />
@@ -261,8 +277,6 @@ function SaveRideForm() {
                       </Form.Item>
                     </div>
                   </Col>
-                </Row>
-                <Row className="form-elements">
                   <Col span={24}>
                     <label id="user-nic-no-label" className="user-input">
                       {i18n.t(`Notes`)}
@@ -273,6 +287,7 @@ function SaveRideForm() {
                         name="note"
                         size="default"
                         placeholder={i18n.t('e.g. Please call after booking the ride.')}
+                        allowClear
                       />
                     </Form.Item>
                   </Col>
