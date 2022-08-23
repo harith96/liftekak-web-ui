@@ -13,6 +13,7 @@ import ImageUpload from 'components/ImageUpload';
 import GenderSelect from 'components/GenderSelect';
 import PassengerPreferenceFormikInput from 'components/PassengerPreferenceInput';
 import CountryDialCodeDropdown from 'components/CountryDialCodeDropdown';
+import { LK_DIAL_CODE } from 'util/constants';
 import UserDetailsPageContext from '../UserDetailsPageContext';
 
 const validGenders = _.keys(Gender);
@@ -20,11 +21,20 @@ const validGenders = _.keys(Gender);
 const validationSchema = yup.object().shape({
   firstName: yup.string().required('First name is required.'),
   lastName: yup.string().required('Last name is required.'),
+  countryCode: yup.string().required('Country Code is required'),
   mobileNo: yup
     .string()
     .required('Mobile number is required.')
-    .matches(/7[0-9]{8}/, { excludeEmptyString: true, message: 'Please enter a valid mobile number.' })
-    .max(9, 'Enter mobile number without leading zero.'),
+    .matches(/^[0-9]*$/, { excludeEmptyString: true, message: 'Please enter a valid mobile number.' })
+    .when('countryCode', {
+      is: LK_DIAL_CODE,
+      then: (schema) =>
+        schema.matches(/7[0-9]{8}/, {
+          excludeEmptyString: true,
+          message: 'Please enter a valid mobile number without leading zero.',
+        }),
+      otherwise: (schema) => schema,
+    }),
   gender: yup.string().required('Gender selection is required.').oneOf(validGenders),
   passengerPreference: yup
     .array()
@@ -71,7 +81,7 @@ function UserDetailsForm() {
         mobileNo,
         gender,
         passengerPreference: _.isEmpty(passengerPreference) ? validGenders : passengerPreference,
-        nic: { idNo, front, back },
+        nic: { idNo, front: front || null, back: back || null },
         userPhoto,
         bio,
         countryCode: countryCode || '+94',
@@ -92,7 +102,6 @@ function UserDetailsForm() {
         touched,
         errors,
       }) => {
-        console.log(countryCodeForm);
         return (
           <div className="user-details-form-container">
             <Form className="user-details-form">
@@ -156,6 +165,7 @@ function UserDetailsForm() {
                       addonBefore={<CountryDialCodeDropdown name="countryCode" dropdownMatchSelectWidth={false} />}
                       size="default"
                       placeholder={i18n.t('e.g. 711234567')}
+                      maxLength={countryCodeForm === LK_DIAL_CODE ? 9 : 20}
                     />
                   </Form.Item>
                 </Col>
@@ -172,12 +182,10 @@ function UserDetailsForm() {
                   </div>
                 </Col>
                 <Col lg={{ span: 12 }} xs={{ span: 24 }}>
-                  <div className="right-column">
-                    <PassengerPreferenceFormikInput
-                      touched={touched.passengerPreference}
-                      error={errors.passengerPreference}
-                    />
-                  </div>
+                  <PassengerPreferenceFormikInput
+                    touched={touched.passengerPreference}
+                    error={errors.passengerPreference}
+                  />
                 </Col>
               </Row>
               <Row className="form-elements">
