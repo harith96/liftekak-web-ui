@@ -23,7 +23,7 @@ import {
 export const signIn = (provider, signInDetails) => action(SIGN_IN.REQUEST, { provider, signInDetails });
 export const signUp = (email, password) => action(SIGN_UP.REQUEST, { email, password });
 export const sendPasswordResetEmail = (email) => action(RESET_PASSWORD.REQUEST, { email });
-export const saveUserDetails = (data) => action(SAVE_USER_DETAILS.REQUEST, { data });
+export const saveUserDetails = (data, callback) => action(SAVE_USER_DETAILS.REQUEST, { data, callback });
 export const loadUserDetails = () => action(USER.REQUEST);
 
 export const saveVehicle = (vehicle, callback) =>
