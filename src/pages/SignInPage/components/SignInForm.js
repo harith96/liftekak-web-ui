@@ -66,7 +66,7 @@ function SignInForm({ togglePasswordRestModal }) {
             {getFieldError(errors, touched, 'email')}
           </AntdForm.Item>
           <AntdForm.Item>
-            <Input
+            <Input.Password
               name="password"
               prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
               type="password"
@@ -76,10 +76,9 @@ function SignInForm({ togglePasswordRestModal }) {
           </AntdForm.Item>
           {isSignUp && (
             <AntdForm.Item>
-              <Input
+              <Input.Password
                 name="rePassword"
                 prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
-                type="password"
                 placeholder={i18n.t('Re-enter password')}
               />
               {getFieldError(errors, touched, 'rePassword')}

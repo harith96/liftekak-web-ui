@@ -124,7 +124,7 @@ function RideSearchBar() {
       }}
       enableReinitialize
     >
-      {({ submitForm }) => {
+      {({ submitForm, setFieldValue }) => {
         return (
           <Collapse ghost activeKey={isBarExpanded ? 1 : null} onChange={onCollapseChange}>
             <CollapsePanel header={<TextWithIcon icon={<SearchOutlined />} text="Search Rides" />} key={1}>
@@ -136,7 +136,7 @@ function RideSearchBar() {
                 }}
               >
                 <div className="search-container">
-                  <Row type="flex" align="bottom" justify="space-around" gutter={16}>
+                  <Row align="bottom" justify="space-around" gutter={[16, 16]}>
                     {searchIndexes.map(
                       ({ name, title, placeholder, props: { type, data, component: Component }, tab }) =>
                         (!tab || activeTabKey === tab) && (
@@ -180,7 +180,11 @@ function RideSearchBar() {
                               )}
                             </>
                             <>{type === FilterTypes.TIME_RANGE && <RangePicker name={name} />}</>
-                            <>{type === FilterTypes.CUSTOM && <Component name={name} placeholder={placeholder} />}</>
+                            <>
+                              {type === FilterTypes.CUSTOM && (
+                                <Component name={name} placeholder={placeholder} setFieldValue={setFieldValue} />
+                              )}
+                            </>
                           </Col>
                         )
                     )}

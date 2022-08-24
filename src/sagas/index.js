@@ -162,12 +162,13 @@ function* loadUserAsync() {
   }
 }
 
-function* saveUserDetailsAsync({ data: userDetails }) {
+function* saveUserDetailsAsync({ data: userDetails, callback }) {
   try {
     yield saveUserDetails(userDetails);
 
     yield loadUserAsync();
 
+    if (callback) callback();
     yield put({ type: SAVE_USER_DETAILS.SUCCESS });
 
     yield put(

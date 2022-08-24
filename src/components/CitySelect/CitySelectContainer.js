@@ -1,27 +1,69 @@
-import { loadCities } from 'actions';
-import { Col, Row } from 'antd';
-import { RightOutlined } from '@ant-design/icons';
-import React, { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { CitySelectContextProvider } from './CitySelectContext';
-import CitySelect from './components/CitySelect';
-import 'components/styles/index.scss';
+import { Col, Input, Row } from 'antd';
+import { CloseCircleFilled, RightOutlined } from '@ant-design/icons';
+import React, { useState } from 'react';
 
-function CitySelectContainer({ showNextCityIcon, setFieldValue, ...rest }) {
-  const dispatch = useDispatch();
-  const cities = useSelector((state) => state.cities.data);
-  const citiesFetching = useSelector((state) => state.cities.fetching);
-  const getCitiesList = useCallback((engNameQuery) => dispatch(loadCities({ engNameQuery })), [dispatch]);
+import 'components/styles/index.scss';
+import AutoComplete from 'react-google-autocomplete';
+import getFirstComponentOfSelectedTown from 'util/getFirstComponentOfSelectedTown';
+import _ from 'lodash';
+
+function CitySelectContainer({ showNextCityIcon, setFieldValue, name, value, clearFieldOnSelect, disabled, ...rest }) {
+  const [searchValue, setSearchValue] = useState('');
+
+  const activeInput = (
+    <div className="ant-form-item-control-input">
+      <div className="ant-form-item-control-input-content">
+        <span className="ant-input-affix-wrapper ant-input-affix-wrapper-input-with-clear-btn ant-input-affix-wrapper-has-feedback">
+          <AutoComplete
+            name={name}
+            className="ant-input"
+            {...rest}
+            value={value || searchValue}
+            onChange={(e) => {
+              e.preventDefault();
+              setSearchValue(e.target.value);
+            }}
+            apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+            options={{
+              types: ['administrative_area_level_3', 'administrative_area_level_4'],
+              componentRestrictions: { country: 'lk' },
+            }}
+            onPlaceSelected={(selectedValue) => {
+              const selectedTown = getFirstComponentOfSelectedTown(selectedValue.formatted_address);
+              setFieldValue(name, selectedTown);
+              setSearchValue(clearFieldOnSelect ? '' : selectedTown);
+            }}
+          />
+          {(!_.isEmpty(value) || !_.isEmpty(searchValue)) && (
+            <span className="ant-input-suffix">
+              <span
+                className="ant-input-clear-icon ant-input-clear-icon-has-suffix"
+                role="button"
+                tabIndex="-1"
+                onClick={() => {
+                  setSearchValue('');
+                  setFieldValue(name, '');
+                }}
+                onKeyDown={() => {}}
+              >
+                <span role="img" aria-label="close-circle" className="anticon anticon-close-circle">
+                  <CloseCircleFilled />
+                </span>
+              </span>
+            </span>
+          )}
+        </span>
+      </div>
+    </div>
+  );
+
+  const preDefinedInput = <Input value={value} disabled />;
 
   return (
-    <CitySelectContextProvider value={{ cities, citiesFetching, getCitiesList }}>
-      <Row align="middle" wrap={false}>
-        <Col flex="auto">
-          <CitySelect {...rest} setFieldValue={setFieldValue} />
-        </Col>
-        <Col flex="10px">{showNextCityIcon && <RightOutlined />}</Col>
-      </Row>
-    </CitySelectContextProvider>
+    <Row align="middle" wrap={false}>
+      <Col flex="auto">{disabled ? preDefinedInput : activeInput}</Col>
+      <Col flex="10px">{showNextCityIcon && <RightOutlined />}</Col>
+    </Row>
   );
 }
 
