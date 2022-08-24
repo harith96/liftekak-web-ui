@@ -1,9 +1,7 @@
-import { Col, Row } from 'antd';
+import { Col, Row, Space } from 'antd';
 import React, { useContext } from 'react';
 import RideDetailsPageContext from '../RidesDetailsPageContext';
-import BookRideButton from './BookRideButton';
 import GoToRidesButton from './GoToRidesButton';
-import RefreshRideButton from './RefreshRideButton';
 import RideDetails from './RideDetails';
 
 import './styles/index.scss';
@@ -14,19 +12,19 @@ function RideDetailsPageComponent() {
     <>
       <Row align="middle">
         <Col lg={{ span: 12 }} xs={{ span: 24 }}>
-          <div className="horizontal-container ride-id-container">
+          <Space>
+            <GoToRidesButton />
             <h1>
               <span>Ride </span>
               <span>#</span>
               <span>{rideId}</span>
             </h1>
-          </div>
+          </Space>
         </Col>
         <Col lg={{ span: 12 }} xs={{ span: 24 }}>
           <div className="horizontal-container ride-details-button-bar">
-            <GoToRidesButton />
-            <RefreshRideButton />
-            <BookRideButton />
+            {/* <RefreshRideButton /> */}
+            {/* <BookRideButton /> */}
           </div>
         </Col>
       </Row>

@@ -1,6 +1,7 @@
-import { Grid, Row } from 'antd';
+import { Grid, Row, Space } from 'antd';
 import AddNewButton from 'components/AddNewButton';
 import SaveVehicleContainer from 'components/SaveVehicle/SaveVehicleContainer';
+import GoToRidesButton from 'pages/RideDetailsPage/components/GoToRidesButton';
 import React, { useContext } from 'react';
 import VehiclesPageContext from '../VehiclesPageContext';
 import VehiclesList from './VehiclesList';
@@ -14,7 +15,10 @@ function VehiclesPageComponent() {
   return (
     <>
       <Row type="flex" justify="space-between" align="middle">
-        <h1>Vehicles</h1>
+        <Space>
+          <GoToRidesButton />
+          <h1>Vehicles</h1>
+        </Space>
         <AddNewButton onClick={toggleModal} entityName="Vehicle" />
       </Row>
       <SaveVehicleContainer vehicle={selectedVehicle} visible={isEditVehicleModalVisible} toggleModal={toggleModal} />

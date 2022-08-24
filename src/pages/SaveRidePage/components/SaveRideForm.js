@@ -1,6 +1,6 @@
 import { Form as AntdForm } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
-import { Button, Col, Row, Tooltip, TimePicker, DatePicker, Spin, Empty } from 'antd';
+import { Button, Col, Row, TimePicker, DatePicker, Spin, Empty } from 'antd';
 import InfoTooltip from 'components/InfoTooltip';
 import PassengerPreferenceFormikInput from 'components/PassengerPreferenceInput';
 import SaveVehicleContainer from 'components/SaveVehicle/SaveVehicleContainer';
@@ -15,6 +15,7 @@ import * as yup from 'yup';
 import * as i18n from '_i18n';
 import CitySelect from 'components/CitySelect/CitySelectContainer';
 import { ROUTE_MAX_TOWN_COUNT } from 'util/constants';
+import FormTitle from 'components/FormTitle';
 import SaveRidePageContext from '../SaveRidePageContext';
 
 const { Option } = Select;
@@ -105,9 +106,9 @@ function SaveRideForm() {
           touched,
           errors,
         }) => {
-          console.log(route);
           return (
             <div className="user-details-form-container">
+              <FormTitle title="Add New Ride" />
               <Form className="user-details-form">
                 <Row className="form-elements" gutter={[16, 16]} align="middle">
                   <Col lg={{ span: 12 }} xs={{ span: 24 }}>
