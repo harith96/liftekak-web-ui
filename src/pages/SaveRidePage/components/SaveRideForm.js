@@ -118,7 +118,12 @@ function SaveRideForm() {
                       </label>
 
                       <Form.Item name="startLocation">
-                        <CitySelect name="startLocation" placeholder="e.g. Malabe" setFieldValue={setFieldValue} />
+                        <CitySelect
+                          name="startLocation"
+                          placeholder="e.g. Malabe"
+                          value={startLocation}
+                          setFieldValue={setFieldValue}
+                        />
                       </Form.Item>
                     </div>
                   </Col>
@@ -128,7 +133,12 @@ function SaveRideForm() {
                         {i18n.t(`End Location`)}
                       </label>
                       <Form.Item name="endLocation">
-                        <CitySelect name="endLocation" placeholder="e.g. Colombo 3" setFieldValue={setFieldValue} />
+                        <CitySelect
+                          name="endLocation"
+                          placeholder="e.g. Colombo 3"
+                          value={endLocation}
+                          setFieldValue={setFieldValue}
+                        />
                       </Form.Item>
                     </div>
                   </Col>
