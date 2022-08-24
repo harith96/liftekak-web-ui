@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import { Formik } from 'formik';
 import { Form as AntdForm } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
-import { Row, Button, Tooltip } from 'antd';
+import { Row, Button, Tooltip, Col } from 'antd';
 import * as yup from 'yup';
 import * as _ from 'lodash';
 
@@ -72,93 +72,107 @@ function SaveVehicleForm() {
         <div className="user-details-form-container">
           <Form className="user-details-form">
             <Row className="form-elements">
-              <div className="left-column">
-                <label id="type-label" className="user-input">
-                  {i18n.t(`Vehicle Type`)}
+              <Col span={24}>
+                <div className="left-column">
+                  <label id="type-label" className="user-input">
+                    {i18n.t(`Vehicle Type`)}
+                  </label>
+                  <Form.Item name="type">
+                    <Select id="user-first-name-input" name="type" size="default">
+                      {_.map(vehicleTypesKeyValueList, ({ key, value }) => (
+                        <Option key={key} value={value}>
+                          {_.startCase(key)}
+                        </Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                </div>
+              </Col>
+            </Row>
+            <Row className="form-elements">
+              <Col span={24}>
+                <div className="left-column">
+                  <label id="type-label" className="user-input">
+                    {i18n.t(`Fuel Type`)}
+                  </label>
+                  <Form.Item name="fuelType">
+                    <Select id="user-first-name-input" name="fuelType" size="default">
+                      {_.map(fuelTypesKeyValueList, ({ key, value }) => (
+                        <Option key={key} value={value}>
+                          {_.startCase(key)}
+                        </Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                </div>
+              </Col>
+            </Row>
+            <Row className="form-elements">
+              <Col span={24}>
+                <label id="user-mobile-no-label" className="user-input">
+                  {i18n.t(`Vehicle Brand`)}
                 </label>
-                <Form.Item name="type">
-                  <Select id="user-first-name-input" name="type" size="default">
-                    {_.map(vehicleTypesKeyValueList, ({ key, value }) => (
-                      <Option key={key} value={value}>
-                        {_.startCase(key)}
-                      </Option>
-                    ))}
-                  </Select>
+                <Form.Item name="brand">
+                  <Input id="user-first-name-input" name="brand" size="default" placeholder={i18n.t('e.g. Toyota')} />
                 </Form.Item>
-              </div>
+              </Col>
             </Row>
             <Row className="form-elements">
-              <div className="left-column">
-                <label id="type-label" className="user-input">
-                  {i18n.t(`Fuel Type`)}
+              <Col span={24}>
+                <label id="user-nic-no-label" className="user-input">
+                  {i18n.t(`Vehicle Model`)}
                 </label>
-                <Form.Item name="fuelType">
-                  <Select id="user-first-name-input" name="fuelType" size="default">
-                    {_.map(fuelTypesKeyValueList, ({ key, value }) => (
-                      <Option key={key} value={value}>
-                        {_.startCase(key)}
-                      </Option>
-                    ))}
-                  </Select>
+                <Form.Item name="model">
+                  <Input id="user-first-name-input" name="model" size="default" placeholder={i18n.t('e.g. Swift')} />
                 </Form.Item>
-              </div>
+              </Col>
             </Row>
             <Row className="form-elements">
-              <label id="user-mobile-no-label" className="user-input">
-                {i18n.t(`Vehicle Brand`)}
-              </label>
-              <Form.Item name="brand">
-                <Input id="user-first-name-input" name="brand" size="default" placeholder={i18n.t('e.g. Toyota')} />
-              </Form.Item>
+              <Col span={24}>
+                <label id="user-nic-no-label" className="user-input">
+                  {i18n.t(`Vehicle Color`)}
+                </label>
+                <Form.Item name="color">
+                  <Input id="user-first-name-input" name="color" size="default" placeholder={i18n.t('e.g. Red')} />
+                </Form.Item>
+              </Col>
             </Row>
             <Row className="form-elements">
-              <label id="user-nic-no-label" className="user-input">
-                {i18n.t(`Vehicle Model`)}
-              </label>
-              <Form.Item name="model">
-                <Input id="user-first-name-input" name="model" size="default" placeholder={i18n.t('e.g. Swift')} />
-              </Form.Item>
+              <Col span={24}>
+                <label id="user-nic-no-label" className="user-input">
+                  {i18n.t(`Vehicle Registration Number`)}
+                </label>
+                <Form.Item name="registrationNo">
+                  <Input
+                    id="user-first-name-input"
+                    name="registrationNo"
+                    size="default"
+                    placeholder={i18n.t('e.g. AAA-1234')}
+                  />
+                </Form.Item>
+              </Col>
             </Row>
             <Row className="form-elements">
-              <label id="user-nic-no-label" className="user-input">
-                {i18n.t(`Vehicle Color`)}
-              </label>
-              <Form.Item name="color">
-                <Input id="user-first-name-input" name="color" size="default" placeholder={i18n.t('e.g. Red')} />
-              </Form.Item>
-            </Row>
-            <Row className="form-elements">
-              <label id="user-nic-no-label" className="user-input">
-                {i18n.t(`Vehicle Registration Number`)}
-              </label>
-              <Form.Item name="registrationNo">
-                <Input
-                  id="user-first-name-input"
-                  name="registrationNo"
-                  size="default"
-                  placeholder={i18n.t('e.g. AAA-1234')}
-                />
-              </Form.Item>
-            </Row>
-            <Row className="form-elements">
-              <label id="user-nic-no-label" className="user-input">
-                {i18n.t(`Passenger Seat Count`)}
-              </label>
-              <Form.Item name="passengerSeatCount">
-                <InputNumber
-                  id="user-first-name-input"
-                  name="passengerSeatCount"
-                  size="default"
-                  max={MAX_PASSENGER_SEAT_COUNTS_BY_VEHICLE_TYPE[type]}
-                  min={1}
-                />
-              </Form.Item>
-              <Form.Item name="passengerSeatCount">
-                <Checkbox id="user-first-name-input" name="isDefaultVehicle" size="default">
-                  <span>Default vehicle</span>
-                  <InfoTooltip title={i18n.t('Will be set as default vehicle automatically selected for rides.')} />
-                </Checkbox>
-              </Form.Item>
+              <Col span={24}>
+                <label id="user-nic-no-label" className="user-input">
+                  {i18n.t(`Passenger Seat Count`)}
+                </label>
+                <Form.Item name="passengerSeatCount">
+                  <InputNumber
+                    id="user-first-name-input"
+                    name="passengerSeatCount"
+                    size="default"
+                    max={MAX_PASSENGER_SEAT_COUNTS_BY_VEHICLE_TYPE[type]}
+                    min={1}
+                  />
+                </Form.Item>
+                <Form.Item name="passengerSeatCount">
+                  <Checkbox id="user-first-name-input" name="isDefaultVehicle" size="default">
+                    <span>Default vehicle</span>
+                    <InfoTooltip title={i18n.t('Will be set as default vehicle automatically selected for rides.')} />
+                  </Checkbox>
+                </Form.Item>
+              </Col>
             </Row>
             <AntdForm.Item>
               <AntdForm.Item>
