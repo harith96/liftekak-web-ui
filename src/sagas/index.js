@@ -213,9 +213,12 @@ function* loadUserVehiclesAsync() {
 
 function* saveVehicleAsync({ vehicle, callback }) {
   try {
-    yield saveVehicle(vehicle);
+    const { defaultVehicle: userDefaultVehicle } = yield select((state) => state.user.data);
+    const isUserDefaultVehicleUpdated = yield saveVehicle({ ...vehicle, userDefaultVehicle });
 
     yield loadUserVehiclesAsync();
+
+    if (isUserDefaultVehicleUpdated) yield loadUserAsync();
 
     if (callback) callback();
 

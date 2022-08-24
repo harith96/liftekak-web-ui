@@ -100,12 +100,13 @@ const saveVehicle = async ({
   isDefaultVehicle = false,
   isDeleted = false,
   fuelType,
+  userDefaultVehicle,
 } = {}) => {
   const uid = getCurrentUserID();
 
   const db = getFirestore();
 
-  const vehicle = {
+  let vehicle = {
     type,
     brand,
     model,
@@ -117,14 +118,30 @@ const saveVehicle = async ({
     fuelType,
   };
 
+  let isUserDefaultVehicleUpdated = false;
+
   const batch = writeBatch(db);
-  if (isDefaultVehicle) await makeVehicleDefaultVehicle(vehicle, batch);
+  if (isDefaultVehicle) {
+    await makeVehicleDefaultVehicle(vehicle, batch);
+
+    isUserDefaultVehicleUpdated = true;
+  } else if (!userDefaultVehicle) {
+    const { defaultVehicle } = await getUserDetails();
+
+    if (!defaultVehicle) {
+      vehicle = { ...vehicle, isDefaultVehicle: true };
+      await makeVehicleDefaultVehicle(vehicle, batch);
+      isUserDefaultVehicleUpdated = true;
+    }
+  }
 
   const vehicleId = registrationNo;
 
   await batch.set(doc(db, `users/${uid}/vehicles`, vehicleId), vehicle);
 
   await batch.commit();
+
+  return isUserDefaultVehicleUpdated;
 };
 
 const getRides = async ({
