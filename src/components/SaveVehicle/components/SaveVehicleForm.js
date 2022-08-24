@@ -148,6 +148,7 @@ function SaveVehicleForm() {
                     name="registrationNo"
                     size="default"
                     placeholder={i18n.t('e.g. AAA-1234')}
+                    style={{ textTransform: 'capitalize' }}
                   />
                 </Form.Item>
               </Col>
