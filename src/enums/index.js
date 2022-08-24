@@ -63,4 +63,6 @@ export const FilterTypes = {
 export const FuelType = {
   DIESEL: 'DIESEL',
   PETROL: 'PETROL',
+  ELECTRIC: 'ELECTRIC',
+  OTHER: 'OTHER',
 };
