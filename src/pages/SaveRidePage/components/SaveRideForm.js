@@ -50,6 +50,7 @@ function SaveRideForm() {
     vehicles,
     isVehiclesLoading,
     rideDetails: {
+      rideId,
       departure,
       details: {
         availableSeatCount,
@@ -108,7 +109,13 @@ function SaveRideForm() {
         }) => {
           return (
             <div className="user-details-form-container">
-              <FormTitle title="Add New Ride" />
+              <FormTitle title={isRideUpdate ? `Update Ride` : 'Add New Ride'} />
+              {rideId && (
+                <h2>
+                  <span>Ride #</span>
+                  {rideId}
+                </h2>
+              )}
               <Form className="user-details-form">
                 <Row className="form-elements" gutter={[16, 16]} align="middle">
                   <Col lg={{ span: 12 }} xs={{ span: 24 }}>
