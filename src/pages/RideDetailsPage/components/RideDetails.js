@@ -45,7 +45,13 @@ function RideDetails() {
       <Row gutter={[32, 32]}>
         <RideDetailsCard
           title="Driver name"
-          icon={driverPhoto ? <Avatar className="user-avatar" size="small" src={driverPhoto} /> : 'smile'}
+          icon={
+            driverPhoto ? (
+              <Avatar className="user-avatar" size="default" src={driverPhoto} style={{ marginRight: '0.5rem' }} />
+            ) : (
+              'smile'
+            )
+          }
           value={getFullName(firstName, lastName)}
           lgColSpan={8}
         />
