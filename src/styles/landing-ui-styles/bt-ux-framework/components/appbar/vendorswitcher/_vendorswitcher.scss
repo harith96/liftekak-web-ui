@@ -11,7 +11,7 @@
 
   &:focus {
     outline: none;
-    box-shadow: 0px 0px 12px $syscoblue;
+    box-shadow: 0px 0px 12px $liftekakblue;
   }
 
   .current-vendor {
@@ -45,10 +45,10 @@
   }
   &.outlined {
     background: $background;
-    color: $syscodarkblue;
-    border: 1px solid $syscodarkblue;
+    color: $liftekakdarkblue;
+    border: 1px solid $liftekakdarkblue;
     .type {
-      border-right: 1px dotted $syscodarkblue;
+      border-right: 1px dotted $liftekakdarkblue;
       opacity: 0.6;
     }
     .name {
@@ -91,7 +91,7 @@
       cursor: pointer;
       &:hover {
         color: $textalternative;
-        background: $syscoblue;
+        background: $liftekakblue;
       }
     }
   }

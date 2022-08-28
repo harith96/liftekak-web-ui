@@ -1,17 +1,17 @@
 a {
   &:link {
     text-decoration: none;
-    color: $syscoblue;
+    color: $liftekakblue;
   }
   &:visited {
     color: $textstandard;
   }
   &:hover {
     transition: color 200ms ease-in-out;
-    color: $syscoblue;
+    color: $liftekakblue;
     text-decoration: underline;
   }
   &:active {
-    color: $syscoblue;
+    color: $liftekakblue;
   }
 }

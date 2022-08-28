@@ -14,7 +14,7 @@
     content: 'QA ENV';
     font-weight: 700;
     color: white;
-    background: $syscoorange;
+    background: $liftekakorange;
     padding: 0.2rem 0.8rem;
     font-size: 0.8rem;
     border-radius: 2rem;
@@ -30,7 +30,7 @@
     content: '🚧 DEV ENV';
     font-weight: 700;
     color: white;
-    background: $syscoyellow;
+    background: $liftekakyellow;
     padding: 0.2rem 0.8rem 0.2rem 0.5rem;
     font-size: 0.8rem;
     border-radius: 2rem;
@@ -47,7 +47,7 @@
     content: 'PROD ENV';
     font-weight: 700;
     color: white;
-    background: $syscogreen;
+    background: $liftekakgreen;
     padding: 0.2rem 0.8rem;
     font-size: 0.8rem;
     border-radius: 2rem;
@@ -119,21 +119,21 @@
     }
     &:hover,
     &:focus {
-      color: $syscoblue;
-      border: 1px solid $syscoblue;
+      color: $liftekakblue;
+      border: 1px solid $liftekakblue;
       &.selected {
         box-shadow: 0px 0px 2px 3px rgba(104, 177, 217, 0.4);
       }
     }
     &.selected,
     &:active {
-      // color: $syscoblue;
-      // border-bottom: 3px solid $syscoblue;
+      // color: $liftekakblue;
+      // border-bottom: 3px solid $liftekakblue;
       transition-duration: 150ms;
       border-radius: 1rem;
       color: white;
-      background: $syscoblue;
-      border: 1px solid $syscoblue;
+      background: $liftekakblue;
+      border: 1px solid $liftekakblue;
       box-shadow: inset 0px 0px 3px 0px rgba(0, 0, 0, 0.32);
     }
   }
@@ -153,10 +153,10 @@
   }
   .organisation {
     background: $background;
-    color: $syscodarkblue;
+    color: $liftekakdarkblue;
     border: 1px solid #d2dbe2;
     .type {
-      border-right: 1px dotted $syscodarkblue;
+      border-right: 1px dotted $liftekakdarkblue;
       opacity: 0.6;
       margin-top: -1px;
     }

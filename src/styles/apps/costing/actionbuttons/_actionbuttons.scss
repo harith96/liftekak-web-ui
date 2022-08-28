@@ -69,21 +69,21 @@
 //Batch list screen
 .green-action-btn,
 .create-new-btn {
-  background-color: $syscogreen;
-  border-color: $syscogreen;
+  background-color: $liftekakgreen;
+  border-color: $liftekakgreen;
   color: $textalternative;
   &:active {
-    background-color: darken($syscogreen, 5%) !important;
+    background-color: darken($liftekakgreen, 5%) !important;
   }
   &:hover,
   &:focus {
-    background-color: lighten($syscogreen, 15%) !important;
-    border-color: $syscogreen;
+    background-color: lighten($liftekakgreen, 15%) !important;
+    border-color: $liftekakgreen;
     color: $textalternative;
   }
   &.invert {
     background-color: $textalternative;
-    color: $syscogreen;
+    color: $liftekakgreen;
     &:hover,
     &:focus,
     &:active {
@@ -92,21 +92,21 @@
   }
 }
 .red-action-btn {
-  background-color: $syscored;
-  border-color: $syscored;
+  background-color: $liftekakred;
+  border-color: $liftekakred;
   color: $textalternative;
   &:active {
-    background-color: darken($syscored, 5%) !important;
+    background-color: darken($liftekakred, 5%) !important;
   }
   &:hover,
   &:focus {
-    background-color: lighten($syscored, 15%) !important;
-    border-color: $syscored;
+    background-color: lighten($liftekakred, 15%) !important;
+    border-color: $liftekakred;
     color: $textalternative;
   }
   &.invert {
     background-color: $textalternative;
-    color: $syscored;
+    color: $liftekakred;
     &:hover,
     &:focus,
     &:active {
@@ -140,13 +140,13 @@
 }
 .white-action-btn {
   background-color: $background;
-  border-color: $syscoblue;
-  color: $syscoblue;
+  border-color: $liftekakblue;
+  color: $liftekakblue;
   &:active {
     background-color: darken($background, 3%) !important;
   }
   &:hover {
-    background-color: $syscoblue;
+    background-color: $liftekakblue;
     color: $background;
   }
 }
@@ -189,7 +189,7 @@
     width: 70%;
   }
   .icon {
-    color: $syscoorange;
+    color: $liftekakorange;
     font-size: 1.9rem;
     padding: 1rem 1rem 1rem 0;
   }

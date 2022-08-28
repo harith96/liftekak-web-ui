@@ -60,13 +60,13 @@
           border-bottom-right-radius: 0.8rem;
         }
         &.unread {
-          background: lighten($syscoyellow, 46%);
+          background: lighten($liftekakyellow, 46%);
         }
         &:hover {
-          background: lighten($syscoyellow, 47%);
+          background: lighten($liftekakyellow, 47%);
         }
         &:active {
-          background: $syscoblue;
+          background: $liftekakblue;
           color: $textalternative;
           .info .title {
             color: $textalternative;
@@ -88,7 +88,7 @@
           .title {
             font-weight: 700;
             font-size: 1.1rem;
-            color: darken($syscoblue, 4%);
+            color: darken($liftekakblue, 4%);
             margin: 0.3rem 0;
           }
           .subtitle {

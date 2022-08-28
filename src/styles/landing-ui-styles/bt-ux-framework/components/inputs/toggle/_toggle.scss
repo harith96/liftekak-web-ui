@@ -31,7 +31,7 @@
     background: linear-gradient(to bottom, #fff 0%, #fff 100%);
   }
   .toggle-checkbox:checked + & {
-    background: $syscoblue;
+    background: $liftekakblue;
     &:before {
       left: 1.2rem;
     }
