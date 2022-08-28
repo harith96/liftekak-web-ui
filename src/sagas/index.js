@@ -355,7 +355,10 @@ function* saveRideAsync({ data, history }) {
       action(SHOW_NOTIFICATION, {
         className: NotificationType.SUCCESS,
         message: i18n.t('liftEkak.ride.success.message'),
-        description: i18n.t('liftEkak.ride.save.success.description'),
+        description:
+          data.status === RideStatus.CANCELLED
+            ? i18n.t('liftEkak.ride.cancel.success.description')
+            : i18n.t('liftEkak.ride.save.success.description'),
       })
     );
   } catch (error) {

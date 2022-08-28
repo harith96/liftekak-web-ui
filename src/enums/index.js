@@ -18,9 +18,10 @@ export const SortOrder = {
 
 export const RideStatus = {
   NEW: 'NEW',
-  ACTIVE: 'ACTIVE',
-  COMPLETED: 'COMPLETED',
-  EXPIRED: 'EXPIRED',
+  // ACTIVE: 'ACTIVE',
+  // COMPLETED: 'COMPLETED',
+  // EXPIRED: 'EXPIRED',
+  CANCELLED: 'CANCELLED',
 };
 
 export const SignInProvider = {

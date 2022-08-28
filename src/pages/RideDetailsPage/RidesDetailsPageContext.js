@@ -5,6 +5,7 @@ const RideDetailsPageContext = React.createContext({
   rideDetails: {},
   fetchRideDetails: () => {},
   bookRide: () => {},
+  cancelRide: () => {},
 });
 
 export const RideDetailsPageContextProvider = RideDetailsPageContext.Provider;

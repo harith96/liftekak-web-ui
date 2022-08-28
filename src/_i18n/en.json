@@ -1,4 +1,7 @@
 {
+  "liftEkak.yes": "Yes",
+  "liftEkak.no": "No",
+  "liftEkak.ok": "Ok",
   "liftEkak.user.error.message": "User Error",
   "liftEkak.user.success.message": "User Success",
   "liftEkak.user.error.notAuthorized.description": "User is not logged in. Please enter your credentials or sign up.",
@@ -19,6 +22,7 @@
   "liftEkak.ride.fetch.error.description": "Failed to fetch the selected ride. Please contact app support if the issue persists.",
   "liftEkak.ride.fetch.notFound.error.description": "The selected ride does not exist. Please try a different ride.",
   "liftEkak.ride.save.success.description": "Your ride is saved successfully.",
+  "liftEkak.ride.cancel.success.description": "Your ride is cancelled successfully.",
   "liftEkak.ride.save.error.description": "Failed to save the ride. Please contact app support if the issue persists.",
   "liftEkak.bookings.error.message": "Booking Error",
   "liftEkak.bookings.fetch.error.description": "Failed to fetch your bookings. Please contact app support if the issue persists.",

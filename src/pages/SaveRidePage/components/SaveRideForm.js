@@ -4,19 +4,23 @@ import { Button, Col, Row, TimePicker, DatePicker, Spin, Empty } from 'antd';
 import InfoTooltip from 'components/InfoTooltip';
 import PassengerPreferenceFormikInput from 'components/PassengerPreferenceInput';
 import SaveVehicleContainer from 'components/SaveVehicle/SaveVehicleContainer';
-import { Gender } from 'enums';
+import { Gender, RideStatus } from 'enums';
 import { Formik } from 'formik';
 import { Form, Input, InputNumber, Select } from 'formik-antd';
 import _ from 'lodash';
 import moment from 'moment';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import * as yup from 'yup';
 
 import * as i18n from '_i18n';
 import CitySelect from 'components/CitySelect/CitySelectContainer';
 import { ROUTE_MAX_TOWN_COUNT } from 'util/constants';
 import FormTitle from 'components/FormTitle';
+import CancelRideButton from 'pages/SaveRidePage/components/CancelRideButton';
+import DangerModal from 'components/DangerModal';
 import SaveRidePageContext from '../SaveRidePageContext';
+import useModalToggle from 'hooks/useModalToggle';
+import isMyRide from 'util/isMyRide';
 
 const { Option } = Select;
 const DEPARTURE_TIME_MIN_STEP = 5;
@@ -52,6 +56,7 @@ function SaveRideForm() {
     rideDetails: {
       rideId,
       departure,
+      driver: { uid: driverUID } = {},
       details: {
         availableSeatCount,
         route: currentRoute,
@@ -65,7 +70,24 @@ function SaveRideForm() {
     isRideUpdate,
     isNewVehicleModalVisible,
     toggleVehicleModal,
+    cancelRide,
   } = useContext(SaveRidePageContext);
+
+  const [cancelModalVisible, toggleCancelModal] = useModalToggle();
+
+  const initialValues = {
+    startLocation: currentStartLocation || '',
+    endLocation: currentEndLocation || '',
+    departure: {
+      date: departure ? moment.unix(departure / 1000) : null,
+      time: departure ? moment.unix(departure / 1000) : null,
+    },
+    vehicle: vehicle || defaultVehicle,
+    passengerPreference: defaultPassengerPreference,
+    availableSeatCount: availableSeatCount || 1,
+    route: _.isArray(currentRoute) ? _.slice(currentRoute, 1, -1) : [],
+    note: driverNote || '',
+  };
 
   return (
     <Spin spinning={isRidesDetailsFetching}>
@@ -76,19 +98,7 @@ function SaveRideForm() {
           setSubmitting(false);
           resetForm({ values });
         }}
-        initialValues={{
-          startLocation: currentStartLocation || '',
-          endLocation: currentEndLocation || '',
-          departure: {
-            date: departure ? moment.unix(departure / 1000) : null,
-            time: departure ? moment.unix(departure / 1000) : null,
-          },
-          vehicle: vehicle || defaultVehicle,
-          passengerPreference: defaultPassengerPreference,
-          availableSeatCount: availableSeatCount || 1,
-          route: _.isArray() ? _.slice(currentRoute, 1, -1) : [],
-          note: driverNote || '',
-        }}
+        initialValues={initialValues}
         validationSchema={validationSchema}
         validateOnMount
         enableReinitialize
@@ -110,12 +120,29 @@ function SaveRideForm() {
           return (
             <div className="user-details-form-container">
               <FormTitle title={isRideUpdate ? `Update Ride` : 'Add New Ride'} />
-              {rideId && (
-                <h2>
-                  <span>Ride #</span>
-                  {rideId}
-                </h2>
-              )}
+              <Row justify="space-between">
+                <Col>
+                  {rideId && (
+                    <h2>
+                      <span>Ride #</span>
+                      {rideId}
+                    </h2>
+                  )}
+                </Col>
+                <Col>
+                  {isMyRide(driverUID) && <CancelRideButton onClick={() => toggleCancelModal()} />}
+                  <DangerModal
+                    visible={cancelModalVisible}
+                    onOk={() => {
+                      cancelRide({ ...initialValues, status: RideStatus.CANCELLED });
+                      toggleCancelModal();
+                    }}
+                    onCancel={() => toggleCancelModal()}
+                    confirmationQuestion={`Are you sure that you want to cancel ride #${rideId || ''}?`}
+                  />
+                </Col>
+              </Row>
+
               <Form className="user-details-form">
                 <Row className="form-elements" gutter={[16, 16]} align="middle">
                   <Col lg={{ span: 12 }} xs={{ span: 24 }}>

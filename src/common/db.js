@@ -198,7 +198,7 @@ const getMyRides = async ({
   destinationTown,
   departureFrom,
   departureUntil,
-  rideStatus = RideStatus.NEW,
+  rideStatus,
   pageAction,
   vehicleType,
   uid,
@@ -225,6 +225,8 @@ const getMyRides = async ({
     pageAction === PageAction.BACK && startAt(myRidesPagination.getPreviousPageFirstDoc()),
     limit(DEFAULT_PAGE_SIZE),
   ].filter((v) => v);
+
+  console.log(queries);
   const q = query(ridesRef, ...queries);
 
   const querySnap = await getDocs(q);
@@ -257,6 +259,7 @@ const saveRide = async ({
   vehicle,
   passengerPreference,
   rideId,
+  status,
 } = {}) => {
   const db = getFirestore();
 
@@ -282,7 +285,7 @@ const saveRide = async ({
       userPhoto: driver.userPhoto,
       countryCode: driver.countryCode,
     },
-    status: RideStatus.NEW,
+    status: status || RideStatus.NEW,
     seatsAvailable: true,
     indices: {
       route: buildRouteIndex(route),

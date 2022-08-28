@@ -59,7 +59,15 @@ function SaveRidePageContainer() {
     [dispatch, history, rideId]
   );
 
+  const cancelRide = useCallback(
+    (values) => {
+      dispatch(saveRide(formatRideValues(rideId, values), history));
+    },
+    [history, dispatch]
+  );
+
   const isNotRideNewOrMyRide =
+    !(isRideCreating || isRidesDetailsFetching) &&
     rideDetails &&
     rideDetails?.rideId &&
     (rideDetails.status !== RideStatus.NEW || rideDetails.driver?.uid !== getCurrentUserID());
@@ -79,6 +87,7 @@ function SaveRidePageContainer() {
           isRideUpdate,
           isNewVehicleModalVisible,
           toggleVehicleModal,
+          cancelRide,
         }}
       >
         <SaveVehicleContextProvider>
