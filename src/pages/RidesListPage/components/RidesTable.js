@@ -74,7 +74,7 @@ function RidesTable() {
   return (
     <div className="rides-table-container">
       <ReactResizeDetector handleHeight onResize={onResize}>
-        <div id="rewards-batches-table-panel" className="grid-panel ">
+        <div id="liftEkak-batches-table-panel" className="grid-panel ">
           <Table
             id="rides-list-table"
             loading={isRidesFetching}

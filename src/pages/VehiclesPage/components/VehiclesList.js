@@ -104,7 +104,7 @@ function VehiclesList() {
 
   return (
     <ReactResizeDetector handleHeight onResize={onResize}>
-      <div id="rewards-batches-table-panel" className="grid-panel">
+      <div id="liftEkak-batches-table-panel" className="grid-panel">
         <Table
           id="rides-list-table"
           className="costing-batches-table"

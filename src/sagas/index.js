@@ -101,6 +101,7 @@ function* signInAsync({ provider, signInDetails: { email, password, rememberMe }
 function* signUpAsync({ email, password }) {
   try {
     yield signUpWithEmailAndPassword(email, password);
+
     yield put({ type: SIGN_UP.SUCCESS });
   } catch (error) {
     yield put({ type: SIGN_UP.FAILURE, payload: error.message });
@@ -125,7 +126,7 @@ function* sendPasswordResetEmailAsync({ email }) {
       action(SHOW_NOTIFICATION, {
         description: i18n.t('Password reset email successfully sent.'),
         className: NotificationType.SUCCESS,
-        message: i18n.t('Password Reset Success'),
+        message: i18n.t('Password Reset Email Success'),
       })
     );
   } catch (error) {

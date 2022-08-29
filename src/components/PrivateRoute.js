@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect, useSelector } from 'react-redux';
 
 import * as i18n from '_i18n';
-import * as rewardsActions from 'actions';
+import * as liftEkakActions from 'actions';
 import { NotificationType, UserRole } from 'enums';
 import { APP_ROUTES } from 'util/constants';
 import { getCurrentUserID, listenForAuthStateChanged } from 'common/auth';
@@ -70,7 +70,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return { actions: bindActionCreators(rewardsActions, dispatch) };
+  return { actions: bindActionCreators(liftEkakActions, dispatch) };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PrivateRoute);

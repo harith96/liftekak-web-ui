@@ -4,6 +4,7 @@
   "liftEkak.ok": "Ok",
   "liftEkak.user.error.message": "User Error",
   "liftEkak.user.success.message": "User Success",
+  "liftEkak.user.emailVerification.success.description": "Please check your emails to verify it.",
   "liftEkak.user.error.notAuthorized.description": "User is not logged in. Please enter your credentials or sign up.",
   "liftEkak.user.error.description": "Failed to authenticate user. Please check your credentials before trying again.",
   "liftEkak.user.fetch.error.description": "Failed to fetch user details. Please contact app support if the issue persists.",

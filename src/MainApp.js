@@ -31,7 +31,9 @@ function MainApp() {
   useEffect(() => {
     let unsubscribe;
 
-    listenForAuthStateChanged(() => dispatch(loadUserDetails()), null).then((unsubFunction) => {
+    listenForAuthStateChanged((user) => {
+      if (user.emailVerified) dispatch(loadUserDetails());
+    }, null).then((unsubFunction) => {
       unsubscribe = unsubFunction;
     });
 

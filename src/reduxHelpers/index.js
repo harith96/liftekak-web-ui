@@ -4,7 +4,7 @@ export const FAILURE = 'FAILURE';
 
 export function createRequestTypes(base) {
   return [REQUEST, SUCCESS, FAILURE].reduce((acc, type) => {
-    acc[type] = `REWARDS_${base}_${type}`;
+    acc[type] = `LIFTEKAK_${base}_${type}`;
     return acc;
   }, {});
 }

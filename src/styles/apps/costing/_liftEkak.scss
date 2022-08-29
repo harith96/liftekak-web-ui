@@ -1,5 +1,5 @@
 /***********************************************************
-    REWARDS APP PRIMARY SASS FILE - BUILT ON BT-UX-FRAMEWORK
+    LiftEkak APP PRIMARY SASS FILE - BUILT ON BT-UX-FRAMEWORK
     Author: Marc Aravindth 
     (Auto Compiled to CSS during runtime)
 ***********************************************************/
@@ -21,7 +21,7 @@
 .reward-wrapper {
   padding: 1rem;
 }
-.rewards-tab {
+.liftEkak-tab {
   width: 100%;
   padding: 10px 0;
 }
@@ -77,8 +77,8 @@
   position: relative;
   top: -3px;
 }
-// Rewards Tags
-.tag-rewards {
+// LiftEkak Tags
+.tag-liftEkak {
   height: 28px;
   align-items: center;
   cursor: default;
@@ -271,7 +271,7 @@
     font-weight: 600;
   }
 }
-.ant-btn-link-rewards {
+.ant-btn-link-liftEkak {
   color: #6a737b;
 }
 .reward-region-name-label {
@@ -361,7 +361,7 @@ th.opco-divider {
     margin: 0;
   }
 }
-.rewards-note {
+.liftEkak-note {
   .type {
     font-weight: 700;
   }
@@ -372,7 +372,7 @@ th.opco-divider {
     padding-top: 10px;
   }
 }
-.rewards-divider-ver {
+.liftEkak-divider-ver {
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' height='60px' width='60px' fill='%23000000' version='1.1' x='0px' y='0px' viewBox='0 0 100 100' enable-background='new 0 0 100 100' xml:space='preserve'%3E%3Cpath fill='none' stroke='%23e5e5e5' stroke-width='2.126' stroke-linecap='round' stroke-linejoin='round' stroke-miterlimit='10' stroke-dasharray='5.6693,5.6693' d=' M50,2.5c0,0,0,11.146,0,95' style='&%2310; background: %23e5e5e5;&%2310;'/%3E%3C/svg%3E")
     repeat-y right center;
 }
