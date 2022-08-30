@@ -27,16 +27,16 @@ const validationSchema = yup.object().shape({
   mobileNo: yup
     .string()
     .required('Mobile number is required.')
-    .matches(/^[0-9]*$/, { excludeEmptyString: true, message: 'Please enter a valid mobile number.' })
-    .when('countryCode', {
-      is: LK_DIAL_CODE,
-      then: (schema) =>
-        schema.matches(/7[0-9]{8}/, {
-          excludeEmptyString: true,
-          message: 'Please enter a valid mobile number without leading zero.',
-        }),
-      otherwise: (schema) => schema,
-    }),
+    .matches(/^[0-9]*$/, { excludeEmptyString: true, message: 'Please enter a valid mobile number.' }),
+  // .when('countryCode', {
+  //   is: LK_DIAL_CODE,
+  //   then: (schema) =>
+  //     schema.matches(/7[0-9]{8}/, {
+  //       excludeEmptyString: true,
+  //       message: 'Please enter a valid mobile number without leading zero.',
+  //     }),
+  //   otherwise: (schema) => schema,
+  // }),
   gender: yup.string().required('Gender selection is required.').oneOf(validGenders),
   passengerPreference: yup
     .array()
@@ -45,7 +45,7 @@ const validationSchema = yup.object().shape({
   nic: yup.object().shape({
     idNo: yup
       .string()
-      .matches(/^([0-9]{9}[x|X|v|V]|[0-9]{12})$/, { excludeEmptyString: true, message: 'Enter a valid NIC number' })
+      // .matches(/^([0-9]{9}[x|X|v|V]|[0-9]{12})$/, { excludeEmptyString: true, message: 'Enter a valid NIC number' })
       .required('NIC number is required'),
     // front: yup.string().required('NIC front image is required.'),
     // back: yup.string().required('NIC back image is required.'),

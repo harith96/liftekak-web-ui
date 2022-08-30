@@ -24,12 +24,10 @@ const validationSchema = yup.object().shape({
   brand: yup.string().required('Vehicle brand is required.'),
   model: yup.string().required('Vehicle model is required.'),
   color: yup.string().required('Vehicle color is required.'),
-  registrationNo: yup
-    .string()
-    .required('Vehicle registration no is required.')
-    .matches(/^([a-zA-Z]{1,3}|((?!0*-)[0-9]{1,3}))-[0-9]{4}(?<!0{4})/, {
-      message: 'Invalid vehicle registration number.',
-    }),
+  registrationNo: yup.string().required('Vehicle registration no is required.'),
+  // .matches(/^([a-zA-Z]{1,3}|((?!0*-)[0-9]{1,3}))-[0-9]{4}(?<!0{4})/, {
+  //   message: 'Invalid vehicle registration number.',
+  // }),
   passengerSeatCount: yup
     .number()
     .required('Available max. passenger seat count is required.')
