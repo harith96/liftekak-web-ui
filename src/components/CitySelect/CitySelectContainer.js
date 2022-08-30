@@ -29,7 +29,7 @@ function CitySelectContainer({ showNextCityIcon, setFieldValue, name, value, cle
             }}
             apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
             options={{
-              types: ['administrative_area_level_3', 'administrative_area_level_4', 'administrative_area_level_2'],
+              types: ['administrative_area_level_3', 'administrative_area_level_4', 'locality'],
               componentRestrictions: { country: 'lk' },
             }}
             onPlaceSelected={(selectedValue) => {
