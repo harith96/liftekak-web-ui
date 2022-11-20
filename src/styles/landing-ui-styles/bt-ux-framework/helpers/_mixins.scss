@@ -190,13 +190,13 @@
   cursor: pointer;
   &:hover,
   &:focus {
-    color: $syscoblue;
+    color: $liftekakblue;
     &.selected {
       box-shadow: 0px 0px 2px 3px rgba(104, 177, 217, 0.4);
     }
   }
   &.selected,
   &:active {
-    color: $syscoblue;
+    color: $liftekakblue;
   }
 }

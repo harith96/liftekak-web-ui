@@ -9,72 +9,6 @@
           "order": "ASCENDING"
         },
         {
-          "fieldPath": "status",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "seatsAvailable",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "departure",
-          "order": "ASCENDING"
-        }
-      ]
-    },
-    {
-      "collectionGroup": "rides",
-      "queryScope": "COLLECTION",
-      "fields": [
-        {
-          "fieldPath": "details.passengerPreference.MALE",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "seatsAvailable",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "status",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "departure",
-          "order": "ASCENDING"
-        }
-      ]
-    },
-    {
-      "collectionGroup": "rides",
-      "queryScope": "COLLECTION",
-      "fields": [
-        {
-          "fieldPath": "details.passengerPreference.OTHER",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "status",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "seatsAvailable",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "departure",
-          "order": "ASCENDING"
-        }
-      ]
-    },
-    {
-      "collectionGroup": "rides",
-      "queryScope": "COLLECTION",
-      "fields": [
-        {
-          "fieldPath": "details.passengerPreference.MALE",
-          "order": "ASCENDING"
-        },
-        {
           "fieldPath": "details.vehicle.type",
           "order": "ASCENDING"
         },
@@ -101,7 +35,51 @@
           "order": "ASCENDING"
         },
         {
+          "fieldPath": "status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "seatsAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "departure",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "rides",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "details.passengerPreference.MALE",
+          "order": "ASCENDING"
+        },
+        {
           "fieldPath": "details.vehicle.type",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "seatsAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "departure",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "rides",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "details.passengerPreference.MALE",
           "order": "ASCENDING"
         },
         {
@@ -144,15 +122,10 @@
         }
       ]
     },
-
     {
       "collectionGroup": "rides",
       "queryScope": "COLLECTION",
       "fields": [
-        {
-          "fieldPath": "details.route",
-          "arrayConfig": "CONTAINS"
-        },
         {
           "fieldPath": "details.passengerPreference.OTHER",
           "order": "ASCENDING"
@@ -228,7 +201,7 @@
       "queryScope": "COLLECTION",
       "fields": [
         {
-          "fieldPath": "indices.route",
+          "fieldPath": "details.route",
           "arrayConfig": "CONTAINS"
         },
         {
@@ -241,6 +214,100 @@
         },
         {
           "fieldPath": "seatsAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "departure",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "rides",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "details.route",
+          "arrayConfig": "CONTAINS"
+        },
+        {
+          "fieldPath": "driver.uid",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "seatsAvailable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "departure",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "departure",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "rides",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "details.route",
+          "arrayConfig": "CONTAINS"
+        },
+        {
+          "fieldPath": "driver.uid",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "departure",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "rides",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "details.vehicle.type",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "driver.uid",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "departure",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "rides",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "driver.uid",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "departure",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "rides",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "driver.uid",
           "order": "ASCENDING"
         },
         {
@@ -301,17 +368,24 @@
         }
       ]
     },
-
     {
       "collectionGroup": "rides",
       "queryScope": "COLLECTION",
       "fields": [
         {
-          "fieldPath": "driver.uid",
+          "fieldPath": "indices.route",
+          "arrayConfig": "CONTAINS"
+        },
+        {
+          "fieldPath": "details.passengerPreference.OTHER",
           "order": "ASCENDING"
         },
         {
           "fieldPath": "status",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "seatsAvailable",
           "order": "ASCENDING"
         },
         {
@@ -325,7 +399,7 @@
       "queryScope": "COLLECTION",
       "fields": [
         {
-          "fieldPath": "details.route",
+          "fieldPath": "indices.route",
           "arrayConfig": "CONTAINS"
         },
         {
@@ -333,96 +407,22 @@
           "order": "ASCENDING"
         },
         {
-          "fieldPath": "status",
-          "order": "ASCENDING"
-        },
-        {
           "fieldPath": "departure",
           "order": "ASCENDING"
         }
       ]
     },
     {
-      "collectionGroup": "rides",
+      "collectionGroup": "vehicles",
       "queryScope": "COLLECTION",
       "fields": [
         {
-          "fieldPath": "driver.uid",
+          "fieldPath": "isDeleted",
           "order": "ASCENDING"
         },
         {
-          "fieldPath": "seatsAvailable",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "status",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "departure",
-          "order": "ASCENDING"
-        }
-      ]
-    },
-    {
-      "collectionGroup": "rides",
-      "queryScope": "COLLECTION",
-      "fields": [
-        {
-          "fieldPath": "details.vehicle.type",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "seatsAvailable",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "status",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "departure",
-          "order": "ASCENDING"
-        }
-      ]
-    },
-    {
-      "collectionGroup": "rides",
-      "queryScope": "COLLECTION",
-      "fields": [
-        {
-          "fieldPath": "details.route",
-          "arrayConfig": "CONTAINS"
-        },
-        {
-          "fieldPath": "driver.uid",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "seatsAvailable",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "status",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "departure",
-          "order": "ASCENDING"
-        },
-        {
-          "collectionGroup": "vehicles",
-          "queryScope": "COLLECTION_GROUP",
-          "fields": [
-            {
-              "fieldPath": "isDeleted",
-              "order": "ASCENDING"
-            },
-            {
-              "fieldPath": "isDefaultVehicle",
-              "order": "DESCENDING"
-            }
-          ]
+          "fieldPath": "isDefaultVehicle",
+          "order": "DESCENDING"
         }
       ]
     }

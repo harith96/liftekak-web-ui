@@ -1,6 +1,6 @@
 import { Form as AntdForm } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
-import { Button, Col, Row } from 'antd';
+import { Button, Col, Row, Space } from 'antd';
 import { Formik } from 'formik';
 import { Form, Input } from 'formik-antd';
 import React, { useContext } from 'react';
@@ -15,6 +15,8 @@ import PassengerPreferenceFormikInput from 'components/PassengerPreferenceInput'
 import CountryDialCodeDropdown from 'components/CountryDialCodeDropdown';
 import { LK_DIAL_CODE } from 'util/constants';
 import UserDetailsPageContext from '../UserDetailsPageContext';
+import GoToRidesButton from 'pages/RideDetailsPage/components/GoToRidesButton';
+import FormTitle from 'components/FormTitle';
 
 const validGenders = _.keys(Gender);
 
@@ -25,16 +27,16 @@ const validationSchema = yup.object().shape({
   mobileNo: yup
     .string()
     .required('Mobile number is required.')
-    .matches(/^[0-9]*$/, { excludeEmptyString: true, message: 'Please enter a valid mobile number.' })
-    .when('countryCode', {
-      is: LK_DIAL_CODE,
-      then: (schema) =>
-        schema.matches(/7[0-9]{8}/, {
-          excludeEmptyString: true,
-          message: 'Please enter a valid mobile number without leading zero.',
-        }),
-      otherwise: (schema) => schema,
-    }),
+    .matches(/^[0-9]*$/, { excludeEmptyString: true, message: 'Please enter a valid mobile number.' }),
+  // .when('countryCode', {
+  //   is: LK_DIAL_CODE,
+  //   then: (schema) =>
+  //     schema.matches(/7[0-9]{8}/, {
+  //       excludeEmptyString: true,
+  //       message: 'Please enter a valid mobile number without leading zero.',
+  //     }),
+  //   otherwise: (schema) => schema,
+  // }),
   gender: yup.string().required('Gender selection is required.').oneOf(validGenders),
   passengerPreference: yup
     .array()
@@ -43,7 +45,7 @@ const validationSchema = yup.object().shape({
   nic: yup.object().shape({
     idNo: yup
       .string()
-      .matches(/^([0-9]{9}[x|X|v|V]|[0-9]{12})$/, { excludeEmptyString: true, message: 'Enter a valid NIC number' })
+      // .matches(/^([0-9]{9}[x|X|v|V]|[0-9]{12})$/, { excludeEmptyString: true, message: 'Enter a valid NIC number' })
       .required('NIC number is required'),
     // front: yup.string().required('NIC front image is required.'),
     // back: yup.string().required('NIC back image is required.'),
@@ -93,7 +95,7 @@ function UserDetailsForm() {
       {({
         values: {
           isSignUp,
-          nic: { front: nicFront, back: nicBack },
+          // nic: { front: nicFront, back: nicBack },
           userPhoto: userPhotoForm,
           countryCode: countryCodeForm,
         },
@@ -104,6 +106,8 @@ function UserDetailsForm() {
       }) => {
         return (
           <div className="user-details-form-container">
+            <FormTitle title="User Details" />
+            {!firstName && <p>Enter user details to complete registration.</p>}
             <Form className="user-details-form">
               <Row className="form-elements" type="flex" align="middle">
                 <Col lg={{ span: 12 }} xs={{ span: 24 }} className="left-column">
@@ -203,7 +207,7 @@ function UserDetailsForm() {
                   </Form.Item>
                 </Col>
               </Row>
-              <Row className="form-elements">
+              {/* <Row className="form-elements">
                 <Col lg={{ span: 12 }} xs={{ span: 24 }}>
                   <label id="user-nic-front-img-label" className="user-input">
                     {i18n.t(`NIC Front Image`)}
@@ -228,7 +232,7 @@ function UserDetailsForm() {
                     />
                   </Form.Item>
                 </Col>
-              </Row>
+              </Row> */}
               <Row className="form-elements">
                 <Col span={24}>
                   <label id="user-nic-no-label" className="user-input">
@@ -249,7 +253,7 @@ function UserDetailsForm() {
               <AntdForm.Item>
                 <AntdForm.Item>
                   <Button loading={isSaving} onClick={submitForm} type="primary" className="submit-button">
-                    {isSignUp ? i18n.t('Sign Up') : i18n.t('Save Details')}
+                    {isSignUp ? i18n.t('Sign Up') : i18n.t('Save')}
                   </Button>
                 </AntdForm.Item>
               </AntdForm.Item>

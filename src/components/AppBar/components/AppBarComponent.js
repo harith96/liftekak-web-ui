@@ -13,7 +13,7 @@ import '../styles/index.scss';
 const userMenu = [
   { icon: 'user', title: 'Profile', route: APP_ROUTES.USER },
   { icon: 'unordered-list', title: 'Rides', route: APP_ROUTES.RIDES_LIST },
-  { icon: 'book', title: 'My Bookings', route: APP_ROUTES.BOOKINGS },
+  // { icon: 'book', title: 'My Bookings', route: APP_ROUTES.BOOKINGS },
   { icon: 'car', title: 'My Vehicles', route: APP_ROUTES.VEHICLES },
 ];
 

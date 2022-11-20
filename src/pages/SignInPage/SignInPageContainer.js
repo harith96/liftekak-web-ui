@@ -1,11 +1,12 @@
-import { sendPasswordResetEmail, signIn, signUp } from 'actions';
-import { listenForAuthStateChanged } from 'common/auth';
-import { SignInProvider } from 'enums';
+import { sendPasswordResetEmail, showNotification, signIn, signUp } from 'actions';
+import { listenForAuthStateChanged, signOut } from 'common/auth';
+import { NotificationType, SignInProvider } from 'enums';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { APP_ROUTES } from 'util/constants';
 
+import * as i18n from '_i18n';
 import SignInPageComponent from './components/SignInPageComponent';
 import { SignInPageContextProvider } from './SignInPageContext';
 
@@ -17,7 +18,20 @@ function SignInPageContainer() {
 
   useEffect(() => {
     let unsubscribe;
-    listenForAuthStateChanged(() => history.push(APP_ROUTES.RIDES_LIST))
+    listenForAuthStateChanged((user) => {
+      if (user.emailVerified) history.push(APP_ROUTES.RIDES_LIST);
+      else {
+        dispatch(
+          showNotification(
+            i18n.t('liftEkak.user.success.message'),
+            i18n.t('liftEkak.user.emailVerification.success.description'),
+            NotificationType.SUCCESS
+          )
+        );
+
+        signOut();
+      }
+    })
       .then((unsubFunction) => {
         unsubscribe = unsubFunction;
       })
@@ -26,7 +40,7 @@ function SignInPageContainer() {
     return () => {
       if (unsubscribe) unsubscribe();
     };
-  }, [history]);
+  }, [history, dispatch]);
 
   const onSignInWithEmailCustom = useCallback(
     ({ email, password, rememberMe }) =>

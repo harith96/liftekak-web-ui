@@ -80,7 +80,7 @@
       @include flexbox();
       text-align: center;
       padding: 1rem 0;
-      color: $syscored;
+      color: $liftekakred;
       max-width: 16rem;
     }
     .login-loader {
@@ -126,14 +126,14 @@
         .icon {
           margin: 1rem 0;
           &.vendor {
-            color: $syscoblue;
+            color: $liftekakblue;
             font-size: 4rem;
             background-size: contain;
             width: 4rem;
             height: 4rem;
           }
           &.associate {
-            color: $syscoyellow;
+            color: $liftekakyellow;
             font-size: 4rem;
             background-size: contain;
             width: 3rem;

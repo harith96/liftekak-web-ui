@@ -18,9 +18,10 @@ export const SortOrder = {
 
 export const RideStatus = {
   NEW: 'NEW',
-  ACTIVE: 'ACTIVE',
-  COMPLETED: 'COMPLETED',
-  EXPIRED: 'EXPIRED',
+  // ACTIVE: 'ACTIVE',
+  // COMPLETED: 'COMPLETED',
+  // EXPIRED: 'EXPIRED',
+  CANCELLED: 'CANCELLED',
 };
 
 export const SignInProvider = {
@@ -63,4 +64,6 @@ export const FilterTypes = {
 export const FuelType = {
   DIESEL: 'DIESEL',
   PETROL: 'PETROL',
+  ELECTRIC: 'ELECTRIC',
+  OTHER: 'OTHER',
 };

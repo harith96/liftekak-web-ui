@@ -35,29 +35,29 @@
       width: 2.8rem;
       background: url(data:image/svg+xml;base64,PHN2ZyBpZD0idXNlciIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjcuMTEiIGhlaWdodD0iMjcuMTEiIHZpZXdCb3g9IjAgMCAyNy4xMSAyNy4xMSI+CiAgPGcgaWQ9Ikdyb3VwXzQzMCIgZGF0YS1uYW1lPSJHcm91cCA0MzAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDApIj4KICAgIDxwYXRoIGlkPSJQYXRoXzM4NSIgZGF0YS1uYW1lPSJQYXRoIDM4NSIgZD0iTTIzLjE0LDE3LjUyNWExMy41LDEzLjUsMCwwLDAtNS4xNTEtMy4yMzEsNy44MzYsNy44MzYsMCwxLDAtOC44NjgsMEExMy41NzYsMTMuNTc2LDAsMCwwLDAsMjcuMTFIMi4xMThhMTEuNDM3LDExLjQzNywwLDAsMSwyMi44NzQsMEgyNy4xMUExMy40NjcsMTMuNDY3LDAsMCwwLDIzLjE0LDE3LjUyNVptLTkuNTg1LTMuOTdhNS43MTgsNS43MTgsMCwxLDEsNS43MTgtNS43MThBNS43MjUsNS43MjUsMCwwLDEsMTMuNTU1LDEzLjU1NVoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDApIiBmaWxsPSIjZmZmIi8+CiAgPC9nPgo8L3N2Zz4K)
           center center/50% auto no-repeat,
-        linear-gradient(-45deg, $syscoblue 0%, lighten($syscoblue, 20%) 100%);
+        linear-gradient(-45deg, $liftekakblue 0%, lighten($liftekakblue, 20%) 100%);
       box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.25);
       transition: background ease-in-out 300ms;
 
       &.color-1 {
         background: url(data:image/svg+xml;base64,PHN2ZyBpZD0idXNlciIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjcuMTEiIGhlaWdodD0iMjcuMTEiIHZpZXdCb3g9IjAgMCAyNy4xMSAyNy4xMSI+CiAgPGcgaWQ9Ikdyb3VwXzQzMCIgZGF0YS1uYW1lPSJHcm91cCA0MzAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDApIj4KICAgIDxwYXRoIGlkPSJQYXRoXzM4NSIgZGF0YS1uYW1lPSJQYXRoIDM4NSIgZD0iTTIzLjE0LDE3LjUyNWExMy41LDEzLjUsMCwwLDAtNS4xNTEtMy4yMzEsNy44MzYsNy44MzYsMCwxLDAtOC44NjgsMEExMy41NzYsMTMuNTc2LDAsMCwwLDAsMjcuMTFIMi4xMThhMTEuNDM3LDExLjQzNywwLDAsMSwyMi44NzQsMEgyNy4xMUExMy40NjcsMTMuNDY3LDAsMCwwLDIzLjE0LDE3LjUyNVptLTkuNTg1LTMuOTdhNS43MTgsNS43MTgsMCwxLDEsNS43MTgtNS43MThBNS43MjUsNS43MjUsMCwwLDEsMTMuNTU1LDEzLjU1NVoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDApIiBmaWxsPSIjZmZmIi8+CiAgPC9nPgo8L3N2Zz4K)
             center center/50% auto no-repeat,
-          linear-gradient(-45deg, $syscoblue 0%, lighten($syscoblue, 20%) 100%);
+          linear-gradient(-45deg, $liftekakblue 0%, lighten($liftekakblue, 20%) 100%);
       }
       &.color-2 {
         background: url(data:image/svg+xml;base64,PHN2ZyBpZD0idXNlciIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjcuMTEiIGhlaWdodD0iMjcuMTEiIHZpZXdCb3g9IjAgMCAyNy4xMSAyNy4xMSI+CiAgPGcgaWQ9Ikdyb3VwXzQzMCIgZGF0YS1uYW1lPSJHcm91cCA0MzAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDApIj4KICAgIDxwYXRoIGlkPSJQYXRoXzM4NSIgZGF0YS1uYW1lPSJQYXRoIDM4NSIgZD0iTTIzLjE0LDE3LjUyNWExMy41LDEzLjUsMCwwLDAtNS4xNTEtMy4yMzEsNy44MzYsNy44MzYsMCwxLDAtOC44NjgsMEExMy41NzYsMTMuNTc2LDAsMCwwLDAsMjcuMTFIMi4xMThhMTEuNDM3LDExLjQzNywwLDAsMSwyMi44NzQsMEgyNy4xMUExMy40NjcsMTMuNDY3LDAsMCwwLDIzLjE0LDE3LjUyNVptLTkuNTg1LTMuOTdhNS43MTgsNS43MTgsMCwxLDEsNS43MTgtNS43MThBNS43MjUsNS43MjUsMCwwLDEsMTMuNTU1LDEzLjU1NVoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDApIiBmaWxsPSIjZmZmIi8+CiAgPC9nPgo8L3N2Zz4K)
             center center/50% auto no-repeat,
-          linear-gradient(-45deg, $syscogreen 0%, lighten($syscogreen, 20%) 100%);
+          linear-gradient(-45deg, $liftekakgreen 0%, lighten($liftekakgreen, 20%) 100%);
       }
       &.color-3 {
         background: url(data:image/svg+xml;base64,PHN2ZyBpZD0idXNlciIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjcuMTEiIGhlaWdodD0iMjcuMTEiIHZpZXdCb3g9IjAgMCAyNy4xMSAyNy4xMSI+CiAgPGcgaWQ9Ikdyb3VwXzQzMCIgZGF0YS1uYW1lPSJHcm91cCA0MzAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDApIj4KICAgIDxwYXRoIGlkPSJQYXRoXzM4NSIgZGF0YS1uYW1lPSJQYXRoIDM4NSIgZD0iTTIzLjE0LDE3LjUyNWExMy41LDEzLjUsMCwwLDAtNS4xNTEtMy4yMzEsNy44MzYsNy44MzYsMCwxLDAtOC44NjgsMEExMy41NzYsMTMuNTc2LDAsMCwwLDAsMjcuMTFIMi4xMThhMTEuNDM3LDExLjQzNywwLDAsMSwyMi44NzQsMEgyNy4xMUExMy40NjcsMTMuNDY3LDAsMCwwLDIzLjE0LDE3LjUyNVptLTkuNTg1LTMuOTdhNS43MTgsNS43MTgsMCwxLDEsNS43MTgtNS43MThBNS43MjUsNS43MjUsMCwwLDEsMTMuNTU1LDEzLjU1NVoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDApIiBmaWxsPSIjZmZmIi8+CiAgPC9nPgo8L3N2Zz4K)
             center center/50% auto no-repeat,
-          linear-gradient(-45deg, $syscoorange 0%, lighten($syscoorange, 20%) 100%);
+          linear-gradient(-45deg, $liftekakorange 0%, lighten($liftekakorange, 20%) 100%);
       }
       &.color-4 {
         background: url(data:image/svg+xml;base64,PHN2ZyBpZD0idXNlciIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjcuMTEiIGhlaWdodD0iMjcuMTEiIHZpZXdCb3g9IjAgMCAyNy4xMSAyNy4xMSI+CiAgPGcgaWQ9Ikdyb3VwXzQzMCIgZGF0YS1uYW1lPSJHcm91cCA0MzAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDApIj4KICAgIDxwYXRoIGlkPSJQYXRoXzM4NSIgZGF0YS1uYW1lPSJQYXRoIDM4NSIgZD0iTTIzLjE0LDE3LjUyNWExMy41LDEzLjUsMCwwLDAtNS4xNTEtMy4yMzEsNy44MzYsNy44MzYsMCwxLDAtOC44NjgsMEExMy41NzYsMTMuNTc2LDAsMCwwLDAsMjcuMTFIMi4xMThhMTEuNDM3LDExLjQzNywwLDAsMSwyMi44NzQsMEgyNy4xMUExMy40NjcsMTMuNDY3LDAsMCwwLDIzLjE0LDE3LjUyNVptLTkuNTg1LTMuOTdhNS43MTgsNS43MTgsMCwxLDEsNS43MTgtNS43MThBNS43MjUsNS43MjUsMCwwLDEsMTMuNTU1LDEzLjU1NVoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDApIiBmaWxsPSIjZmZmIi8+CiAgPC9nPgo8L3N2Zz4K)
             center center/50% auto no-repeat,
-          linear-gradient(-45deg, $syscored 0%, lighten($syscored, 20%) 100%);
+          linear-gradient(-45deg, $liftekakred 0%, lighten($liftekakred, 20%) 100%);
       }
     }
     .menuicon {
@@ -66,7 +66,7 @@
     &:focus {
       outline: none;
       .pic {
-        box-shadow: 0px 0px 12px $syscoblue;
+        box-shadow: 0px 0px 12px $liftekakblue;
       }
     }
   }
@@ -138,7 +138,7 @@
   font-size: 1.3rem;
   cursor: pointer;
   &:active {
-    color: $syscoblue;
+    color: $liftekakblue;
   }
   //Responsive
   @include breakpoint(xs) {

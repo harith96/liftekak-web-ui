@@ -101,6 +101,7 @@ function* signInAsync({ provider, signInDetails: { email, password, rememberMe }
 function* signUpAsync({ email, password }) {
   try {
     yield signUpWithEmailAndPassword(email, password);
+
     yield put({ type: SIGN_UP.SUCCESS });
   } catch (error) {
     yield put({ type: SIGN_UP.FAILURE, payload: error.message });
@@ -125,7 +126,7 @@ function* sendPasswordResetEmailAsync({ email }) {
       action(SHOW_NOTIFICATION, {
         description: i18n.t('Password reset email successfully sent.'),
         className: NotificationType.SUCCESS,
-        message: i18n.t('Password Reset Success'),
+        message: i18n.t('Password Reset Email Success'),
       })
     );
   } catch (error) {
@@ -213,9 +214,12 @@ function* loadUserVehiclesAsync() {
 
 function* saveVehicleAsync({ vehicle, callback }) {
   try {
-    yield saveVehicle(vehicle);
+    const { defaultVehicle: userDefaultVehicle } = yield select((state) => state.user.data);
+    const isUserDefaultVehicleUpdated = yield saveVehicle({ ...vehicle, userDefaultVehicle });
 
     yield loadUserVehiclesAsync();
+
+    if (isUserDefaultVehicleUpdated) yield loadUserAsync();
 
     if (callback) callback();
 
@@ -352,7 +356,10 @@ function* saveRideAsync({ data, history }) {
       action(SHOW_NOTIFICATION, {
         className: NotificationType.SUCCESS,
         message: i18n.t('liftEkak.ride.success.message'),
-        description: i18n.t('liftEkak.ride.save.success.description'),
+        description:
+          data.status === RideStatus.CANCELLED
+            ? i18n.t('liftEkak.ride.cancel.success.description')
+            : i18n.t('liftEkak.ride.save.success.description'),
       })
     );
   } catch (error) {

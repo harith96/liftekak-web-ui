@@ -100,12 +100,13 @@ const saveVehicle = async ({
   isDefaultVehicle = false,
   isDeleted = false,
   fuelType,
+  userDefaultVehicle,
 } = {}) => {
   const uid = getCurrentUserID();
 
   const db = getFirestore();
 
-  const vehicle = {
+  let vehicle = {
     type,
     brand,
     model,
@@ -117,14 +118,30 @@ const saveVehicle = async ({
     fuelType,
   };
 
+  let isUserDefaultVehicleUpdated = false;
+
   const batch = writeBatch(db);
-  if (isDefaultVehicle) await makeVehicleDefaultVehicle(vehicle, batch);
+  if (isDefaultVehicle) {
+    await makeVehicleDefaultVehicle(vehicle, batch);
+
+    isUserDefaultVehicleUpdated = true;
+  } else if (!userDefaultVehicle) {
+    const { defaultVehicle } = await getUserDetails();
+
+    if (!defaultVehicle) {
+      vehicle = { ...vehicle, isDefaultVehicle: true };
+      await makeVehicleDefaultVehicle(vehicle, batch);
+      isUserDefaultVehicleUpdated = true;
+    }
+  }
 
   const vehicleId = registrationNo;
 
   await batch.set(doc(db, `users/${uid}/vehicles`, vehicleId), vehicle);
 
   await batch.commit();
+
+  return isUserDefaultVehicleUpdated;
 };
 
 const getRides = async ({
@@ -181,7 +198,7 @@ const getMyRides = async ({
   destinationTown,
   departureFrom,
   departureUntil,
-  rideStatus = RideStatus.NEW,
+  rideStatus,
   pageAction,
   vehicleType,
   uid,
@@ -208,6 +225,8 @@ const getMyRides = async ({
     pageAction === PageAction.BACK && startAt(myRidesPagination.getPreviousPageFirstDoc()),
     limit(DEFAULT_PAGE_SIZE),
   ].filter((v) => v);
+
+  console.log(queries);
   const q = query(ridesRef, ...queries);
 
   const querySnap = await getDocs(q);
@@ -240,6 +259,7 @@ const saveRide = async ({
   vehicle,
   passengerPreference,
   rideId,
+  status,
 } = {}) => {
   const db = getFirestore();
 
@@ -265,7 +285,7 @@ const saveRide = async ({
       userPhoto: driver.userPhoto,
       countryCode: driver.countryCode,
     },
-    status: RideStatus.NEW,
+    status: status || RideStatus.NEW,
     seatsAvailable: true,
     indices: {
       route: buildRouteIndex(route),

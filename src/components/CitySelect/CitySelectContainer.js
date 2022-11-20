@@ -1,6 +1,6 @@
 import { Col, Input, Row } from 'antd';
 import { CloseCircleFilled, RightOutlined } from '@ant-design/icons';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import 'components/styles/index.scss';
 import AutoComplete from 'react-google-autocomplete';
@@ -10,6 +10,10 @@ import _ from 'lodash';
 function CitySelectContainer({ showNextCityIcon, setFieldValue, name, value, clearFieldOnSelect, disabled, ...rest }) {
   const [searchValue, setSearchValue] = useState('');
 
+  useEffect(() => {
+    if (value) setSearchValue(value);
+  }, [value, setSearchValue]);
+
   const activeInput = (
     <div className="ant-form-item-control-input">
       <div className="ant-form-item-control-input-content">
@@ -18,14 +22,14 @@ function CitySelectContainer({ showNextCityIcon, setFieldValue, name, value, cle
             name={name}
             className="ant-input"
             {...rest}
-            value={value || searchValue}
+            value={searchValue}
             onChange={(e) => {
               e.preventDefault();
               setSearchValue(e.target.value);
             }}
             apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
             options={{
-              types: ['administrative_area_level_3', 'administrative_area_level_4'],
+              types: ['administrative_area_level_3', 'administrative_area_level_4', 'locality'],
               componentRestrictions: { country: 'lk' },
             }}
             onPlaceSelected={(selectedValue) => {

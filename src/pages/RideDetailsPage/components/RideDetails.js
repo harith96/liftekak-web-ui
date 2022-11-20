@@ -6,6 +6,9 @@ import getFullName from 'util/getFullName';
 import { Avatar, Col, Divider, Row, Spin } from 'antd';
 import getFormattedRoute from 'util/getFormattedRoute';
 import { getFullPhoneNumber, simulateCall } from 'util/phoneUtil';
+import useModalToggle from 'hooks/useModalToggle';
+import InfoModal from 'components/InfoModal';
+import isMyRide from 'util/isMyRide';
 import RideDetailsPageContext from '../RidesDetailsPageContext';
 import RideDetailsCard from './RideDetailsCard';
 
@@ -13,8 +16,8 @@ function RideDetails() {
   const {
     isRidesDetailsFetching,
     rideDetails: {
-      driver: { firstName, lastName, mobileNo, bio, userPhoto: driverPhoto, countryCode } = {},
-      departure: { seconds: departure } = {},
+      driver: { firstName, lastName, mobileNo, bio, userPhoto: driverPhoto, countryCode, uid } = {},
+      departure,
       details: {
         availableSeatCount,
         route,
@@ -26,6 +29,10 @@ function RideDetails() {
     } = {},
   } = useContext(RideDetailsPageContext);
 
+  const [cancelRideInfoModalVisible, toggleCancelRideInfoModal] = useModalToggle();
+
+  const showDriverNote = !_.isEmpty(driverNote);
+
   return (
     <Spin spinning={isRidesDetailsFetching} delay={200} className="spinner-container">
       <Divider>
@@ -36,8 +43,14 @@ function RideDetails() {
         <RideDetailsCard title="End location" icon="check-circle" value={destinationLocation} />
         <RideDetailsCard title="Departure date" icon="calendar" value={getFormattedDate(departure)} />
         <RideDetailsCard title="Departure time" icon="clock-circle" value={getFormattedTime(departure)} />
-        <RideDetailsCard title="Route" icon="fork" value={getFormattedRoute(route)} lgColSpan={18} />
+        <RideDetailsCard
+          title="Route"
+          icon="fork"
+          value={getFormattedRoute(route)}
+          lgColSpan={showDriverNote ? 24 : 18}
+        />
         <RideDetailsCard title="Available seats" icon="number" value={availableSeatCount} />
+        {showDriverNote && <RideDetailsCard title="Driver note" icon="message" value={driverNote} lgColSpan={18} />}
       </Row>
       <Divider>
         <h2>Driver</h2>
@@ -45,7 +58,13 @@ function RideDetails() {
       <Row gutter={[32, 32]}>
         <RideDetailsCard
           title="Driver name"
-          icon={driverPhoto ? <Avatar className="user-avatar" size="small" src={driverPhoto} /> : 'smile'}
+          icon={
+            driverPhoto ? (
+              <Avatar className="user-avatar" size="default" src={driverPhoto} style={{ marginRight: '0.5rem' }} />
+            ) : (
+              'smile'
+            )
+          }
           value={getFullName(firstName, lastName)}
           lgColSpan={8}
         />
@@ -53,14 +72,12 @@ function RideDetails() {
           title="Driver mobile no"
           icon="phone"
           value={getFullPhoneNumber(countryCode, mobileNo)}
-          onClick={() => simulateCall(mobileNo)}
+          onClick={!isMyRide(uid) ? () => simulateCall(mobileNo) : null}
           lgColSpan={8}
+          clickToShowContent={!isMyRide(uid)}
+          extraCallbackOnContentReveal={toggleCancelRideInfoModal}
         />
-        {_.isEmpty(driverNote) ? (
-          <RideDetailsCard title="Driver bio" icon="pic-left" value={bio} lgColSpan={8} />
-        ) : (
-          <RideDetailsCard title="Driver note" icon="message" value={driverNote} lgColSpan={8} />
-        )}
+        <RideDetailsCard title="Driver bio" icon="pic-left" value={bio} lgColSpan={8} />
       </Row>
       <Divider>
         <h2>Vehicle</h2>
@@ -71,6 +88,11 @@ function RideDetails() {
         <RideDetailsCard title="Vehicle model" icon="car" value={model} />
         <RideDetailsCard title="Vehicle color" icon="car" value={vehicleColor} />
       </Row>
+      <InfoModal
+        visible={cancelRideInfoModalVisible}
+        toggleModal={toggleCancelRideInfoModal}
+        message="We will soon roll out functionality to book rides. Until then kindly connect with the driver to arrange your ride. Please note that drivers may cancel anytime."
+      />
     </Spin>
   );
 }

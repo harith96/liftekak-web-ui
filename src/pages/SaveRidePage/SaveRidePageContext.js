@@ -9,6 +9,7 @@ const SaveRidePageContext = React.createContext({
   rideDetails: {},
   isRidesDetailsFetching: false,
   isRideUpdate: false,
+  cancelRide: () => {},
 });
 
 export const SaveRidePageContextProvider = SaveRidePageContext.Provider;

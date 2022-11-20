@@ -1,40 +1,40 @@
 .state {
-  color: $syscoblue;
-  background: $syscoblue;
-  border-color: $syscoblue;
+  color: $liftekakblue;
+  background: $liftekakblue;
+  border-color: $liftekakblue;
   font-weight: 600;
   border-radius: 6px;
   text-transform: uppercase;
 
   &.open {
     color: $textalternative;
-    background: $syscoblue;
-    border-color: $syscoblue;
+    background: $liftekakblue;
+    border-color: $liftekakblue;
   }
   &.pending {
-    color: $syscoblue;
+    color: $liftekakblue;
     background: $textalternative;
-    border-color: $syscoblue;
+    border-color: $liftekakblue;
   }
   &.approved {
     color: $textalternative;
-    background: $syscogreen;
-    border-color: $syscogreen;
+    background: $liftekakgreen;
+    border-color: $liftekakgreen;
   }
   &.rejected {
     color: $textalternative;
-    background: $syscored;
-    border-color: $syscored;
+    background: $liftekakred;
+    border-color: $liftekakred;
   }
   &.partial {
-    color: $syscoorange;
+    color: $liftekakorange;
     background: $textalternative;
-    border-color: $syscoorange;
+    border-color: $liftekakorange;
   }
   &.reviewed {
     color: $textalternative;
-    background: $syscoyellow;
-    border-color: $syscoyellow;
+    background: $liftekakyellow;
+    border-color: $liftekakyellow;
   }
   &.closed {
     color: $textalternative;
@@ -42,9 +42,9 @@
     border-color: $bluegrey;
   }
   &.expired {
-    color: $syscored;
+    color: $liftekakred;
     background: $textalternative;
-    border-color: $syscored;
+    border-color: $liftekakred;
   }
   &.archived {
     color: $bluegrey;

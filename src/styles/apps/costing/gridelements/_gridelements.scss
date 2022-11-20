@@ -68,18 +68,18 @@ th.opco-divider {
 
 .regional-grid-label {
   font-weight: 600;
-  color: $syscogreen;
+  color: $liftekakgreen;
   .region-name-label {
-    color: $syscogreen;
+    color: $liftekakgreen;
     background: $textalternative;
-    border-color: $syscogreen;
+    border-color: $liftekakgreen;
     margin-left: 0.3rem;
     font-weight: 600;
   }
 }
 .national-grid-label {
   font-weight: 600;
-  color: $syscoblue;
+  color: $liftekakblue;
 }
 .ant-table-row-expand-icon {
   display: none;
@@ -98,11 +98,11 @@ th.opco-divider {
 
 .red-checkbox.ant-checkbox-inner,
 .red-checkbox.ant-checkbox-inner::after {
-  background: $syscored;
+  background: $liftekakred;
 }
 .red-checkbox .ant-checkbox-checked .ant-checkbox-inner {
-  background-color: $syscored;
-  border-color: $syscored;
+  background-color: $liftekakred;
+  border-color: $liftekakred;
 }
 
 .ant-badge {
@@ -131,7 +131,7 @@ th.opco-divider {
   &:visited,
   &:hover,
   &:active {
-    color: $syscoblue;
+    color: $liftekakblue;
     font-weight: 600;
   }
 }

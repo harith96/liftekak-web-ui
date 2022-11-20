@@ -33,10 +33,10 @@
       .effective-date-btn {
         cursor: pointer;
         &:hover {
-          color: $syscoblue;
+          color: $liftekakblue;
         }
         &:active {
-          color: lighten($syscoblue, 20%);
+          color: lighten($liftekakblue, 20%);
         }
       }
     }

@@ -41,7 +41,7 @@ const searchIndexes = [
   {
     name: 'availableSeatCount',
     dataIndex: 'availableSeatCount',
-    title: 'Seat Count',
+    title: 'Seats Needed',
     placeholder: 'Search minimum seat count',
     props: { type: FilterTypes.NUMBER },
     tab: RidesTabs.ALL_RIDES,
@@ -124,7 +124,7 @@ function RideSearchBar() {
       }}
       enableReinitialize
     >
-      {({ submitForm, setFieldValue }) => {
+      {({ submitForm, setFieldValue, values }) => {
         return (
           <Collapse ghost activeKey={isBarExpanded ? 1 : null} onChange={onCollapseChange}>
             <CollapsePanel header={<TextWithIcon icon={<SearchOutlined />} text="Search Rides" />} key={1}>
@@ -182,7 +182,12 @@ function RideSearchBar() {
                             <>{type === FilterTypes.TIME_RANGE && <RangePicker name={name} />}</>
                             <>
                               {type === FilterTypes.CUSTOM && (
-                                <Component name={name} placeholder={placeholder} setFieldValue={setFieldValue} />
+                                <Component
+                                  name={name}
+                                  placeholder={placeholder}
+                                  value={values[name]}
+                                  setFieldValue={setFieldValue}
+                                />
                               )}
                             </>
                           </Col>

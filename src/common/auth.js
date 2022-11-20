@@ -9,6 +9,7 @@ import {
   browserSessionPersistence,
   signOut as signOutFirebase,
   onAuthStateChanged,
+  sendEmailVerification,
 } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 
@@ -46,14 +47,14 @@ export const loginWithGoogle = async () => {
 export const signUpWithEmailAndPassword = async (email, password) => {
   const auth = getAuth();
 
-  return createUserWithEmailAndPassword(auth, email, password);
+  const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
+
+  return sendEmailVerification(userCredentials.user);
 };
 
 export const sendPasswordRestEmail = async (email) => {
   const auth = getAuth();
 
-  console.log('reset password: ', auth);
-  console.log('reset password: ', email);
   await sendPasswordResetEmail(auth, email);
 };
 

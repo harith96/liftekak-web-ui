@@ -35,7 +35,7 @@
   }
   .count {
     color: $textalternative;
-    background: $syscored;
+    background: $liftekakred;
     border-radius: 50%;
     padding: 0.2rem;
     font-size: 0.7rem;
@@ -57,7 +57,7 @@
     margin: 0 0.7rem;
     &:focus {
       outline: none;
-      color: $syscoblue;
+      color: $liftekakblue;
     }
   }
   // display: none;

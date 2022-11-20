@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useState } from 'react';
-import { Table } from 'antd';
+import { Space, Table, Tooltip } from 'antd';
 import _ from 'lodash';
 import ReactResizeDetector from 'react-resize-detector';
 
@@ -7,6 +7,8 @@ import PaginationBar from 'components/PaginationBar';
 import { getFormattedDate, getFormattedTime } from 'util/dateUtil';
 import getFormattedRoute from 'util/getFormattedRoute';
 import getFullName from 'util/getFullName';
+import { CloseCircleFilled } from '@ant-design/icons';
+import { RideStatus } from 'enums';
 import RidesListPageContext from '../RidesListPageContext';
 
 const columns = [
@@ -14,7 +16,14 @@ const columns = [
     title: 'Departure Date',
     dataIndex: 'departure',
     key: 'departureDate',
-    render: (departure) => getFormattedDate(departure),
+    render: (departure, record) => (
+      <Space>
+        <Tooltip title={record.status === RideStatus.CANCELLED ? 'This ride was cancelled' : null}>
+          {record.status === RideStatus.CANCELLED && <CloseCircleFilled style={{ color: '#6a737b' }} />}
+        </Tooltip>
+        {getFormattedDate(departure)}
+      </Space>
+    ),
   },
   {
     title: 'Departure Time',
@@ -65,7 +74,7 @@ function RidesTable() {
   return (
     <div className="rides-table-container">
       <ReactResizeDetector handleHeight onResize={onResize}>
-        <div id="rewards-batches-table-panel" className="grid-panel ">
+        <div id="liftEkak-batches-table-panel" className="grid-panel ">
           <Table
             id="rides-list-table"
             loading={isRidesFetching}
