@@ -59,3 +59,13 @@ export const RidesTabs = {
 export const ROUTE_MAX_TOWN_COUNT = 10;
 
 export const LK_DIAL_CODE = '+94';
+
+export const BookingStatusClassNameMap = {
+  ACCEPTED: 'approved',
+  REJECTED: 'rejected',
+  PENDING: 'pending',
+};
+
+export const ERRORS = {
+  NO_SEATS: 'NO_SEATS',
+};

@@ -67,3 +67,17 @@ export const FuelType = {
   ELECTRIC: 'ELECTRIC',
   OTHER: 'OTHER',
 };
+
+export const BookingStatus = {
+  PENDING: 'PENDING',
+  ACCEPTED: 'ACCEPTED',
+  REJECTED: 'REJECTED',
+  EXPIRED: 'EXPIRED',
+  CANCELLED: 'CANCELLED',
+  BLOCKED: 'BLOCKED', // Allow drivers to mark riders as spam
+};
+
+export const BookingAction = {
+  ADD: 'ADD',
+  REMOVE: 'REMOVE',
+};

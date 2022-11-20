@@ -21,10 +21,10 @@ import {
   MY_RIDES,
   CITIES,
 } from 'actions/actionTypes';
-import { APP_ROUTES, BAD_REQUEST_STATUS, NOT_FOUND_STATUS, USER_NOT_AUTHORIZED_STATUS } from 'util/constants';
+import { APP_ROUTES, BAD_REQUEST_STATUS, ERRORS, NOT_FOUND_STATUS, USER_NOT_AUTHORIZED_STATUS } from 'util/constants';
 import * as i18n from '_i18n';
 import { action } from 'reduxHelpers';
-import { FirebaseError, NotificationType, RideStatus, SignInProvider } from 'enums';
+import { BookingStatus, FirebaseError, NotificationType, RideStatus, SignInProvider } from 'enums';
 import openNotification from 'components/openNotification';
 import { getAuth } from '@firebase/auth';
 import {
@@ -45,11 +45,14 @@ import {
   saveVehicle,
   getMyRides,
   getCities,
+  createBooking,
+  saveBooking,
 } from 'common/db';
 
 export const getRole = (state) => state.user.data.userRole;
 export const getUser = (state) => state.user.data;
 export const getRideFilters = (state) => state.rideFilters.data;
+export const getRideSelector = (state) => state.ride.data;
 
 function* handleUserSessionErrors(error) {
   let handled = false;
@@ -397,20 +400,40 @@ function* loadBookingsAsync({ filters }) {
   }
 }
 
-function* saveBooking(booking) {
+function* saveBookingAsync({
+  data: { pickupLocation, dropLocation, passengerNote = '', seatsCount, bookingStatus = BookingStatus.PENDING },
+  callback,
+}) {
+  const { rideId } = yield select(getRideSelector);
   try {
-    const bookings = yield saveBooking(booking);
+    const user = yield select(getUser);
+    const bookingData = { pickupLocation, dropLocation, passengerNote, rideId, user, bookingStatus, seatsCount };
 
-    yield put({ type: SAVE_BOOKING.SUCCESS, payload: bookings });
+    const bookingId = yield saveBooking(bookingData);
+
+    callback();
+    yield loadRideAsync({ selectedRideId: rideId });
+    yield put({ type: SAVE_BOOKING.SUCCESS, payload: { bookingId } });
+    yield put(
+      action(SHOW_NOTIFICATION, {
+        className: NotificationType.SUCCESS,
+        message: i18n.t('liftEkak.booking.request.success.message'),
+        description: i18n.t('liftEkak.booking.request.success.description'),
+      })
+    );
   } catch (error) {
+    yield loadRideAsync({ selectedRideId: rideId });
     yield put({ type: SAVE_BOOKING.FAILURE, payload: error.message });
     const handled = yield handleUserSessionErrors(error);
     if (!handled)
       yield put(
         action(SHOW_NOTIFICATION, {
-          description: i18n.t('liftEkak.booking.save.error.description'),
+          description:
+            error.message === ERRORS.NO_SEATS
+              ? i18n.t('liftEkak.booking.request.error.noSeats.description')
+              : i18n.t('liftEkak.booking.request.error.description'),
           className: NotificationType.ERROR,
-          message: i18n.t('liftEkak.booking.error.message'),
+          message: i18n.t('liftEkak.booking.request.error.message'),
         })
       );
   }
@@ -506,7 +529,7 @@ function* watchLoadBookings() {
 }
 
 function* watchSaveBooking() {
-  yield takeLatest(SAVE_BOOKING.REQUEST, saveBooking);
+  yield takeLatest(SAVE_BOOKING.REQUEST, saveBookingAsync);
 }
 
 function* watchLoadCities() {

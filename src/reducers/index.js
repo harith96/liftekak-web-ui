@@ -37,7 +37,7 @@ const rideFilters = createReducer(UPDATE_RIDE_FILTERS, initialState.rideFilters)
 const updateRide = createReducer(UPDATE_RIDE, initialState.updateRide);
 const saveRide = createReducer(SAVE_RIDE, initialState.saveRide);
 const bookings = createReducer(BOOKINGS, initialState.bookings);
-const saveBooking = createReducer(SAVE_BOOKING, initialState.saveBookings);
+const saveBooking = createReducer(SAVE_BOOKING, initialState.saveBooking);
 const cities = createReducer(CITIES, initialState.cities);
 
 export default combineReducers({
@@ -54,5 +54,7 @@ export default combineReducers({
   rideFilters,
   updateRide,
   saveRide,
+  bookings,
+  saveBooking,
   cities,
 });

@@ -29,5 +29,13 @@
   "liftEkak.bookings.fetch.error.description": "Failed to fetch your bookings. Please contact app support if the issue persists.",
   "liftEkak.booking.save.error.description": "Failed to save your booking. Please contact app support if the issue persists.",
   "liftEkak.cities.error.message": "Failed to save your booking. Please contact app support if the issue persists.",
-  "liftEkak.cities.fetch.error.description": "Failed to fetch cities list. Please contact app support if the issue persists."
+  "liftEkak.cities.fetch.error.description": "Failed to fetch cities list. Please contact app support if the issue persists.",
+  "liftEkak.booking.details.pickupLocation": "Pickup Location",
+  "liftEkak.booking.details.dropLocation": "Drop Location",
+  "liftEkak.booking.details.passengerNote": "Passenger Note",
+  "liftEkak.booking.details.seatsCount": "Seats Count",
+  "liftEkak.booking.request.success.message": "Ride Request Success",
+  "liftEkak.booking.request.success.description": "Successfully made a ride request. Please wait for the response from the driver.",
+  "liftEkak.booking.request.error.message": "Ride Request Failed",
+  "liftEkak.booking.request.error.noSeats.description": "Insufficient seats count available to fullfil your request."
 }

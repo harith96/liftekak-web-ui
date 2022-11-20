@@ -14,12 +14,13 @@ import {
   serverTimestamp,
   startAfter,
   startAt,
+  runTransaction,
 } from '@firebase/firestore';
-import { PageAction, RideStatus } from 'enums';
+import { BookingAction, BookingStatus, PageAction, RideStatus } from 'enums';
 
 import * as _ from 'lodash';
 import moment from 'moment';
-import { DEFAULT_DROPDOWN_SIZE, DEFAULT_PAGE_SIZE } from 'util/constants';
+import { DEFAULT_DROPDOWN_SIZE, DEFAULT_PAGE_SIZE, ERRORS } from 'util/constants';
 import buildRouteIndex, { buildRouteIndexString } from 'util/buildRouteIndex';
 import buildPassengerPreferenceDB from 'util/buildPassengerPreferenceDB';
 import { getCurrentUserID, getUserEmail } from './auth';
@@ -260,6 +261,8 @@ const saveRide = async ({
   passengerPreference,
   rideId,
   status,
+  bookings = {},
+  totalSeatCount,
 } = {}) => {
   const db = getFirestore();
 
@@ -272,9 +275,10 @@ const saveRide = async ({
       availableSeatCount,
       driverNote,
       route,
-      totalSeatCount: availableSeatCount,
+      totalSeatCount: totalSeatCount || vehicle.passengerSeatCount || 0,
       vehicle,
       passengerPreference: buildPassengerPreferenceDB(passengerPreference),
+      bookings,
     },
     driver: {
       mobileNo: driver.mobileNo,
@@ -295,29 +299,79 @@ const saveRide = async ({
   await setDoc(doc(db, 'rides', rideId), ride);
 };
 
-const createBooking = async ({ ride, pickupLocation, dropLocation, note, user }) => {
+const updateRideBookings = async (rideRef, transaction, ride, passengerId, bookingId, bookingStatus) => {
+  const rideBookings = ride.details.bookings || {};
+
+  rideBookings[passengerId] = { bookingId, bookingStatus };
+
+  await transaction.update(rideRef, {
+    ...ride,
+    details: {
+      ...ride.details,
+      bookings: rideBookings,
+      availableSeatCount:
+        ride.details.totalSeatCount -
+        _.chain(rideBookings)
+          .keys()
+          .filter((uid) => rideBookings[uid].bookingStatus === BookingStatus.ACCEPTED)
+          .size()
+          .value(),
+    },
+  });
+};
+
+const saveBooking = async ({
+  bookingId: currentBookingId,
+  rideId,
+  pickupLocation,
+  dropLocation,
+  passengerNote,
+  user,
+  status = BookingStatus.PENDING,
+  seatsCount,
+}) => {
   const uid = getCurrentUserID();
 
   const db = getFirestore();
-  const bookingId = moment.now();
-  const booking = {
-    bookingId,
-    ride,
-    details: {
-      pickupLocation,
-      dropLocation,
-      passengerNote: note,
-    },
-    user: {
-      uid,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      mobileNo: user.mobileNo,
-    },
-    bookedTimestamp: serverTimestamp,
-  };
 
-  await setDoc(doc(db, `bookings`, bookingId), booking);
+  const rideRef = doc(db, 'rides', rideId);
+
+  const bookingId = currentBookingId || `${uid}_${rideId}_${moment.now()}`;
+
+  const bookingRef = doc(db, `bookings`, bookingId);
+
+  await runTransaction(db, async (transaction) => {
+    const docSnap = await transaction.get(rideRef);
+
+    const ride = docSnap.data();
+
+    if (ride.details.availableSeatCount < seatsCount) return Promise.reject(new Error(ERRORS.NO_SEATS));
+
+    const booking = {
+      bookingId,
+      ride,
+      details: {
+        pickupLocation,
+        dropLocation,
+        passengerNote,
+        seatsCount,
+      },
+      passenger: {
+        uid,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        mobileNo: user.mobileNo,
+      },
+      bookedTimestamp: serverTimestamp(),
+      status,
+    };
+
+    await transaction.set(bookingRef, booking);
+
+    await updateRideBookings(rideRef, transaction, ride, uid, bookingId, status);
+
+    return bookingId;
+  });
 };
 
 const getBookings = async () => {};
@@ -351,7 +405,7 @@ export {
   getRides,
   getRide,
   saveRide,
-  createBooking,
+  saveBooking,
   getBookings,
   getMyRides,
   getCities,

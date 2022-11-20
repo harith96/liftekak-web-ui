@@ -1,14 +1,18 @@
 import { Col, Row, Space } from 'antd';
+import SaveBookingContainer from 'components/SaveBooking/SaveBookingContainer';
 import { RideStatus } from 'enums';
+import useModalToggle from 'hooks/useModalToggle';
 import React, { useContext } from 'react';
 import RideDetailsPageContext from '../RidesDetailsPageContext';
+import BookingStatusBadge from './BookingStatusBadge';
+import BookRideButton from './BookRideButton';
 import GoToRidesButton from './GoToRidesButton';
 import RideDetails from './RideDetails';
 
 import './styles/index.scss';
 
 function RideDetailsPageComponent() {
-  const { rideDetails: { rideId, status } = {} } = useContext(RideDetailsPageContext);
+  const { rideDetails: { rideId, status } = {}, shouldAllowBookings, userBooking } = useContext(RideDetailsPageContext);
   return (
     <>
       <Row align="middle">
@@ -24,7 +28,9 @@ function RideDetailsPageComponent() {
         </Col>
         <Col lg={{ span: 12 }} xs={{ span: 24 }}>
           <div className="horizontal-container ride-details-button-bar">
-            {status === RideStatus.CANCELLED && <span className="ant-tag state rejected">Cancelled</span>}
+            {status === RideStatus.CANCELLED && <span className="ant-tag state closed">Cancelled</span>}
+            {shouldAllowBookings && <BookRideButton />}
+            {userBooking && <BookingStatusBadge bookingStatus={userBooking.bookingStatus} />}
           </div>
         </Col>
       </Row>

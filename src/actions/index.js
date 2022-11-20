@@ -47,5 +47,5 @@ export const updateRide = (data, history) =>
   });
 export const loadAllRides = () => action(FETCH_ALL_RIDES.REQUEST);
 export const loadBookings = () => action(BOOKINGS.REQUEST);
-export const saveBookings = () => action(SAVE_BOOKING.REQUEST);
+export const saveBookings = (data, callback) => action(SAVE_BOOKING.REQUEST, { data, callback });
 export const loadCities = ({ engNameQuery } = {}) => action(CITIES.REQUEST, { engNameQuery });

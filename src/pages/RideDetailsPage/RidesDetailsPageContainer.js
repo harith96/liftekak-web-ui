@@ -1,14 +1,18 @@
-import { loadRideDetails, showNotification } from 'actions';
-import { NotificationType } from 'enums';
+import { loadRideDetails, saveBookings, showNotification } from 'actions';
+import _ from 'lodash';
+import { BookingStatus, NotificationType, RideStatus } from 'enums';
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import RideDetailsPageComponent from './components/RideDetailsPageComponent';
 import { RideDetailsPageContextProvider } from './RidesDetailsPageContext';
+import { getCurrentUserID } from 'common/auth';
 
 function RidesDetailsPageContainer() {
   const { rideId } = useParams();
   const dispatch = useDispatch();
+
+  const userId = getCurrentUserID();
 
   const rideDetails = useSelector(
     (state) => state.rides.data?.find((ride) => ride.rideId === rideId) || state.ride.data
@@ -35,17 +39,22 @@ function RidesDetailsPageContainer() {
   }, [rideId, dispatch]);
 
   const bookRide = useCallback(() => {
-    dispatch(
-      showNotification(
-        'Functionality under development',
-        'Functionality is being developed. Please try again later.',
-        NotificationType.INFO
-      )
-    );
+    dispatch(saveBookings());
   }, [dispatch]);
 
+  const userBooking = rideDetails?.details?.bookings?.[userId];
+
+  // TODO: add check whether my ride
+  const shouldAllowBookings =
+    rideDetails.status === RideStatus.NEW &&
+    userBooking?.bookingStatus !== BookingStatus.PENDING &&
+    userBooking?.bookingStatus !== BookingStatus.ACCEPTED &&
+    userBooking?.bookingStatus !== BookingStatus.BLOCKED;
+
   return (
-    <RideDetailsPageContextProvider value={{ rideDetails, isRidesDetailsFetching, fetchRideDetails, bookRide }}>
+    <RideDetailsPageContextProvider
+      value={{ rideDetails, isRidesDetailsFetching, fetchRideDetails, bookRide, userBooking, shouldAllowBookings }}
+    >
       <RideDetailsPageComponent />
     </RideDetailsPageContextProvider>
   );
