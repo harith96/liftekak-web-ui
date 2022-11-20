@@ -40,6 +40,7 @@ function SaveRidePageContainer() {
   );
   const isRidesDetailsFetching = useSelector((state) => state.ride.fetching);
   const rideError = useSelector((state) => state.ride.error);
+  const isRideCancelled = rideDetails?.status === RideStatus.CANCELLED;
 
   useEffect(() => {
     if (rideId && isRideUpdate) {
@@ -53,6 +54,10 @@ function SaveRidePageContainer() {
     dispatch(loadUserVehicles());
     dispatch(loadCities());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (isRideCancelled && !isRidesDetailsFetching) history.push(`${APP_ROUTES.RIDE_VIEW}/${rideId}`);
+  }, [isRideCancelled, isRidesDetailsFetching, history]);
 
   const onSaveRide = useCallback(
     (values) => dispatch(saveRide(formatRideValues(rideId, values), history)),

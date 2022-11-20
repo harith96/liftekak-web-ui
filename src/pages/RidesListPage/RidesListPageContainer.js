@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import { loadCities, loadMyRides, loadRidesList, updateRideFilters } from 'actions';
-import { PageAction } from 'enums';
+import { PageAction, RideStatus } from 'enums';
 import { APP_ROUTES, RidesTabs } from 'util/constants';
 import { isUserSignedIn } from 'common/auth';
 import RidesListPageComponent from './components/RidesListPageComponent';
@@ -43,7 +43,13 @@ function RidesListPageContainer() {
 
   const onPreviousMyRidePage = useCallback(() => dispatch(loadMyRides(PageAction.BACK)), [dispatch]);
 
-  const onMyRideSelected = useCallback(({ rideId }) => history.push(`${APP_ROUTES.UPDATE_RIDE}/${rideId}`), [history]);
+  const onMyRideSelected = useCallback(
+    ({ rideId, status }) =>
+      status === RideStatus.NEW
+        ? history.push(`${APP_ROUTES.UPDATE_RIDE}/${rideId}`)
+        : history.push(`${APP_ROUTES.RIDE_VIEW}/${rideId}`),
+    [history]
+  );
 
   const saveRide = useCallback(() => history.push(APP_ROUTES.CREATE_RIDE), [history]);
 
