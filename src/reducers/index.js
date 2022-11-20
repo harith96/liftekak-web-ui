@@ -18,6 +18,7 @@ import {
   SAVE_BOOKING,
   MY_RIDES,
   CITIES,
+  BOOKING,
 } from 'actions/actionTypes';
 import { createReducer } from 'reduxHelpers';
 
@@ -37,6 +38,7 @@ const rideFilters = createReducer(UPDATE_RIDE_FILTERS, initialState.rideFilters)
 const updateRide = createReducer(UPDATE_RIDE, initialState.updateRide);
 const saveRide = createReducer(SAVE_RIDE, initialState.saveRide);
 const bookings = createReducer(BOOKINGS, initialState.bookings);
+const booking = createReducer(BOOKING, initialState.booking);
 const saveBooking = createReducer(SAVE_BOOKING, initialState.saveBooking);
 const cities = createReducer(CITIES, initialState.cities);
 
@@ -54,6 +56,7 @@ export default combineReducers({
   rideFilters,
   updateRide,
   saveRide,
+  booking,
   bookings,
   saveBooking,
   cities,

@@ -4,9 +4,9 @@ import { BookingStatus, NotificationType, RideStatus } from 'enums';
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
+import { getCurrentUserID } from 'common/auth';
 import RideDetailsPageComponent from './components/RideDetailsPageComponent';
 import { RideDetailsPageContextProvider } from './RidesDetailsPageContext';
-import { getCurrentUserID } from 'common/auth';
 
 function RidesDetailsPageContainer() {
   const { rideId } = useParams();
@@ -19,6 +19,10 @@ function RidesDetailsPageContainer() {
   );
   const isRidesDetailsFetching = useSelector((state) => state.ride.fetching);
   const rideError = useSelector((state) => state.ride.error);
+
+  const userBooking = rideDetails?.details?.bookings?.[userId] || {};
+
+  const { bookingStatus: userBookingStatus, bookingId: userBookingId } = userBooking;
 
   useEffect(() => {
     if (rideId) {
@@ -38,22 +42,32 @@ function RidesDetailsPageContainer() {
     dispatch(loadRideDetails(rideId));
   }, [rideId, dispatch]);
 
-  const bookRide = useCallback(() => {
-    dispatch(saveBookings());
-  }, [dispatch]);
-
-  const userBooking = rideDetails?.details?.bookings?.[userId];
+  const cancelBooking = useCallback(() => {
+    dispatch(saveBookings({ bookingId: userBookingId, bookingStatus: BookingStatus.CANCELLED }));
+  }, [dispatch, userBookingId]);
 
   // TODO: add check whether my ride
   const shouldAllowBookings =
     rideDetails.status === RideStatus.NEW &&
-    userBooking?.bookingStatus !== BookingStatus.PENDING &&
-    userBooking?.bookingStatus !== BookingStatus.ACCEPTED &&
-    userBooking?.bookingStatus !== BookingStatus.BLOCKED;
+    userBookingStatus !== BookingStatus.PENDING &&
+    userBookingStatus !== BookingStatus.ACCEPTED &&
+    userBookingStatus !== BookingStatus.BLOCKED;
+
+  const shouldAllowBookingCancellation =
+    rideDetails.status === RideStatus.NEW &&
+    (userBookingStatus === BookingStatus.ACCEPTED || userBookingStatus === BookingStatus.PENDING);
 
   return (
     <RideDetailsPageContextProvider
-      value={{ rideDetails, isRidesDetailsFetching, fetchRideDetails, bookRide, userBooking, shouldAllowBookings }}
+      value={{
+        rideDetails,
+        isRidesDetailsFetching,
+        fetchRideDetails,
+        userBooking,
+        shouldAllowBookings,
+        shouldAllowBookingCancellation,
+        cancelBooking,
+      }}
     >
       <RideDetailsPageComponent />
     </RideDetailsPageContextProvider>

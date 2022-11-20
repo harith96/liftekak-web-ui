@@ -8,6 +8,8 @@ const RideDetailsPageContext = React.createContext({
   cancelRide: () => {},
   userBooking: null,
   shouldAllowBookings: false,
+  shouldAllowBookingCancellation: false,
+  cancelBooking: () => {},
 });
 
 export const RideDetailsPageContextProvider = RideDetailsPageContext.Provider;

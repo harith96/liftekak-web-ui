@@ -18,6 +18,7 @@ export const UPDATE_RIDE = createRequestTypes('UPDATE_RIDE');
 export const FETCH_ALL_RIDES = createRequestTypes('FETCH_ALL_RIDES');
 
 export const BOOKINGS = createRequestTypes('BOOKINGS');
+export const BOOKING = createRequestTypes('BOOKING');
 export const SAVE_BOOKING = createRequestTypes('SAVE_BOOKING');
 
 export const CITIES = createRequestTypes('CITIES');

@@ -3,11 +3,11 @@ import _ from 'lodash';
 import React from 'react';
 import { BookingStatusClassNameMap } from 'util/constants';
 
-function BookingStatusBadge({ bookingStatus }) {
+function BookingStatusBadge({ bookingStatus, title }) {
   return (
     <BookingStatus
       buttonClass={BookingStatusClassNameMap[bookingStatus]}
-      title={bookingStatus}
+      title={title}
       desc={`Your booking request is ${_.lowerCase(bookingStatus)}.`}
     />
   );

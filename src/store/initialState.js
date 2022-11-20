@@ -102,6 +102,11 @@ const initialState = {
     data: [],
     error: null,
   },
+  booking: {
+    fetching: false,
+    data: [],
+    error: null,
+  },
   saveBooking: {
     fetching: false,
     data: null,

@@ -47,6 +47,7 @@ import {
   getCities,
   createBooking,
   saveBooking,
+  getBooking,
 } from 'common/db';
 
 export const getRole = (state) => state.user.data.userRole;
@@ -400,20 +401,37 @@ function* loadBookingsAsync({ filters }) {
   }
 }
 
+const getBookingDataIfAvailable = async (bookingId) => {
+  if (bookingId) return getBooking(bookingId);
+
+  return null;
+};
+
 function* saveBookingAsync({
-  data: { pickupLocation, dropLocation, passengerNote = '', seatsCount, bookingStatus = BookingStatus.PENDING },
+  data: { pickupLocation, dropLocation, passengerNote = '', seatsCount, bookingStatus, bookingId },
   callback,
 }) {
   const { rideId } = yield select(getRideSelector);
   try {
     const user = yield select(getUser);
-    const bookingData = { pickupLocation, dropLocation, passengerNote, rideId, user, bookingStatus, seatsCount };
 
-    const bookingId = yield saveBooking(bookingData);
+    const currentBooking = yield getBookingDataIfAvailable(bookingId);
 
-    callback();
+    const bookingData = {
+      pickupLocation: pickupLocation || currentBooking?.details?.pickupLocation,
+      dropLocation: dropLocation || currentBooking?.details?.dropLocation,
+      passengerNote: passengerNote || currentBooking?.details?.passengerNote,
+      rideId: currentBooking?.ride?.rideId || rideId,
+      user: currentBooking?.passenger || user,
+      status: bookingStatus || currentBooking?.status || BookingStatus.PENDING,
+      seatsCount: seatsCount || currentBooking?.details?.seatsCount,
+    };
+
+    const savedBookingId = yield saveBooking(bookingData);
+
+    if (callback) callback();
     yield loadRideAsync({ selectedRideId: rideId });
-    yield put({ type: SAVE_BOOKING.SUCCESS, payload: { bookingId } });
+    yield put({ type: SAVE_BOOKING.SUCCESS, payload: { bookingId: savedBookingId } });
     yield put(
       action(SHOW_NOTIFICATION, {
         className: NotificationType.SUCCESS,

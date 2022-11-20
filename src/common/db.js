@@ -327,12 +327,13 @@ const saveBooking = async ({
   dropLocation,
   passengerNote,
   user,
-  status = BookingStatus.PENDING,
+  status,
   seatsCount,
+  bookedTimestamp,
 }) => {
-  const uid = getCurrentUserID();
-
   const db = getFirestore();
+
+  const uid = user.uid || getCurrentUserID();
 
   const rideRef = doc(db, 'rides', rideId);
 
@@ -362,9 +363,11 @@ const saveBooking = async ({
         lastName: user.lastName,
         mobileNo: user.mobileNo,
       },
-      bookedTimestamp: serverTimestamp(),
+      bookedTimestamp: bookedTimestamp || serverTimestamp(),
       status,
     };
+
+    console.log(booking);
 
     await transaction.set(bookingRef, booking);
 
@@ -375,6 +378,15 @@ const saveBooking = async ({
 };
 
 const getBookings = async () => {};
+
+const getBooking = async (bookingId) => {
+  const db = getFirestore();
+  const bookingRef = doc(db, `bookings`, bookingId);
+
+  const docSnap = await getDoc(bookingRef);
+
+  return docSnap.data();
+};
 
 const getCities = async ({ engNameQuery }) => {
   const db = getFirestore();
@@ -406,6 +418,7 @@ export {
   getRide,
   saveRide,
   saveBooking,
+  getBooking,
   getBookings,
   getMyRides,
   getCities,
