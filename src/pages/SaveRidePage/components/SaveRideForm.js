@@ -18,19 +18,19 @@ import { ROUTE_MAX_TOWN_COUNT } from 'util/constants';
 import FormTitle from 'components/FormTitle';
 import CancelRideButton from 'pages/SaveRidePage/components/CancelRideButton';
 import DangerModal from 'components/DangerModal';
-import SaveRidePageContext from '../SaveRidePageContext';
 import useModalToggle from 'hooks/useModalToggle';
 import isMyRide from 'util/isMyRide';
+import SaveRidePageContext from '../SaveRidePageContext';
 
 const { Option } = Select;
 const DEPARTURE_TIME_MIN_STEP = 5;
 
 const validationSchema = yup.object().shape({
   startLocation: yup.string().required(i18n.t('Start location is required.')),
-  endLocation: yup.string().required(i18n.t('Start location is required.')),
+  endLocation: yup.string().required(i18n.t('End location is required.')),
   departure: yup.object().shape({
-    date: yup.object().nullable().required(i18n.t('Start location is required.')),
-    time: yup.object().nullable().required(i18n.t('Start location is required.')),
+    date: yup.object().nullable().required(i18n.t('Departure date is required.')),
+    time: yup.object().nullable().required(i18n.t('Departure time is required.')),
   }),
   availableSeatCount: yup.number().min(1).required('Available seat count is required.'),
   route: yup
@@ -79,8 +79,8 @@ function SaveRideForm() {
     startLocation: currentStartLocation || '',
     endLocation: currentEndLocation || '',
     departure: {
-      date: departure ? moment.unix(departure / 1000) : null,
-      time: departure ? moment.unix(departure / 1000) : null,
+      date: departure ? moment.utc(departure) : null,
+      time: departure ? moment.utc(departure) : null,
     },
     vehicle: vehicle || defaultVehicle,
     passengerPreference: defaultPassengerPreference,
@@ -295,16 +295,16 @@ function SaveRideForm() {
                       </label>
                       <Form.Item name="departure.time">
                         <TimePicker
-                          name="departure.time"
-                          disabledHours={() => (departureDate?.isBefore() ? _.range(0, moment().hour()) : [])}
-                          disabledMinutes={(selectedHour) =>
-                            selectedHour === moment().hour() && departureDate?.isBefore()
-                              ? _.range(0, moment().minute(), DEPARTURE_TIME_MIN_STEP)
-                              : []
-                          }
-                          format="HH:mm"
-                          minuteStep={DEPARTURE_TIME_MIN_STEP}
-                          hideDisabledOptions
+                          // name="departure.time"
+                          // disabledHours={() => (departureDate?.isBefore() ? _.range(0, moment().hour()) : [])}
+                          // disabledMinutes={(selectedHour) =>
+                          //   selectedHour === moment().hour() && departureDate?.isBefore()
+                          //     ? _.range(0, moment().minute(), DEPARTURE_TIME_MIN_STEP)
+                          //     : []
+                          // }
+                          // format="HH:mm"
+                          // minuteStep={DEPARTURE_TIME_MIN_STEP}
+                          // hideDisabledOptions
                           value={departureTime}
                           onChange={(value) => setFieldValue('departure.time', value)}
                         />

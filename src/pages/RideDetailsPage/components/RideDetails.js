@@ -6,19 +6,18 @@ import getFullName from 'util/getFullName';
 import { Avatar, Col, Divider, Row, Spin } from 'antd';
 import getFormattedRoute from 'util/getFormattedRoute';
 import { getFullPhoneNumber, simulateCall } from 'util/phoneUtil';
-import RideDetailsPageContext from '../RidesDetailsPageContext';
-import RideDetailsCard from './RideDetailsCard';
 import useModalToggle from 'hooks/useModalToggle';
 import InfoModal from 'components/InfoModal';
-import { getCurrentUserID } from 'common/auth';
 import isMyRide from 'util/isMyRide';
+import RideDetailsPageContext from '../RidesDetailsPageContext';
+import RideDetailsCard from './RideDetailsCard';
 
 function RideDetails() {
   const {
     isRidesDetailsFetching,
     rideDetails: {
       driver: { firstName, lastName, mobileNo, bio, userPhoto: driverPhoto, countryCode, uid } = {},
-      departure: { seconds: departure } = {},
+      departure,
       details: {
         availableSeatCount,
         route,
