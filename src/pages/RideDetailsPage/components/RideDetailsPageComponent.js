@@ -37,10 +37,10 @@ function RideDetailsPageComponent() {
           <div className="horizontal-container ride-details-button-bar">
             <Space>
               {status === RideStatus.CANCELLED && <span className="ant-tag state closed">Cancelled</span>}
-              {userBooking && (
+              {userBooking?.bookingStatus && (
                 <BookingStatusBadge
-                  bookingStatus={userBooking.bookingStatus}
-                  title={`Booking ${userBooking.bookingStatus}`}
+                  bookingStatus={userBooking?.bookingStatus}
+                  title={`Booking ${userBooking?.bookingStatus}`}
                 />
               )}
               {shouldAllowBookings && <BookRideButton />}
