@@ -1,6 +1,6 @@
 import React from 'react';
 
-function BookingStatus({ buttonClass, title, desc }) {
+function StatusTag({ buttonClass, title, desc }) {
   return (
     <span className={`ant-tag state ${buttonClass}`} title={desc}>
       {title}
@@ -8,4 +8,4 @@ function BookingStatus({ buttonClass, title, desc }) {
   );
 }
 
-export default BookingStatus;
+export default StatusTag;

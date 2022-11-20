@@ -37,5 +37,7 @@
   "liftEkak.booking.request.success.message": "Ride Request Success",
   "liftEkak.booking.request.success.description": "Successfully made a ride request. Please wait for the response from the driver.",
   "liftEkak.booking.request.error.message": "Ride Request Failed",
-  "liftEkak.booking.request.error.noSeats.description": "Insufficient seats count available to fullfil your request."
+  "liftEkak.booking.request.error.noSeats.description": "Insufficient seats count available to fullfil your request.",
+  "liftEkak.booking.update.success.message": "Booking Updated",
+  "liftEkak.booking.update.success.description": "Successfully updated ride booking."
 }

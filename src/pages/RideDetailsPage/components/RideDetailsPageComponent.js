@@ -4,7 +4,7 @@ import { BookingStatus, RideStatus } from 'enums';
 import useModalToggle from 'hooks/useModalToggle';
 import React, { useContext } from 'react';
 import RideDetailsPageContext from '../RidesDetailsPageContext';
-import BookingStatusBadge from './BookingStatusBadge';
+import BookingStatusBadge from '../../../components/BookingStatusBadge';
 import BookRideButton from './BookRideButton';
 import CancelBookingButton from './CancelBookingButton';
 import GoToRidesButton from './GoToRidesButton';

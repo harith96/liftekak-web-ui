@@ -227,7 +227,6 @@ const getMyRides = async ({
     limit(DEFAULT_PAGE_SIZE),
   ].filter((v) => v);
 
-  console.log(queries);
   const q = query(ridesRef, ...queries);
 
   const querySnap = await getDocs(q);
@@ -367,8 +366,6 @@ const saveBooking = async ({
       status,
     };
 
-    console.log(booking);
-
     await transaction.set(bookingRef, booking);
 
     await updateRideBookings(rideRef, transaction, ride, uid, bookingId, status);
@@ -377,7 +374,77 @@ const saveBooking = async ({
   });
 };
 
-const getBookings = async () => {};
+const getBookings = async ({ uid }) => {
+  if (!uid) return [];
+  // if (!pageAction) myRidesPagination.reset();
+
+  const db = getFirestore();
+
+  const bookingsRef = collection(db, 'bookings');
+  const queries = [
+    // startTown && !destinationTown && where('details.route', 'array-contains', startTown),
+    // !startTown && destinationTown && where('details.route', 'array-contains', destinationTown),
+    // startTown &&
+    //   destinationTown &&
+    //   where('indices.route', 'array-contains', buildRouteIndexString([startTown, destinationTown])),
+    // departureFrom && where('departure', '>=', departureFrom.valueOf()),
+    // departureUntil && where('departure', '<=', departureUntil.valueOf()),
+    // vehicleType && where('details.vehicle.type', '==', vehicleType),
+    where(`passenger.uid`, '==', uid),
+    // rideStatus && where('status', '==', rideStatus),
+    orderBy('bookedTimestamp', 'desc'),
+    // pageAction === PageAction.NEXT && startAfter(myRidesPagination.currentPageLastDoc),
+    // pageAction === PageAction.BACK && startAt(myRidesPagination.getPreviousPageFirstDoc()),
+    // limit(DEFAULT_PAGE_SIZE),
+  ].filter((v) => v);
+
+  const q = query(bookingsRef, ...queries);
+
+  const querySnap = await getDocs(q);
+
+  if (!_.isEmpty(querySnap.docs)) {
+    myRidesPagination.updatePagination(querySnap.docs);
+    return querySnap.docs.map((docSnap) => docSnap.data());
+  }
+
+  return [];
+};
+
+const getBookingRequests = async ({ uid }) => {
+  if (!uid) return [];
+  // if (!pageAction) myRidesPagination.reset();
+
+  const db = getFirestore();
+
+  const bookingsRef = collection(db, 'bookings');
+  const queries = [
+    // startTown && !destinationTown && where('details.route', 'array-contains', startTown),
+    // !startTown && destinationTown && where('details.route', 'array-contains', destinationTown),
+    // startTown &&
+    //   destinationTown &&
+    //   where('indices.route', 'array-contains', buildRouteIndexString([startTown, destinationTown])),
+    // departureFrom && where('departure', '>=', departureFrom.valueOf()),
+    // departureUntil && where('departure', '<=', departureUntil.valueOf()),
+    // vehicleType && where('details.vehicle.type', '==', vehicleType),
+    where(`ride.driver.uid`, '==', uid),
+    // rideStatus && where('status', '==', rideStatus),
+    orderBy('bookedTimestamp', 'desc'),
+    // pageAction === PageAction.NEXT && startAfter(myRidesPagination.currentPageLastDoc),
+    // pageAction === PageAction.BACK && startAt(myRidesPagination.getPreviousPageFirstDoc()),
+    // limit(DEFAULT_PAGE_SIZE),
+  ].filter((v) => v);
+
+  const q = query(bookingsRef, ...queries);
+
+  const querySnap = await getDocs(q);
+
+  if (!_.isEmpty(querySnap.docs)) {
+    myRidesPagination.updatePagination(querySnap.docs);
+    return querySnap.docs.map((docSnap) => docSnap.data());
+  }
+
+  return [];
+};
 
 const getBooking = async (bookingId) => {
   const db = getFirestore();
@@ -420,6 +487,7 @@ export {
   saveBooking,
   getBooking,
   getBookings,
+  getBookingRequests,
   getMyRides,
   getCities,
 };

@@ -66,8 +66,6 @@ function RidesListPageContainer() {
         rideStatus,
       };
 
-      console.log(filters);
-
       dispatch(updateRideFilters(filters));
     },
     [history, dispatch]

@@ -14,11 +14,12 @@ import {
   SAVE_VEHICLE,
   USER_VEHICLES,
   RESET_PASSWORD,
-  BOOKINGS,
+  BOOKING_REQUESTS,
   SAVE_BOOKING,
   MY_RIDES,
   CITIES,
   BOOKING,
+  MY_BOOKINGS,
 } from './actionTypes';
 
 export const signIn = (provider, signInDetails) => action(SIGN_IN.REQUEST, { provider, signInDetails });
@@ -47,7 +48,8 @@ export const updateRide = (data, history) =>
     history,
   });
 export const loadAllRides = () => action(FETCH_ALL_RIDES.REQUEST);
-export const loadBookings = () => action(BOOKINGS.REQUEST);
+export const loadBookingRequests = () => action(BOOKING_REQUESTS.REQUEST);
+export const loadMyBookings = () => action(MY_BOOKINGS.REQUEST);
 export const loadBooking = () => action(BOOKING.REQUEST);
 export const saveBookings = (data, callback) => action(SAVE_BOOKING.REQUEST, { data, callback });
 export const loadCities = ({ engNameQuery } = {}) => action(CITIES.REQUEST, { engNameQuery });

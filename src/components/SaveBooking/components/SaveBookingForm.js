@@ -17,7 +17,7 @@ const getSeatsDescription = (availableSeatCount = 0) =>
 function SaveBookingForm() {
   const {
     availableSeatCount,
-    booking: { pickupLocation, dropLocation, passengerNote, seatsCount = 1 } = {},
+    booking: { pickupLocation = '', dropLocation = '', passengerNote = '', seatsCount = 1 } = {},
     saveBooking,
     isSavingBooking,
   } = useContext(SaveBookingContext);

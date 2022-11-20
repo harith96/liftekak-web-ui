@@ -56,6 +56,11 @@ export const RidesTabs = {
   MY_RIDES: 'my-rides',
 };
 
+export const BookingsTabs = {
+  BOOKING_REQUESTS: 'booking-requests',
+  MY_BOOKINGS: 'my-bookings',
+};
+
 export const ROUTE_MAX_TOWN_COUNT = 10;
 
 export const LK_DIAL_CODE = '+94';
