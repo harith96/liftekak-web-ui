@@ -44,16 +44,20 @@ function RidesDetailsPageContainer() {
     dispatch(saveBookings({ bookingId: userBookingId, bookingStatus: BookingStatus.CANCELLED }));
   }, [dispatch, userBookingId]);
 
+  const isMyRide = rideDetails.driver?.uid === getCurrentUserID();
+
+  const rideHasNotStarted = rideDetails.status === RideStatus.NEW;
+
   // TODO: add check whether my ride
   const shouldAllowBookings =
-    rideDetails.status === RideStatus.NEW &&
+    rideHasNotStarted &&
     userBookingStatus !== BookingStatus.PENDING &&
     userBookingStatus !== BookingStatus.ACCEPTED &&
-    userBookingStatus !== BookingStatus.BLOCKED;
+    userBookingStatus !== BookingStatus.BLOCKED &&
+    !isMyRide;
 
   const shouldAllowBookingCancellation =
-    rideDetails.status === RideStatus.NEW &&
-    (userBookingStatus === BookingStatus.ACCEPTED || userBookingStatus === BookingStatus.PENDING);
+    rideHasNotStarted && (userBookingStatus === BookingStatus.ACCEPTED || userBookingStatus === BookingStatus.PENDING);
 
   return (
     <RideDetailsPageContextProvider
