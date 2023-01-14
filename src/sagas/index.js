@@ -441,6 +441,7 @@ function* saveBookingAsync({
     const currentBooking = yield getBookingDataIfAvailable(bookingId);
 
     const bookingData = {
+      bookingId,
       pickupLocation: pickupLocation || currentBooking?.details?.pickupLocation,
       dropLocation: dropLocation || currentBooking?.details?.dropLocation,
       passengerNote: passengerNote || currentBooking?.details?.passengerNote || '',
