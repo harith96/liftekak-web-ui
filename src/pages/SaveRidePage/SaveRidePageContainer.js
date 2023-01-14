@@ -35,9 +35,7 @@ function SaveRidePageContainer() {
   const { pathname } = useLocation();
   const isRideUpdate = pathname.includes(APP_ROUTES.UPDATE_RIDE);
 
-  const rideDetails = useSelector(
-    (state) => state.rides.data?.find((ride) => ride.rideId === rideId) || state.ride.data
-  );
+  const rideDetails = useSelector((state) => state.ride.data);
   const isRidesDetailsFetching = useSelector((state) => state.ride.fetching);
   const rideError = useSelector((state) => state.ride.error);
   const isRideCancelled = rideDetails?.status === RideStatus.CANCELLED;
@@ -87,7 +85,7 @@ function SaveRidePageContainer() {
           vehicles,
           isVehiclesLoading,
           user,
-          rideDetails,
+          rideDetails: isRideUpdate ? rideDetails : undefined,
           isRidesDetailsFetching,
           isRideUpdate,
           isNewVehicleModalVisible,

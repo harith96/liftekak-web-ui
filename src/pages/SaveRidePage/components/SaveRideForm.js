@@ -66,7 +66,7 @@ function SaveRideForm() {
         vehicle,
         passengerPreference,
       } = {},
-    },
+    } = {},
     isRidesDetailsFetching,
     isRideUpdate,
     isNewVehicleModalVisible,
