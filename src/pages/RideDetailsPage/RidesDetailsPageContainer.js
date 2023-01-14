@@ -14,9 +14,7 @@ function RidesDetailsPageContainer() {
 
   const userId = getCurrentUserID();
 
-  const rideDetails = useSelector(
-    (state) => state.rides.data?.find((ride) => ride.rideId === rideId) || state.ride.data
-  );
+  const rideDetails = useSelector((state) => state.ride.data);
   const isRidesDetailsFetching = useSelector((state) => state.ride.fetching);
   const rideError = useSelector((state) => state.ride.error);
 
