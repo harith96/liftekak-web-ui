@@ -1,7 +1,5 @@
 import { Col, Row, Space } from 'antd';
-import SaveBookingContainer from 'components/SaveBooking/SaveBookingContainer';
-import { BookingStatus, RideStatus } from 'enums';
-import useModalToggle from 'hooks/useModalToggle';
+import { RideStatus } from 'enums';
 import React, { useContext } from 'react';
 import RideDetailsPageContext from '../RidesDetailsPageContext';
 import BookingStatusBadge from '../../../components/BookingStatusBadge';
