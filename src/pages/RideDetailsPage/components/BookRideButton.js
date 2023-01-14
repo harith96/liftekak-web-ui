@@ -9,7 +9,7 @@ function BookRideButton() {
   return (
     <>
       <Button type="primary" style={{ backgroundColor: '#008ace' }} onClick={toggleBookingModal}>
-        Request A Ride
+        Request a lift
       </Button>
 
       <SaveBookingContainer visible={visible} toggleModal={toggleBookingModal} />
