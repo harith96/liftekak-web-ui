@@ -24,7 +24,8 @@ function RidesDetailsPageContainer() {
 
   useEffect(() => {
     if (rideId) {
-      if ((!rideDetails?.rideId || rideDetails?.rideId !== rideId) && !rideError) dispatch(loadRideDetails(rideId));
+      if ((!rideDetails?.rideId || rideDetails?.rideId !== rideId) && !rideError && rideId)
+        dispatch(loadRideDetails(rideId));
     } else {
       dispatch(
         showNotification({

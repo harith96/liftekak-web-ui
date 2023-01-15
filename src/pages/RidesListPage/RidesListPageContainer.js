@@ -37,7 +37,12 @@ function RidesListPageContainer() {
 
   const onPreviousPage = useCallback(() => dispatch(loadRidesList(PageAction.BACK)), [dispatch]);
 
-  const onRideSelected = useCallback(({ rideId }) => history.push(`${APP_ROUTES.RIDE_VIEW}/${rideId}`), [history]);
+  const onRideSelected = useCallback(
+    ({ rideId }) => {
+      if (rideId) history.push(`${APP_ROUTES.RIDE_VIEW}/${rideId}`);
+    },
+    [history]
+  );
 
   const onNextMyRidePage = useCallback(() => dispatch(loadMyRides(PageAction.NEXT)), [dispatch]);
 
@@ -45,7 +50,7 @@ function RidesListPageContainer() {
 
   const onMyRideSelected = useCallback(
     ({ rideId, status }) =>
-      status === RideStatus.NEW
+      status === RideStatus.NEW && rideId
         ? history.push(`${APP_ROUTES.UPDATE_RIDE}/${rideId}`)
         : history.push(`${APP_ROUTES.RIDE_VIEW}/${rideId}`),
     [history]

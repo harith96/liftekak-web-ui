@@ -290,6 +290,7 @@ const saveRide = async ({
       bio: driver.bio,
       userPhoto: driver.userPhoto,
       countryCode: driver.countryCode,
+      gender: driver.gender,
     },
     status: status || RideStatus.NEW,
     seatsAvailable: true,
@@ -301,7 +302,7 @@ const saveRide = async ({
   await setDoc(doc(db, 'rides', rideId), ride);
 };
 
-const updateRideBookings = async (rideRef, transaction, ride, passengerId, bookingId, bookingStatus) => {
+const updateBookingsInRide = async (rideRef, transaction, ride, passengerId, bookingId, bookingStatus) => {
   const rideBookings = ride.details.bookings || {};
 
   rideBookings[passengerId] = { bookingId, bookingStatus };
@@ -336,7 +337,7 @@ const saveBooking = async ({
 }) => {
   const db = getFirestore();
 
-  const uid = user.uid || getCurrentUserID();
+  const uid = user?.uid || getCurrentUserID();
 
   const rideRef = doc(db, 'rides', rideId);
 
@@ -352,6 +353,8 @@ const saveBooking = async ({
     if (ride.details.availableSeatCount + currentSeatCount < seatsCount)
       return Promise.reject(new Error(ERRORS.NO_SEATS));
 
+    console.log(user);
+
     const booking = {
       bookingId,
       rideId,
@@ -366,14 +369,20 @@ const saveBooking = async ({
         firstName: user.firstName,
         lastName: user.lastName,
         mobileNo: user.mobileNo,
+        userPhoto: user.userPhoto,
+        gender: user.gender,
+        countryCode: user.countryCode,
       },
+      // TODO: remove ride data from booking
+      ride,
+      driver: ride.driver,
       bookedTimestamp: bookedTimestamp || serverTimestamp(),
       status,
     };
 
     await transaction.set(bookingRef, booking);
 
-    await updateRideBookings(rideRef, transaction, ride, uid, bookingId, status);
+    await updateBookingsInRide(rideRef, transaction, ride, uid, bookingId, status);
 
     await sendBookingEventEmail(booking, ride, !!currentBookingId);
 
@@ -433,8 +442,9 @@ const getBookingRequests = async ({ uid }) => {
     // departureFrom && where('departure', '>=', departureFrom.valueOf()),
     // departureUntil && where('departure', '<=', departureUntil.valueOf()),
     // vehicleType && where('details.vehicle.type', '==', vehicleType),
-    where(`ride.driver.uid`, '==', uid),
+    where(`driver.uid`, '==', uid),
     // rideStatus && where('status', '==', rideStatus),
+    orderBy('rideId', 'desc'),
     orderBy('bookedTimestamp', 'desc'),
     // pageAction === PageAction.NEXT && startAfter(myRidesPagination.currentPageLastDoc),
     // pageAction === PageAction.BACK && startAt(myRidesPagination.getPreviousPageFirstDoc()),
@@ -502,16 +512,17 @@ const sendBookingEventEmail = async (booking, ride, bookingExists = false) => {
   const {
     bookingId,
     details: { pickupLocation, dropLocation },
-    ride: {
-      departure,
-      driver: { uid: driverId },
-      details: {
-        destination: { location: destination },
-        start: { location: startLocation },
-      },
-    },
+    driver: { uid: driverId },
     passenger: { uid: passengerId },
   } = booking || {};
+
+  const {
+    departure,
+    details: {
+      destination: { location: destination },
+      start: { location: startLocation },
+    },
+  } = ride;
 
   const departureDate = getFormattedDate(departure);
   const departureTime = getFormattedTime(departure);

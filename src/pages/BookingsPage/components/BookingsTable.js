@@ -12,6 +12,7 @@ import { CarOutlined } from '@ant-design/icons';
 import DangerModal from 'components/DangerModal';
 import useModalToggle from 'hooks/useModalToggle';
 import getFullName from 'util/getFullName';
+import UserDetailsModal from 'components/UserDetailsModal';
 
 const columns = [
   {
@@ -71,6 +72,7 @@ function BookingsTable() {
 
   const [isUpdateModalVisible, toggleUpdateModal] = useModalToggle();
   const [isCancelModalVisible, toggleCancelModal] = useModalToggle();
+  const [isUserDetailsModalVisible, toggleUserDetailsModal] = useModalToggle();
 
   const onCell = useCallback(
     (record) => ({
@@ -103,6 +105,7 @@ function BookingsTable() {
     toggleCancelModal();
   }, [setSelectedBooking, toggleCancelModal]);
 
+  if (selectedBooking) console.log(selectedBooking);
   const columnsWithHoverActions = [
     isMyBookingPage && {
       title: 'Driver Name',
@@ -134,7 +137,10 @@ function BookingsTable() {
                     id="batch-merchandiser-approve"
                     type="button"
                     className="ant-btn btn blue-action-btn"
-                    onClick={() => viewRideDetails(rideId)}
+                    onClick={() => {
+                      setSelectedBooking(record);
+                      viewRideDetails(rideId);
+                    }}
                   >
                     <CarOutlined />
                     <span>View Ride</span>
@@ -146,8 +152,7 @@ function BookingsTable() {
                         type="button"
                         className="ant-btn btn white-action-btn"
                         onClick={() => {
-                          setSelectedBooking(record);
-                          toggleCancelModal();
+                          onCell(record);
                         }}
                         disabled={isNotEditable}
                       >
@@ -175,7 +180,10 @@ function BookingsTable() {
                         id="batch-merchandiser-approve"
                         type="button"
                         className="ant-btn btn blue-action-btn"
-                        onClick={() => onViewPassenger(bookingId)}
+                        onClick={() => {
+                          setSelectedBooking(record);
+                          toggleUserDetailsModal();
+                        }}
                       >
                         <i className="fi flaticon-user" />
                         <span>View Passenger</span>
@@ -244,6 +252,11 @@ function BookingsTable() {
         onCancel={onCancel_CancelBookingModal}
         data={selectedBooking?.bookingId}
         confirmationQuestion={`Are you sure that you want cancel you lift from ${selectedBooking?.details?.pickupLocation} to ${selectedBooking?.details?.dropLocation}?`}
+      />
+      <UserDetailsModal
+        userDetails={selectedBooking?.passenger}
+        visible={isUserDetailsModalVisible}
+        toggleModal={toggleUserDetailsModal}
       />
     </div>
   );

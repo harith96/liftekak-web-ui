@@ -29,8 +29,6 @@ function RideDetails() {
     } = {},
   } = useContext(RideDetailsPageContext);
 
-  const [cancelRideInfoModalVisible, toggleCancelRideInfoModal] = useModalToggle();
-
   const showDriverNote = !_.isEmpty(driverNote);
 
   return (
@@ -75,7 +73,9 @@ function RideDetails() {
           onClick={!isMyRide(uid) ? () => simulateCall(mobileNo) : null}
           lgColSpan={8}
           clickToShowContent={!isMyRide(uid)}
-          extraCallbackOnContentReveal={toggleCancelRideInfoModal}
+
+          //TODO: record mobile number reveals
+          // extraCallbackOnContentReveal={}
         />
         <RideDetailsCard title="Driver bio" icon="pic-left" value={bio} lgColSpan={8} />
       </Row>
@@ -88,11 +88,6 @@ function RideDetails() {
         <RideDetailsCard title="Vehicle model" icon="car" value={model} />
         <RideDetailsCard title="Vehicle color" icon="car" value={vehicleColor} />
       </Row>
-      <InfoModal
-        visible={cancelRideInfoModalVisible}
-        toggleModal={toggleCancelRideInfoModal}
-        message="We will soon roll out functionality to book rides. Until then kindly connect with the driver to arrange your ride. Please note that drivers may cancel anytime."
-      />
     </Spin>
   );
 }

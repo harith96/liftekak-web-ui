@@ -57,6 +57,17 @@ function SaveRidePageContainer() {
     if (isRideCancelled && !isRidesDetailsFetching && rideId) history.push(`${APP_ROUTES.RIDE_VIEW}/${rideId}`);
   }, [isRideCancelled, isRidesDetailsFetching, rideId, history]);
 
+  useEffect(() => {
+    const isNotRideNewOrMyRide =
+      rideId &&
+      !(isRideCreating || isRidesDetailsFetching) &&
+      isRidesDetailsFetching &&
+      rideDetails?.rideId &&
+      (rideDetails.status !== RideStatus.NEW || rideDetails.driver?.uid !== getCurrentUserID());
+
+    if (isNotRideNewOrMyRide) history.push(`${APP_ROUTES.RIDE_VIEW}/${rideId}`);
+  }, [isRideCreating, isRidesDetailsFetching, rideDetails, rideId, history]);
+
   const onSaveRide = useCallback(
     (values) => dispatch(saveRide(formatRideValues(rideId, values), history)),
     [dispatch, history, rideId]
@@ -66,38 +77,29 @@ function SaveRidePageContainer() {
     (values) => {
       dispatch(saveRide(formatRideValues(rideId, values), history));
     },
-    [history, dispatch]
+    [history, rideId, dispatch]
   );
 
-  const isNotRideNewOrMyRide =
-    !(isRideCreating || isRidesDetailsFetching) &&
-    rideDetails &&
-    rideDetails?.rideId &&
-    (rideDetails.status !== RideStatus.NEW || rideDetails.driver?.uid !== getCurrentUserID());
-
   return (
-    <>
-      {isNotRideNewOrMyRide && <Redirect to={`${APP_ROUTES.RIDE_VIEW}/${rideId}`} />}
-      <SaveRidePageContextProvider
-        value={{
-          onSaveRide,
-          isRideCreating,
-          vehicles,
-          isVehiclesLoading,
-          user,
-          rideDetails: isRideUpdate ? rideDetails : undefined,
-          isRidesDetailsFetching,
-          isRideUpdate,
-          isNewVehicleModalVisible,
-          toggleVehicleModal,
-          cancelRide,
-        }}
-      >
-        <SaveVehicleContextProvider>
-          <SaveRidePageComponent />
-        </SaveVehicleContextProvider>
-      </SaveRidePageContextProvider>
-    </>
+    <SaveRidePageContextProvider
+      value={{
+        onSaveRide,
+        isRideCreating,
+        vehicles,
+        isVehiclesLoading,
+        user,
+        rideDetails: isRideUpdate ? rideDetails : undefined,
+        isRidesDetailsFetching,
+        isRideUpdate,
+        isNewVehicleModalVisible,
+        toggleVehicleModal,
+        cancelRide,
+      }}
+    >
+      <SaveVehicleContextProvider>
+        <SaveRidePageComponent />
+      </SaveVehicleContextProvider>
+    </SaveRidePageContextProvider>
   );
 }
 
