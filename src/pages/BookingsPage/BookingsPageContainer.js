@@ -16,7 +16,8 @@ function BookingsPageContainer() {
 
   const [activeTabKey, setActiveTabKey] = useState(BookingsTabs.BOOKING_REQUESTS);
 
-  const isBookingRequestsVisible = activeTabKey === BookingsTabs.BOOKING_REQUESTS;
+  const isBookingRequestsPage = activeTabKey === BookingsTabs.BOOKING_REQUESTS;
+  const isMyBookingPage = activeTabKey === BookingsTabs.MY_BOOKINGS;
 
   const isBookingRequestsFetching = useSelector((state) => state.bookingRequests.fetching);
   const isMyBookingsFetching = useSelector((state) => state.myBookings.fetching);
@@ -58,10 +59,17 @@ function BookingsPageContainer() {
     [dispatch]
   );
 
+  const onCancelBooking = useCallback(
+    (bookingId) => {
+      dispatch(saveBookings({ bookingId, bookingStatus: BookingStatus.CANCELLED }, () => dispatch(loadMyBookings())));
+    },
+    [dispatch]
+  );
+
   return (
     <BookingsPageContextProvider
       value={{
-        bookings: isBookingRequestsVisible ? bookingRequests : myBookings,
+        bookings: isBookingRequestsPage ? bookingRequests : myBookings,
         isBookingsFetching,
         activeTabKey,
         setActiveTabKey,
@@ -69,6 +77,9 @@ function BookingsPageContainer() {
         onRejectRequests,
         onBlockBookings,
         onViewPassenger,
+        isMyBookingPage,
+        isBookingRequestsPage,
+        onCancelBooking,
       }}
     >
       <BookingPageComponent />

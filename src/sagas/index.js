@@ -435,9 +435,9 @@ function* saveBookingAsync({
   callback,
 }) {
   const { rideId } = yield select(getRideSelector);
+
   try {
     const user = yield select(getUser);
-
     const currentBooking = yield getBookingDataIfAvailable(bookingId);
 
     const bookingData = {
@@ -449,6 +449,7 @@ function* saveBookingAsync({
       user: currentBooking?.passenger || user,
       status: bookingStatus || currentBooking?.status || BookingStatus.PENDING,
       seatsCount: seatsCount || currentBooking?.details?.seatsCount,
+      currentSeatCount: currentBooking?.details?.seatsCount || 0,
     };
 
     const savedBookingId = yield saveBooking(bookingData);

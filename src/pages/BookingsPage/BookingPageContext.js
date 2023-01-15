@@ -5,6 +5,7 @@ const BookingsPageContext = React.createContext({
   bookings: [],
   isBookingsFetching: true,
   bookingsFilters: {},
+  isMyBookingPage: false,
   onNextPage: () => {},
   onPreviousPage: () => {},
   onBookingSelected: () => {},

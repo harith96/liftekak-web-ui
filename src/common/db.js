@@ -16,7 +16,7 @@ import {
   startAt,
   runTransaction,
 } from '@firebase/firestore';
-import { BookingAction, BookingStatus, PageAction, RideStatus } from 'enums';
+import { BookingEmailEvent, BookingStatus, PageAction, RideStatus } from 'enums';
 
 import * as _ from 'lodash';
 import moment from 'moment';
@@ -25,6 +25,7 @@ import buildRouteIndex, { buildRouteIndexString } from 'util/buildRouteIndex';
 import buildPassengerPreferenceDB from 'util/buildPassengerPreferenceDB';
 import { getCurrentUserID, getUserEmail } from './auth';
 import DocPagination from './util/DocPagination';
+import getFullName from 'util/getFullName';
 
 const allRidesPagination = new DocPagination();
 const myRidesPagination = new DocPagination();
@@ -329,6 +330,7 @@ const saveBooking = async ({
   status,
   seatsCount,
   bookedTimestamp,
+  currentSeatCount,
 }) => {
   const db = getFirestore();
 
@@ -345,7 +347,8 @@ const saveBooking = async ({
 
     const ride = docSnap.data();
 
-    if (ride.details.availableSeatCount < seatsCount) return Promise.reject(new Error(ERRORS.NO_SEATS));
+    if (ride.details.availableSeatCount + currentSeatCount < seatsCount)
+      return Promise.reject(new Error(ERRORS.NO_SEATS));
 
     const booking = {
       bookingId,
@@ -369,6 +372,8 @@ const saveBooking = async ({
     await transaction.set(bookingRef, booking);
 
     await updateRideBookings(rideRef, transaction, ride, uid, bookingId, status);
+
+    // await sendBookingEventEmail(booking);
 
     return bookingId;
   });
@@ -474,6 +479,40 @@ const getCities = async ({ engNameQuery }) => {
   const querySnap = await getDocs(q);
 
   return querySnap.docs.map((city) => city.data());
+};
+
+const sendEmail = async (emailId, toUids, template) => {
+  const db = getFirestore();
+  const emailRef = doc(db, 'mails', emailId);
+
+  await setDoc(db, emailRef, { toUids, template });
+};
+
+const sendBookingEventEmail = async (booking) => {
+  const passengerId = booking.passenger.uid;
+  const passengerName = getFullName(booking.passenger.firstName, booking.passenger.lastName);
+
+  const driverId = booking.ride.driver.uid;
+  const driverName = getFullName(booking.ride.driver.firstName, booking.ride.driver.lastName);
+
+  const {
+    bookingId,
+    details: { pickupLocation, dropLocation, passengerNote },
+  } = booking || {};
+
+  // booking email event and booking event template name are equal.
+  const bookingEmailTemplate = getBookingEmailEvent(booking.status);
+};
+
+const getBookingEmailEvent = (bookingStatus, bookingExists = false) => {
+  let emailEvent;
+
+  if (bookingStatus == BookingStatus.PENDING)
+    if (!bookingExists) emailEvent = BookingEmailEvent.CREATED;
+    else emailEvent = BookingEmailEvent.UPDATED;
+  else emailEvent = BookingEmailEvent[bookingStatus];
+
+  return emailEvent;
 };
 
 export {
