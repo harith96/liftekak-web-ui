@@ -84,7 +84,7 @@ function SaveRideForm() {
       time: departure ? moment.utc(departure) : null,
     },
     vehicle: vehicle || defaultVehicle,
-    passengerPreference: _.keys(passengerPreference) || defaultPassengerPreference,
+    passengerPreference: passengerPreference ? _.keys(passengerPreference) : defaultPassengerPreference,
     availableSeatCount: availableSeatCount || 1,
     route: _.isArray(currentRoute) ? _.slice(currentRoute, 1, -1) : [],
     note: driverNote || '',
