@@ -17,7 +17,10 @@ const getSeatsDescription = (availableSeatCount = 0) =>
 function SaveBookingForm() {
   const {
     availableSeatCount,
-    booking: { pickupLocation = '', dropLocation = '', passengerNote = '', seatsCount = 1 } = {},
+    booking: {
+      bookingId,
+      details: { pickupLocation = '', dropLocation = '', passengerNote = '', seatsCount = 1 } = {},
+    } = {},
     saveBooking,
     isSavingBooking,
   } = useContext(SaveBookingContext);
@@ -41,6 +44,7 @@ function SaveBookingForm() {
         resetForm({ values });
       }}
       initialValues={{
+        bookingId,
         pickupLocation,
         dropLocation,
         passengerNote,
