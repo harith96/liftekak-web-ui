@@ -14,6 +14,7 @@ const RidesListPageContext = React.createContext({
   isMyRidesFetching: false,
   activeTabKey: RidesTabs.ALL_RIDES,
   setActiveTabKey: () => {},
+  hasPendingBookingRequests: false,
 });
 
 export const RidesListPageContextProvider = RidesListPageContext.Provider;

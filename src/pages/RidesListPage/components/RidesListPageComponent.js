@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { IdcardOutlined, UnorderedListOutlined } from '@ant-design/icons';
-import { Row, Tabs } from 'antd';
+import { Row, Space, Tabs } from 'antd';
 
 import { RidesTabs } from 'util/constants';
 import AddNewButton from 'components/AddNewButton';
@@ -9,6 +9,7 @@ import RidesTable from './RidesTable';
 import './styles/index.scss';
 import RidesListPageContext from '../RidesListPageContext';
 import RidesList from './RidesList';
+import HasBookingRequests from './HasBookingRequests';
 
 const { TabPane } = Tabs;
 
@@ -35,13 +36,19 @@ const myRidesTab = (
 );
 
 function RidesListPageComponent() {
-  const { activeTabKey, setActiveTabKey, gotToSaveRideView } = useContext(RidesListPageContext);
+  const { activeTabKey, setActiveTabKey, gotToSaveRideView, hasPendingBookingRequests } =
+    useContext(RidesListPageContext);
 
   return (
     <>
       <Row type="flex" justify="space-between" align="middle">
         <h1>Rides</h1>
-        <AddNewButton onClick={gotToSaveRideView} entityName="Ride" />
+        <div>
+          <Space>
+            {hasPendingBookingRequests && <HasBookingRequests />}
+            <AddNewButton onClick={gotToSaveRideView} entityName="Ride" />
+          </Space>
+        </div>
       </Row>
       <Tabs activeKey={activeTabKey} defaultActiveKey={RidesTabs.ALL_RIDES} onChange={setActiveTabKey} className="tab">
         <TabPane tab={allRidesTab} key={RidesTabs.ALL_RIDES} className="tab-pane">

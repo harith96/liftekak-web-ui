@@ -2,12 +2,13 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
-import { loadCities, loadMyRides, loadRidesList, updateRideFilters } from 'actions';
-import { PageAction, RideStatus } from 'enums';
+import { loadBookingRequests, loadCities, loadMyRides, loadRidesList, updateRideFilters } from 'actions';
+import { BookingStatus, PageAction, RideStatus } from 'enums';
 import { APP_ROUTES, RidesTabs } from 'util/constants';
 import { isUserSignedIn } from 'common/auth';
 import RidesListPageComponent from './components/RidesListPageComponent';
 import { RidesListPageContextProvider } from './RidesListPageContext';
+import _ from 'lodash';
 
 function RidesListPageContainer() {
   const dispatch = useDispatch();
@@ -17,6 +18,10 @@ function RidesListPageContainer() {
   const isMyRidesFetching = useSelector((state) => state.myRides.fetching);
   const rideFilters = useSelector((state) => state.rideFilters.data);
   const isRidesFetching = useSelector((state) => state.rides.fetching);
+
+  const bookingRequests = useSelector((state) => state.bookingRequests?.data);
+
+  const hasPendingBookingRequests = _.some(bookingRequests, (booking) => booking.status === BookingStatus.PENDING);
 
   const [activeTabKey, setActiveTabKey] = useState(RidesTabs.ALL_RIDES);
 
@@ -30,6 +35,7 @@ function RidesListPageContainer() {
   useEffect(() => {
     if (isUserSignedIn()) {
       dispatch(loadCities());
+      dispatch(loadBookingRequests());
     }
   }, [dispatch]);
 
@@ -89,6 +95,7 @@ function RidesListPageContainer() {
         rideFilters,
         activeTabKey,
         setActiveTabKey,
+        hasPendingBookingRequests,
       }}
     >
       <RidesListPageComponent />
