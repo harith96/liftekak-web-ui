@@ -77,7 +77,11 @@ export const BookingStatus = {
   BLOCKED: 'BLOCKED', // Allow drivers to mark riders as spam
 };
 
-export const BookingAction = {
-  ADD: 'ADD',
-  REMOVE: 'REMOVE',
+export const BookingEmailEvent = {
+  CREATED: 'BOOKING_CREATED',
+  UPDATED: 'BOOKING_UPDATED',
+  ACCEPTED: 'BOOKING_ACCEPTED',
+  REJECTED: 'BOOKING_REJECTED',
+  EXPIRED: 'BOOKING_EXPIRED',
+  CANCELLED: 'BOOKING_CANCELLED',
 };

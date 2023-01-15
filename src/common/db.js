@@ -15,6 +15,7 @@ import {
   startAfter,
   startAt,
   runTransaction,
+  addDoc,
 } from '@firebase/firestore';
 import { BookingEmailEvent, BookingStatus, PageAction, RideStatus } from 'enums';
 
@@ -26,6 +27,7 @@ import buildPassengerPreferenceDB from 'util/buildPassengerPreferenceDB';
 import { getCurrentUserID, getUserEmail } from './auth';
 import DocPagination from './util/DocPagination';
 import getFullName from 'util/getFullName';
+import { getFormattedDate, getFormattedTime } from 'util/dateUtil';
 
 const allRidesPagination = new DocPagination();
 const myRidesPagination = new DocPagination();
@@ -352,7 +354,7 @@ const saveBooking = async ({
 
     const booking = {
       bookingId,
-      ride,
+      rideId,
       details: {
         pickupLocation,
         dropLocation,
@@ -373,7 +375,7 @@ const saveBooking = async ({
 
     await updateRideBookings(rideRef, transaction, ride, uid, bookingId, status);
 
-    // await sendBookingEventEmail(booking);
+    await sendBookingEventEmail(booking, ride, !!currentBookingId);
 
     return bookingId;
   });
@@ -457,7 +459,11 @@ const getBooking = async (bookingId) => {
 
   const docSnap = await getDoc(bookingRef);
 
-  return docSnap.data();
+  const booking = docSnap.data();
+
+  const ride = getRide(booking.ride?.rideId || booking.rideId);
+
+  return { ...booking, ride };
 };
 
 const getCities = async ({ engNameQuery }) => {
@@ -481,27 +487,55 @@ const getCities = async ({ engNameQuery }) => {
   return querySnap.docs.map((city) => city.data());
 };
 
-const sendEmail = async (emailId, toUids, template) => {
+const sendEmail = async (toUids, template) => {
   const db = getFirestore();
-  const emailRef = doc(db, 'mails', emailId);
+  const emailsRef = collection(db, 'mails');
 
-  await setDoc(db, emailRef, { toUids, template });
+  await addDoc(emailsRef, { toUids, template });
 };
 
-const sendBookingEventEmail = async (booking) => {
-  const passengerId = booking.passenger.uid;
+const sendBookingEventEmail = async (booking, ride, bookingExists = false) => {
   const passengerName = getFullName(booking.passenger.firstName, booking.passenger.lastName);
 
-  const driverId = booking.ride.driver.uid;
-  const driverName = getFullName(booking.ride.driver.firstName, booking.ride.driver.lastName);
+  const driverName = getFullName(ride.driver.firstName, ride.driver.lastName);
 
   const {
     bookingId,
-    details: { pickupLocation, dropLocation, passengerNote },
+    details: { pickupLocation, dropLocation },
+    ride: {
+      departure,
+      driver: { uid: driverId },
+      details: {
+        destination: { location: destination },
+        start: { location: startLocation },
+      },
+    },
+    passenger: { uid: passengerId },
   } = booking || {};
 
+  const departureDate = getFormattedDate(departure);
+  const departureTime = getFormattedTime(departure);
+
   // booking email event and booking event template name are equal.
-  const bookingEmailTemplate = getBookingEmailEvent(booking.status);
+  const bookingEmailTemplate = getBookingEmailEvent(booking.status, bookingExists);
+
+  const recepientId = getBookingEmailRecepientId(bookingEmailTemplate, driverId, passengerId);
+
+  const template = {
+    name: bookingEmailTemplate,
+    data: {
+      passengerName,
+      driverName,
+      pickupLocation,
+      dropLocation,
+      startLocation,
+      destination,
+      departureTime,
+      departureDate,
+    },
+  };
+
+  await sendEmail([recepientId], template);
 };
 
 const getBookingEmailEvent = (bookingStatus, bookingExists = false) => {
@@ -513,6 +547,20 @@ const getBookingEmailEvent = (bookingStatus, bookingExists = false) => {
   else emailEvent = BookingEmailEvent[bookingStatus];
 
   return emailEvent;
+};
+
+const getBookingEmailRecepientId = (bookingEvent, driverId, passengerId) => {
+  switch (bookingEvent) {
+    case BookingEmailEvent.CREATED:
+    case BookingEmailEvent.UPDATED:
+    case BookingEmailEvent.CANCELLED:
+      return driverId;
+    case BookingEmailEvent.ACCEPTED:
+    case BookingEmailEvent.REJECTED:
+      return passengerId;
+    default:
+      break;
+  }
 };
 
 export {

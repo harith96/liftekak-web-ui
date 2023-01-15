@@ -11,6 +11,7 @@ import SaveBookingModal from 'components/SaveBooking/SaveBookingContainer';
 import { CarOutlined } from '@ant-design/icons';
 import DangerModal from 'components/DangerModal';
 import useModalToggle from 'hooks/useModalToggle';
+import getFullName from 'util/getFullName';
 
 const columns = [
   {
@@ -74,8 +75,10 @@ function BookingsTable() {
   const onCell = useCallback(
     (record) => ({
       onClick: () => {
-        setSelectedBooking(record);
-        toggleUpdateModal();
+        if (record.status === BookingStatus.PENDING) {
+          setSelectedBooking(record);
+          toggleUpdateModal();
+        }
       },
     }),
     [setSelectedBooking]
@@ -101,6 +104,18 @@ function BookingsTable() {
   }, [setSelectedBooking, toggleCancelModal]);
 
   const columnsWithHoverActions = [
+    isMyBookingPage && {
+      title: 'Driver Name',
+      dataIndex: ['ride', 'driver'],
+      key: 'driverName',
+      render: (driver) => getFullName(driver?.firstName, driver?.lastName),
+    },
+    isBookingRequestsPage && {
+      title: 'Passenger Name',
+      dataIndex: 'passenger',
+      key: 'passenger',
+      render: (passenger) => getFullName(passenger?.firstName, passenger?.lastName),
+    },
     ...columns.map((column) => ({ ...column, onCell })),
     {
       title: '',
@@ -180,7 +195,7 @@ function BookingsTable() {
       },
       className: 'hover-actions',
     },
-  ];
+  ].filter(Boolean);
 
   return (
     <div className="rides-table-container">

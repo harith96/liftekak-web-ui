@@ -445,16 +445,19 @@ function* saveBookingAsync({
       pickupLocation: pickupLocation || currentBooking?.details?.pickupLocation,
       dropLocation: dropLocation || currentBooking?.details?.dropLocation,
       passengerNote: passengerNote || currentBooking?.details?.passengerNote || '',
-      rideId: currentBooking?.ride?.rideId || rideId,
+      rideId: currentBooking?.ride?.rideId || currentBooking?.rideId || rideId,
       user: currentBooking?.passenger || user,
       status: bookingStatus || currentBooking?.status || BookingStatus.PENDING,
       seatsCount: seatsCount || currentBooking?.details?.seatsCount,
       currentSeatCount: currentBooking?.details?.seatsCount || 0,
+      bookedTimestamp: currentBooking?.bookedTimestamp,
     };
 
     const savedBookingId = yield saveBooking(bookingData);
 
     if (callback) callback();
+    if (rideId === currentBooking?.ride?.rideId || rideId === currentBooking?.rideId)
+      yield loadRideAsync({ selectedRideId: rideId });
     // yield loadRideAsync({ selectedRideId: currentBooking?.ride?.rideId || rideId });
     yield put({ type: SAVE_BOOKING.SUCCESS, payload: { bookingId: savedBookingId } });
     yield put(

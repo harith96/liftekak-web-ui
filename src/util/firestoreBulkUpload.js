@@ -5,7 +5,6 @@ import cities from '../data/cities.json';
 
 export default async function (collectionPath) {
   const db = getFirestore();
-  console.log('upload cities');
 
   _.chain(cities)
     .chunk(400)
