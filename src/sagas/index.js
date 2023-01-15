@@ -456,8 +456,7 @@ function* saveBookingAsync({
     const savedBookingId = yield saveBooking(bookingData);
 
     if (callback) callback();
-    if (rideId === currentBooking?.ride?.rideId || rideId === currentBooking?.rideId)
-      yield loadRideAsync({ selectedRideId: rideId });
+    if (rideId) yield loadRideAsync({ selectedRideId: rideId });
 
     yield loadBookingRequestsAsync();
     // yield loadRideAsync({ selectedRideId: currentBooking?.ride?.rideId || rideId });
