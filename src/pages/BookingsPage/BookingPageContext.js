@@ -16,6 +16,7 @@ const BookingsPageContext = React.createContext({
   onAcceptRequest: () => {},
   onRejectRequests: () => {},
   onBlockBookings: () => {},
+  viewRideDetails: () => {},
 });
 
 export const BookingsPageContextProvider = BookingsPageContext.Provider;

@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { BookingsTabs } from 'util/constants';
+import { APP_ROUTES, BookingsTabs } from 'util/constants';
 import { BookingsPageContextProvider } from './BookingPageContext';
 import BookingPageComponent from './components/BookingPageComponent';
 
@@ -66,6 +66,13 @@ function BookingsPageContainer() {
     [dispatch]
   );
 
+  const viewRideDetails = useCallback(
+    (rideId) => {
+      if (rideId) history.push(`${APP_ROUTES.RIDE_VIEW}/${rideId}`);
+    },
+    [history]
+  );
+
   return (
     <BookingsPageContextProvider
       value={{
@@ -80,6 +87,7 @@ function BookingsPageContainer() {
         isMyBookingPage,
         isBookingRequestsPage,
         onCancelBooking,
+        viewRideDetails,
       }}
     >
       <BookingPageComponent />

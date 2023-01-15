@@ -59,7 +59,7 @@ function BookingsTable() {
     // onBlockBookings,
     onViewPassenger,
     onCancelBooking,
-    onViewRide,
+    viewRideDetails,
   } = useContext(BookingsPageContext);
 
   const onResize = useCallback(
@@ -123,6 +123,8 @@ function BookingsTable() {
       render: (_0, record) => {
         const isNotEditable = record.status !== BookingStatus.PENDING;
         const { bookingId } = record;
+
+        const rideId = record?.rideId || record?.ride?.rideId;
         return (
           <div className="hover-actions-panel">
             <div className=" grid-hover-panel">
@@ -132,13 +134,26 @@ function BookingsTable() {
                     id="batch-merchandiser-approve"
                     type="button"
                     className="ant-btn btn blue-action-btn"
-                    onClick={() => onViewPassenger(bookingId)}
+                    onClick={() => viewRideDetails(rideId)}
                   >
                     <CarOutlined />
                     <span>View Ride</span>
                   </button>
                   {isMyBookingPage && (
                     <>
+                      <button
+                        id="batch-merchandiser-approve"
+                        type="button"
+                        className="ant-btn btn white-action-btn"
+                        onClick={() => {
+                          setSelectedBooking(record);
+                          toggleCancelModal();
+                        }}
+                        disabled={isNotEditable}
+                      >
+                        <i className="fi flaticon-pencil" />
+                        <span>Edit</span>
+                      </button>
                       <button
                         id="batch-merchandiser-approve"
                         type="button"
