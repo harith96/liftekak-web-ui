@@ -5,6 +5,7 @@ const SaveBookingContext = React.createContext({
   isSavingBooking: false,
   saveBooking: () => {},
   modal: { visible: false, toggleModal: () => {} },
+  isBookingUpdate: false,
 });
 
 export const SaveBookingContextProvider = SaveBookingContext.Provider;

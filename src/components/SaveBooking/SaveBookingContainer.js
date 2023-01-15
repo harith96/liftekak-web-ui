@@ -9,6 +9,8 @@ function SaveBookingContainer({ booking, visible, toggleModal }) {
   const isSavingBooking = useSelector((state) => state.saveBooking.fetching);
   const availableSeatCount = useSelector((state) => state.ride.data?.details?.availableSeatCount);
 
+  const isBookingUpdate = !!booking;
+
   const onSaveBooking = useCallback((values) => dispatch(saveBookings(values, toggleModal)), [dispatch, toggleModal]);
   return (
     <SaveBookingContextProvider
@@ -18,6 +20,7 @@ function SaveBookingContainer({ booking, visible, toggleModal }) {
         isSavingBooking,
         booking,
         availableSeatCount,
+        isBookingUpdate,
       }}
     >
       <SaveBookingComponent />

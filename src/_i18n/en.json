@@ -33,7 +33,7 @@
   "liftEkak.booking.details.pickupLocation": "Pickup Location",
   "liftEkak.booking.details.dropLocation": "Drop Location",
   "liftEkak.booking.details.passengerNote": "Passenger Note",
-  "liftEkak.booking.details.seatsCount": "Seats Count",
+  "liftEkak.booking.details.seatsCount": "Passenger Count",
   "liftEkak.booking.request.success.message": "Ride Request Success",
   "liftEkak.booking.request.success.description": "Successfully made a ride request. Please wait for the response from the driver.",
   "liftEkak.booking.request.error.message": "Ride Request Failed",

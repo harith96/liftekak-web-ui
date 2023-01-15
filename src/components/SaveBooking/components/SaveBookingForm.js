@@ -9,10 +9,12 @@ import CitySelect from 'components/CitySelect/CitySelectContainer';
 import InfoTooltip from 'components/InfoTooltip';
 import SaveBookingContext from '../SaveBookingContext';
 
-const getSeatsDescription = (availableSeatCount = 0) =>
-  `Only ${availableSeatCount} seat${availableSeatCount === 1 ? '' : 's'} ${
-    availableSeatCount === 1 ? 'is' : 'are'
-  } available. However this value may have change since the last update.`;
+const getSeatsDescription = (isBookingUpdate, availableSeatCount = 0) =>
+  isBookingUpdate
+    ? 'Please update seat count from the details page of this ride. You can go to ride details page via View Ride option.'
+    : `Only ${availableSeatCount} seat${availableSeatCount === 1 ? '' : 's'} ${
+        availableSeatCount === 1 ? 'is' : 'are'
+      } available. However this value may have change since the last update.`;
 
 function SaveBookingForm() {
   const {
@@ -23,6 +25,7 @@ function SaveBookingForm() {
     } = {},
     saveBooking,
     isSavingBooking,
+    isBookingUpdate,
   } = useContext(SaveBookingContext);
 
   const validationSchema = yup.object().shape({
@@ -32,7 +35,7 @@ function SaveBookingForm() {
     seatsCount: yup
       .number()
       .min(1, 'At least 1 seat must be requested.')
-      .max(availableSeatCount, getSeatsDescription(availableSeatCount)),
+      .max(availableSeatCount, getSeatsDescription(isBookingUpdate, availableSeatCount)),
   });
 
   return (
@@ -96,7 +99,7 @@ function SaveBookingForm() {
                 <Col span={24}>
                   <label id="user-mobile-no-label" className="user-input">
                     {i18n.t('liftEkak.booking.details.seatsCount')}
-                    <InfoTooltip title={getSeatsDescription(availableSeatCount)} />
+                    <InfoTooltip title={getSeatsDescription(isBookingUpdate, availableSeatCount)} />
                   </label>
                   <Form.Item name="seatsCount">
                     <Input
@@ -107,6 +110,7 @@ function SaveBookingForm() {
                       placeholder={i18n.t('Required Seats Count')}
                       min={1}
                       max={availableSeatCount}
+                      disabled={isBookingUpdate}
                     />
                   </Form.Item>
                 </Col>
@@ -129,7 +133,7 @@ function SaveBookingForm() {
               <AntdForm.Item>
                 <AntdForm.Item>
                   <Button loading={isSavingBooking} onClick={submitForm} type="primary" className="submit-button">
-                    {i18n.t('Save Booking')}
+                    {i18n.t('Save Lift Request')}
                   </Button>
                 </AntdForm.Item>
               </AntdForm.Item>
