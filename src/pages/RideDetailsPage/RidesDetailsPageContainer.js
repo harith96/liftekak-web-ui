@@ -1,8 +1,10 @@
-import { loadRideDetails, showNotification } from 'actions';
-import { NotificationType } from 'enums';
+import { loadRideDetails, saveBookings, showNotification } from 'actions';
+import _ from 'lodash';
+import { BookingStatus, NotificationType, RideStatus } from 'enums';
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
+import { getCurrentUserID } from 'common/auth';
 import RideDetailsPageComponent from './components/RideDetailsPageComponent';
 import { RideDetailsPageContextProvider } from './RidesDetailsPageContext';
 
@@ -10,15 +12,20 @@ function RidesDetailsPageContainer() {
   const { rideId } = useParams();
   const dispatch = useDispatch();
 
-  const rideDetails = useSelector(
-    (state) => state.rides.data?.find((ride) => ride.rideId === rideId) || state.ride.data
-  );
+  const userId = getCurrentUserID();
+
+  const rideDetails = useSelector((state) => state.ride.data);
   const isRidesDetailsFetching = useSelector((state) => state.ride.fetching);
   const rideError = useSelector((state) => state.ride.error);
 
+  const userBooking = rideDetails?.details?.bookings?.[userId] || {};
+
+  const { bookingStatus: userBookingStatus, bookingId: userBookingId } = userBooking;
+
   useEffect(() => {
     if (rideId) {
-      if ((!rideDetails?.rideId || rideDetails?.rideId !== rideId) && !rideError) dispatch(loadRideDetails(rideId));
+      if ((!rideDetails?.rideId || rideDetails?.rideId !== rideId) && !rideError && rideId)
+        dispatch(loadRideDetails(rideId));
     } else {
       dispatch(
         showNotification({
@@ -34,18 +41,37 @@ function RidesDetailsPageContainer() {
     dispatch(loadRideDetails(rideId));
   }, [rideId, dispatch]);
 
-  const bookRide = useCallback(() => {
-    dispatch(
-      showNotification(
-        'Functionality under development',
-        'Functionality is being developed. Please try again later.',
-        NotificationType.INFO
-      )
-    );
-  }, [dispatch]);
+  const cancelBooking = useCallback(() => {
+    dispatch(saveBookings({ bookingId: userBookingId, bookingStatus: BookingStatus.CANCELLED }));
+  }, [dispatch, userBookingId]);
+
+  const isMyRide = rideDetails.driver?.uid === getCurrentUserID();
+
+  const rideHasNotStarted = rideDetails.status === RideStatus.NEW;
+
+  // TODO: add check whether my ride
+  const shouldAllowBookings =
+    rideHasNotStarted &&
+    userBookingStatus !== BookingStatus.PENDING &&
+    userBookingStatus !== BookingStatus.ACCEPTED &&
+    userBookingStatus !== BookingStatus.BLOCKED &&
+    !isMyRide;
+
+  const shouldAllowBookingCancellation =
+    rideHasNotStarted && (userBookingStatus === BookingStatus.ACCEPTED || userBookingStatus === BookingStatus.PENDING);
 
   return (
-    <RideDetailsPageContextProvider value={{ rideDetails, isRidesDetailsFetching, fetchRideDetails, bookRide }}>
+    <RideDetailsPageContextProvider
+      value={{
+        rideDetails,
+        isRidesDetailsFetching,
+        fetchRideDetails,
+        userBooking,
+        shouldAllowBookings,
+        shouldAllowBookingCancellation,
+        cancelBooking,
+      }}
+    >
       <RideDetailsPageComponent />
     </RideDetailsPageContextProvider>
   );

@@ -35,9 +35,7 @@ function SaveRidePageContainer() {
   const { pathname } = useLocation();
   const isRideUpdate = pathname.includes(APP_ROUTES.UPDATE_RIDE);
 
-  const rideDetails = useSelector(
-    (state) => state.rides.data?.find((ride) => ride.rideId === rideId) || state.ride.data
-  );
+  const rideDetails = useSelector((state) => state.ride.data);
   const isRidesDetailsFetching = useSelector((state) => state.ride.fetching);
   const rideError = useSelector((state) => state.ride.error);
   const isRideCancelled = rideDetails?.status === RideStatus.CANCELLED;
@@ -56,8 +54,19 @@ function SaveRidePageContainer() {
   }, [dispatch]);
 
   useEffect(() => {
-    if (isRideCancelled && !isRidesDetailsFetching) history.push(`${APP_ROUTES.RIDE_VIEW}/${rideId}`);
-  }, [isRideCancelled, isRidesDetailsFetching, history]);
+    if (isRideCancelled && !isRidesDetailsFetching && rideId) history.push(`${APP_ROUTES.RIDE_VIEW}/${rideId}`);
+  }, [isRideCancelled, isRidesDetailsFetching, rideId, history]);
+
+  useEffect(() => {
+    const isNotRideNewOrMyRide =
+      rideId &&
+      !(isRideCreating || isRidesDetailsFetching) &&
+      isRidesDetailsFetching &&
+      rideDetails?.rideId &&
+      (rideDetails.status !== RideStatus.NEW || rideDetails.driver?.uid !== getCurrentUserID());
+
+    if (isNotRideNewOrMyRide) history.push(`${APP_ROUTES.RIDE_VIEW}/${rideId}`);
+  }, [isRideCreating, isRidesDetailsFetching, rideDetails, rideId, history]);
 
   const onSaveRide = useCallback(
     (values) => dispatch(saveRide(formatRideValues(rideId, values), history)),
@@ -68,38 +77,29 @@ function SaveRidePageContainer() {
     (values) => {
       dispatch(saveRide(formatRideValues(rideId, values), history));
     },
-    [history, dispatch]
+    [history, rideId, dispatch]
   );
 
-  const isNotRideNewOrMyRide =
-    !(isRideCreating || isRidesDetailsFetching) &&
-    rideDetails &&
-    rideDetails?.rideId &&
-    (rideDetails.status !== RideStatus.NEW || rideDetails.driver?.uid !== getCurrentUserID());
-
   return (
-    <>
-      {isNotRideNewOrMyRide && <Redirect to={`${APP_ROUTES.RIDE_VIEW}/${rideId}`} />}
-      <SaveRidePageContextProvider
-        value={{
-          onSaveRide,
-          isRideCreating,
-          vehicles,
-          isVehiclesLoading,
-          user,
-          rideDetails,
-          isRidesDetailsFetching,
-          isRideUpdate,
-          isNewVehicleModalVisible,
-          toggleVehicleModal,
-          cancelRide,
-        }}
-      >
-        <SaveVehicleContextProvider>
-          <SaveRidePageComponent />
-        </SaveVehicleContextProvider>
-      </SaveRidePageContextProvider>
-    </>
+    <SaveRidePageContextProvider
+      value={{
+        onSaveRide,
+        isRideCreating,
+        vehicles,
+        isVehiclesLoading,
+        user,
+        rideDetails: isRideUpdate ? rideDetails : undefined,
+        isRidesDetailsFetching,
+        isRideUpdate,
+        isNewVehicleModalVisible,
+        toggleVehicleModal,
+        cancelRide,
+      }}
+    >
+      <SaveVehicleContextProvider>
+        <SaveRidePageComponent />
+      </SaveVehicleContextProvider>
+    </SaveRidePageContextProvider>
   );
 }
 

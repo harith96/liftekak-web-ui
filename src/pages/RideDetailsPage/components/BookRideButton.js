@@ -1,13 +1,19 @@
 import { Button } from 'antd';
-import React, { useContext } from 'react';
-import RideDetailsPageContext from '../RidesDetailsPageContext';
+import SaveBookingContainer from 'components/SaveBooking/SaveBookingContainer';
+import useModalToggle from 'hooks/useModalToggle';
+import React from 'react';
 
 function BookRideButton() {
-  const { bookRide } = useContext(RideDetailsPageContext);
+  const [visible, toggleBookingModal] = useModalToggle();
+
   return (
-    <Button type="primary" style={{ backgroundColor: '#008ace' }} onClick={bookRide}>
-      Book ride
-    </Button>
+    <>
+      <Button type="primary" style={{ backgroundColor: '#008ace' }} onClick={toggleBookingModal}>
+        Request a lift
+      </Button>
+
+      <SaveBookingContainer visible={visible} toggleModal={toggleBookingModal} />
+    </>
   );
 }
 

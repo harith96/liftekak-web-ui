@@ -97,7 +97,17 @@ const initialState = {
     },
     error: null,
   },
-  bookings: {
+  bookingRequests: {
+    fetching: false,
+    data: [],
+    error: null,
+  },
+  myBookings: {
+    fetching: false,
+    data: [],
+    error: null,
+  },
+  booking: {
     fetching: false,
     data: [],
     error: null,
