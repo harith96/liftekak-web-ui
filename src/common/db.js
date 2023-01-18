@@ -302,23 +302,27 @@ const saveRide = async ({
   await setDoc(doc(db, 'rides', rideId), ride);
 };
 
-const updateBookingsInRide = async (rideRef, transaction, ride, passengerId, bookingId, bookingStatus) => {
+const updateBookingsInRide = async (rideRef, transaction, ride, passengerId, bookingId, bookingStatus, seatCount) => {
   const rideBookings = ride.details.bookings || {};
 
-  rideBookings[passengerId] = { bookingId, bookingStatus };
+  rideBookings[passengerId] = { bookingId, bookingStatus, seatCount };
+
+  const availableSeatCount =
+    ride.details.totalSeatCount -
+    _.chain(rideBookings)
+      .keys()
+      .filter((uid) => rideBookings[uid].bookingStatus === BookingStatus.ACCEPTED)
+      .reduce((sum, uid) => sum + (rideBookings[uid].seatCount || 0), 0)
+      .value();
+
+  console.log('--test', availableSeatCount);
 
   await transaction.update(rideRef, {
     ...ride,
     details: {
       ...ride.details,
       bookings: rideBookings,
-      availableSeatCount:
-        ride.details.totalSeatCount -
-        _.chain(rideBookings)
-          .keys()
-          .filter((uid) => rideBookings[uid].bookingStatus === BookingStatus.ACCEPTED)
-          .size()
-          .value(),
+      availableSeatCount,
     },
   });
 };
@@ -382,7 +386,7 @@ const saveBooking = async ({
 
     await transaction.set(bookingRef, booking);
 
-    await updateBookingsInRide(rideRef, transaction, ride, uid, bookingId, status);
+    await updateBookingsInRide(rideRef, transaction, ride, uid, bookingId, status, seatsCount);
 
     await sendBookingEventEmail(booking, ride, !!currentBookingId);
 
